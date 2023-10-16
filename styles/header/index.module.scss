@@ -1,3 +1,5 @@
+@import "../variables";
+
 /*
 .header{
   color: #ffffff
@@ -65,8 +67,8 @@
 
 .header__top{
   height: 38px;
-  background-color: #2D2D2D;
-  color: #ffffff;
+  background-color: $header-top;
+  color: $white;
   margin-bottom: 20px;
 }
 
@@ -76,7 +78,7 @@
   text-decoration: underline;
   cursor: pointer;
   height: 17px;
-  color: #ffffff;
+  color: $white;
   svg{
     height: 12px;
     width: 12px;
@@ -85,9 +87,15 @@
   }
 }
 
-.logo path{
+/*.logo path{
   fill: chocolate;
+}*/
+
+.logo.dark_mode path{
+  fill: $white;
 }
+
+
 
 .header__top__inner{
   display: flex;
@@ -132,6 +140,10 @@
   margin-left: 30px;
 }
 
+.user__list__item.dark_mode path{
+  stroke: $white;
+}
+
 .basket{
   position: relative;
   display: flex;
@@ -155,6 +167,10 @@
 
 .search{
   position: relative;
+}
+
+.searchSvg.dark_mode path{
+  stroke: #ffffff;
 }
 
 .searchSvg{

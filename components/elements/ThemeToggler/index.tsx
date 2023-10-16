@@ -4,22 +4,28 @@ import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {useDispatch} from 'react-redux';
 import React from 'react';
 import {setTheme} from '../../../store/reducers/ThemeSlice';
+import {useTheme} from '../../../hooks/useTheme';
+
 
 export const ThemeToggle = ({className}) => {
 
   const {theme} = useAppSelector((state) => state.themeReducer)
 
   const dispatch = useAppDispatch()
+  const {toggleTheme} = useTheme()
 
-  React.useEffect(() => {
-    document.documentElement.dataset.theme = theme
-    localStorage.setItem('theme', theme)
-  }, [ theme ])
+
 
   const handleChange = () => {
-    const next = theme === 'light' ? 'dark' : 'light'
-    dispatch(setTheme(next))
+    toggleTheme()
+    document.body.classList.toggle('dark_mode')
   }
+
+  React.useEffect(() => {
+    document.body.classList.add(theme === 'dark' ? 'dark_mode' : 'body')
+  }, [theme])
+
+  /*console.log(document.body.classList)*/
 
   return (
     <div

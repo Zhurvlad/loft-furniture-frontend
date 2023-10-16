@@ -97,7 +97,7 @@ button{
   --text-color: #f5f6f7;
 }
 
-body {
+/*body {
   background: var(--background-color);
   color: var(--text-color);
-}
+}*/

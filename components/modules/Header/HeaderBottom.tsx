@@ -8,18 +8,21 @@ import {CartSvg} from '../../elements/CartSvg/index';
 import {SearchInput} from '../../elements/SearchInput/index';
 
 import {ThemeToggle} from '../../elements/ThemeToggler/index';
+import {useAppSelector} from '../../../hooks/redux';
 
 
 export const HeaderBottom = () => {
 
+  const {theme} = useAppSelector((state) => state.themeReducer)
 
+  const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
 
   return (
     <div className={styles.header__bottom}>
       <div className="container">
         <div className={styles.header__bottom__inner}>
-          <div className={styles.logo}>
+          <div className={`${styles.logo} ${darkModeClass}`}>
             <Link href={'/'} legacyBehavior passHref>
               <a>
                 <LogoSvg/>
@@ -29,7 +32,7 @@ export const HeaderBottom = () => {
 
           <div className={styles.search}>
             <SearchInput/>
-            <button className={styles.searchSvg}>
+            <button className={`${styles.searchSvg} ${darkModeClass}`}>
                 <SearchSvg/>{/**/}
             </button>
           </div>
@@ -37,7 +40,7 @@ export const HeaderBottom = () => {
           <div className={styles.header__box}>
             <ul className={styles.user__list}>
               <ThemeToggle/>
-              <li className={styles.user__list__item}>
+              <li className={`${styles.user__list__item} ${darkModeClass}`}>
                 <Link href={''} passHref legacyBehavior>
                   <a className={styles.basket}>
                     <FavoriteSvg/>
@@ -45,7 +48,7 @@ export const HeaderBottom = () => {
                   </a>
                 </Link>
               </li>
-              <li className={styles.user__list__item}>
+              <li className={`${styles.user__list__item} ${darkModeClass}`}>
                 <Link href={''} passHref legacyBehavior>
                   <a className={styles.basket}>
                     <CartSvg/>
