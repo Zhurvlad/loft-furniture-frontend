@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import {Header} from '../components/modules/Header/Header';
+import {Footer} from '../components/modules/Footer/Footer';
 
 export default function Home() {
   return (
@@ -14,6 +15,8 @@ export default function Home() {
 
       </Head>
       <Header/>
+      <div className={'page'}>123</div>
+      <Footer/>
     </>
 )
 }
