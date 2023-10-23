@@ -1,8 +1,19 @@
 import Head from 'next/head'
 import {Header} from '../components/modules/Header/Header';
 import {Footer} from '../components/modules/Footer/Footer';
+import {MainPage} from '../components/templates/MainPage/index';
+import {useAppDispatch} from '../hooks/redux';
+import {fetchSofas} from '../store/reducers/ActionCreators';
+import React from 'react';
 
 export default function Home() {
+
+  const dispatch = useAppDispatch()
+
+  React.useEffect(() => {
+    fetchSofas(dispatch)
+  }, [])
+
   return (
     <>
       <Head>
@@ -15,7 +26,7 @@ export default function Home() {
 
       </Head>
       <Header/>
-      <div className={'page'}>123</div>
+      <MainPage/>
       <Footer/>
     </>
 )

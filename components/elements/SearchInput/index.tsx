@@ -6,7 +6,7 @@ import {useAppSelector} from '../../../hooks/redux';
 
 export const SearchInput = () => {
 
-  const {theme} = useAppSelector((state) => state.themeReducer)
+  const {theme} = useAppSelector((state) => state.theme)
 
   const [searchOption, setSearchOption] = useState<SelectOptionType>(null)
 

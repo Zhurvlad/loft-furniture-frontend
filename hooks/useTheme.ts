@@ -4,7 +4,7 @@ import React from 'react';
 
 
 export const useTheme = () => {
-  const {theme} = useAppSelector((state) => state.themeReducer)
+  const {theme} = useAppSelector((state) => state.theme)
   const dispatch = useAppDispatch()
 
   const toggleTheme = () => {

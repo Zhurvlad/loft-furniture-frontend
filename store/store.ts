@@ -1,24 +1,29 @@
 import {Action, combineReducers} from 'redux';
 import {configureStore, ThunkAction} from '@reduxjs/toolkit';
-import themeReducer from '../store/reducers/ThemeSlice'
+
+import {theme} from './reducers/ThemeSlice';
+import {sofas} from './reducers/SofasSlice';
 
 
 const rootReducer = combineReducers({
-  themeReducer
+  theme,
+  sofas
+
 })
 
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
-    devTools: true
+    devTools: true,
   })
 }
 
 export const store = setupStore();
 
 export type RootState = ReturnType<RootStore['getState']>;
-export type RootStore = ReturnType<typeof rootReducer>;
+/*export type RootState = ReturnType<typeof rootReducer>;*/
+export type RootStore = ReturnType<typeof setupStore>;
 
 /*
 export type AppDispatch = typeof store.dispatch;

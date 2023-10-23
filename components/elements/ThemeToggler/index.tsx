@@ -9,7 +9,7 @@ import {useTheme} from '../../../hooks/useTheme';
 
 export const ThemeToggle = ({className}) => {
 
-  const {theme} = useAppSelector((state) => state.themeReducer)
+  const {theme} = useAppSelector((state) => state.theme)
 
   const dispatch = useAppDispatch()
   const {toggleTheme} = useTheme()

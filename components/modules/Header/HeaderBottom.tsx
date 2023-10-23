@@ -13,7 +13,7 @@ import {useAppSelector} from '../../../hooks/redux';
 
 export const HeaderBottom = () => {
 
-  const {theme} = useAppSelector((state) => state.themeReducer)
+  const {theme} = useAppSelector((state) => state.theme)
 
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
