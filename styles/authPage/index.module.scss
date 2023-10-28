@@ -1,0 +1,137 @@
+@import "../variables";
+
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(77, 77, 77, .8);
+  height: 100vh;
+  display: block;
+  z-index: 10;
+  width: 100%;
+
+}
+
+.signUp {
+  /*min-height: 556px;*/
+  background-color: #ffffff;
+  color: $text-color;
+  padding: 45px 60px;
+  border-radius: 20px;
+  display: inline-block;
+  transform: translate(-50%, -50%);
+  position: relative;
+  top: 50%;
+  left: 50%;
+
+  &.dark_mode {
+    /*background-color: #151B28;*/
+    background-image: linear-gradient(45deg, #101828 14.64%, #475467 85.36%);
+
+  }
+}
+
+.signUp__title {
+  font-size: 36px;
+  font-weight: 500;
+  margin-bottom: 32px;
+  text-align: center;
+
+  &.dark_mode {
+    color: #F9F9F9;
+  }
+}
+
+.signUp__inner {
+  position: relative;
+}
+
+.signUp__inner {
+  margin-bottom: 35px;
+  display: block;
+}
+
+.signUp__input__title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+
+  &.dark_mode {
+    color: #F9F9F9;
+  }
+}
+
+.signUp__input {
+  border-radius: 6px;
+  border: 1px solid #DAE0E6;
+  box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.04);
+  padding: 12px 16px;
+  width: 392px;
+
+  &.dark_mode {
+    color: #F9F9F9;
+    border: 1px solid var(--gray-300, #2E3545);
+    background: var(--gray-600, #2C3444);
+  }
+}
+
+.close {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  cursor: pointer;
+
+  &.dark_mode path {
+    stroke: #F9F9F9;
+  }
+}
+
+
+.signUp__btn {
+  padding: 12px 20px;
+  border: none;
+  background: var(--gradient-primary-liniar-decorative-base, linear-gradient(225deg, #A48AFB 14.64%, #0046D1 85.36%));
+  /* background-color: #437EF7;*/
+  display: block;
+  width: 100%;
+  border-radius: 6px;
+  color: $white;
+  margin-bottom: 24px;
+  cursor: pointer;
+  margin-top: 32px;
+  transition: --gradient-primary-liniar-decorative-base 1s ease-out;
+
+  &:hover {
+    background-position: 100px;
+    /*   background: var(--gradient-primary-liniar-decorative-base, linear-gradient(225deg, #0046D1 14.64%, #A48AFB 85.36%));
+       transition: background-image 1s ease-out;*/
+  }
+}
+
+.signUp__register {
+  color: #5F6D7E;
+  font-size: 16px;
+
+  span:last-child {
+    color: #437EF7;
+    cursor: pointer;
+  }
+
+  &.dark_mode {
+    color: #A5ACBA;
+
+    span:last-child {
+      color: #437EF7;
+    }
+  }
+}
+
+.error_alert {
+  font-size: 12px;
+  color: #A5ACBA;
+  position: absolute;
+  left: 16px;
+  bottom: -17px;
+}

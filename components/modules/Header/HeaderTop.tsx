@@ -3,11 +3,20 @@ import styles from '../../../styles/header/index.module.scss'
 import Link from 'next/link';
 import {LocationSvg} from '../../elements/LocationSvg/index';
 import {UserSvg} from '../../elements/UserSvg/index';
+import {SignUpFrom} from '../AuthPage/SignUpForm';
+import {SignInForm} from '../AuthPage/SignInForm';
 
 
 export const HeaderTop = () => {
+
+  const [open, setOpen] = React.useState(false)
+
+  const toggleOpen = () => {
+    setOpen(!open)
+  }
+
   return (
-    <div className={styles.header__top}>
+    <div  className={styles.header__top}>
       <div className={'container'}>
         <div className={styles.header__top__inner}>
           <button className={styles.city}>
@@ -35,13 +44,15 @@ export const HeaderTop = () => {
               </li>
             </ul>
           </nav>
-          <div className={styles.header__box}>
+          <div onClick={toggleOpen} className={styles.header__box}>
             <button>
               <span>
                 <UserSvg/>
               </span>
             </button>
           </div>
+          {open && <SignInForm setOpen={toggleOpen}/>}
+          {/*{!open && <SignInForm setOpen={toggleOpen}/>}*/}
         </div>
       </div>
     </div>
