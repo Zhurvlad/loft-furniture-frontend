@@ -9,10 +9,10 @@ export const NameInput:FC<IAuthInput> = ({errors, register}) => {
 
   return (
     <label className={styles.signUp__inner}>
-      <p className={`${styles.signUp__input__title} ${darkModeClass}`}>Your name</p>
+      <p className={`${styles.signUp__input__title} ${darkModeClass}`}>Ваше имя</p>
       <input className={`${styles.signUp__input} ${darkModeClass}`}
              type="text"
-             placeholder={'Insert your name'}
+             placeholder={'Введите ваше имя'}
              name={'username'}
              {...register("username", {
                required: "Введите имя!",

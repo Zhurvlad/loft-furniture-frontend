@@ -10,10 +10,10 @@ export const PasswordInput: FC<IAuthInput> = ({errors, register}) => {
 
   return (
     <label className={styles.signUp__inner}>
-      <p className={`${styles.signUp__input__title} ${darkModeClass}`}>Password</p>
+      <p className={`${styles.signUp__input__title} ${darkModeClass}`}>Пароль</p>
       <input className={`${styles.signUp__input} ${darkModeClass}`}
              type="text" name={'Password'}
-             placeholder={'Insert your password'}
+             placeholder={'Введите свой пароль'}
              {...register("password", {
                required: "Введите пароль!",
                minLength: 8,

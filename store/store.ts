@@ -5,13 +5,15 @@ import {theme} from './reducers/ThemeSlice';
 import {sofas} from './reducers/SofasSlice';
 import {user} from './reducers/UserSlice';
 import {sofaApi} from './sofa/sofa.api';
+import {authApi} from './user/user.api';
+import {api} from './api';
 
 
 const rootReducer = combineReducers({
   theme,
-  /*sofas,*/
-  [sofaApi.reducerPath]: sofaApi.reducer,
-  user
+  user,
+  sofas,
+  [api.reducerPath]: api.reducer,
 })
 
 
@@ -20,7 +22,7 @@ export const setupStore = () => {
     reducer: rootReducer,
     devTools: true,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(sofaApi.middleware),
+      getDefaultMiddleware().concat(api.middleware),
   })
 }
 

@@ -10,7 +10,7 @@ export const EmailInput: FC<IAuthInput> = ({errors, register}) => {
 
   return (
     <label className={styles.signUp__inner}>
-      <p className={`${styles.signUp__input__title} ${darkModeClass}`}>Email Address</p>
+      <p className={`${styles.signUp__input__title} ${darkModeClass}`}>E-mail адрес</p>
       <input className={`${styles.signUp__input} ${darkModeClass}`}
              name={'Email'} type="text"
              placeholder={'Введите свой E-mail'}

@@ -18,8 +18,6 @@ export const TopSales = () => {
   const {data:sofas, isLoading, error} = sofaApi.useGetSofasQuery(12)
   const {theme} = useAppSelector((state) => state.theme)
 
-  console.log(sofas && sofas.rows)
-  console.log(isLoading, 99)
 
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 

@@ -3,20 +3,26 @@ import styles from '../../../styles/header/index.module.scss'
 import Link from 'next/link';
 import {LocationSvg} from '../../elements/LocationSvg/index';
 import {UserSvg} from '../../elements/UserSvg/index';
-import {SignUpFrom} from '../AuthPage/SignUpForm';
 import {SignInForm} from '../AuthPage/SignInForm';
+import {SignUpForm} from '../AuthPage/SignUpForm';
+import ProfileDropDown from './ProfileDropDown';
 
 
 export const HeaderTop = () => {
 
   const [open, setOpen] = React.useState(false)
+  const [register, setRegister] = React.useState(false)
+
+  const toggleRegister = () => {
+    setRegister(!register)
+  }
 
   const toggleOpen = () => {
     setOpen(!open)
   }
 
   return (
-    <div  className={styles.header__top}>
+    <div className={styles.header__top}>
       <div className={'container'}>
         <div className={styles.header__top__inner}>
           <button className={styles.city}>
@@ -45,14 +51,13 @@ export const HeaderTop = () => {
             </ul>
           </nav>
           <div onClick={toggleOpen} className={styles.header__box}>
-            <button>
-              <span>
-                <UserSvg/>
-              </span>
-            </button>
+            <ProfileDropDown/>
           </div>
-          {open && <SignInForm setOpen={toggleOpen}/>}
-          {/*{!open && <SignInForm setOpen={toggleOpen}/>}*/}
+          {open
+            ? register
+              ? <SignUpForm setOpen={toggleOpen} toggleRegister={toggleRegister}/>
+              : <SignInForm setOpen={toggleOpen} toggleRegister={toggleRegister}/>
+            : ''}
         </div>
       </div>
     </div>

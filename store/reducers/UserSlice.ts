@@ -1,7 +1,8 @@
-import {ResponseCreateUser} from '../../utils/api/types';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../store';
 import {registerUser} from './AuthActions';
+import {ResponseCreateUser} from '../../types/auth';
+import {authApi} from '../user/user.api';
 
 
 export interface UserState {
@@ -14,21 +15,24 @@ const initialState: UserState = {
 
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: 'auth',
   initialState,
   reducers: {
-    setUserData(state, action: PayloadAction<ResponseCreateUser>) {
-      state.user = action.payload
-    }
+    logOut: () => initialState
   },
-  /*extraReducers: {
-    [registerUser.fulfilled]: (state, {payload}) => {
-      state.user = payload
-    }
-  }*/
+  extraReducers: builder => {
+    builder
+      .addMatcher(authApi.endpoints.login.matchFulfilled, (state, action) => {
+        state.user = action.payload
+      })
+    .addMatcher(authApi.endpoints.register.matchFulfilled, (state, action) => {
+        state.user = action.payload
+      })
+
+  }
 })
 
-export const {setUserData} = userSlice.actions
+export const {logOut} = userSlice.actions
 
 export const selectUserData = (state: RootState) => state.user
 
