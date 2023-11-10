@@ -4,6 +4,8 @@ import {ISofas} from '../../models/ISofas';
 import {sofasSlice} from './SofasSlice';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 
+//TODO: Можно удалить
+
 export const fetchSofas = async (dispatch: AppDispatch) => {
     try {
       dispatch(sofasSlice.actions.sofasFetching())

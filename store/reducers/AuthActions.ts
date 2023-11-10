@@ -3,6 +3,7 @@ import {CreateUserDto} from '../../utils/api/types';
 import axios from 'axios';
 import url from '../../utils/api'
 
+//TODO: Можно удалить
 
 export const registerUser = createAsyncThunk(
   'auth/register',

@@ -1,47 +1,52 @@
 import React from 'react';
 import styles from '../../../styles/authPage/index.module.scss'
 import {NameInput} from '../../elements/Auth/NameInput';
-import {EmailInput} from '../../elements/Auth/EmailInput';
 import {PasswordInput} from '../../elements/Auth/PasswordInput';
 import {CloseSvg} from '../../elements/CloseSvg/index';
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {useForm} from 'react-hook-form';
 import {CreateUserDto, IAuthFrom, IInputs} from '../../../types/auth';
-import axios from 'axios';
-import {registerUser} from '../../../store/reducers/AuthActions';
 import {useLoginMutation} from '@/store/user/user.api';
+import {isErrorWithMessage} from '../../../utils/is-error-with-message';
 
 
 export const SignInForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
 
-  const dispatch = useAppDispatch()
+
   const [loginUser, loginUserResult] = useLoginMutation()
   const {register, formState: {errors}, handleSubmit, reset} = useForm<IInputs>()
-
-  const [form, setForm] = React.useState(false)
-
+  const [error, setError] = React.useState('')
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
   const onSubmit = async (dto: CreateUserDto) => {
     try {
+      console.log(dto)
       await loginUser(dto).unwrap()
       setOpen()
       reset()
-    } catch (e) {
-
+    } catch (err) {
+      const maybeError = isErrorWithMessage(err)
+      if(maybeError){
+        setError(err.data.message)
+      } else {
+        setError('Произошла неизвестная ошибка')
+      }
     }
   }
 
-  console.log(loginUserResult)
+  console.log(errors)
 
   return (
     <div>
       <div className={styles.overlay}>
-        <form className={`${styles.signUp} ${darkModeClass}`} onSubmit={handleSubmit(onSubmit)}>
+        <form className={`${styles.signUp} ${darkModeClass}`} onSubmit={() => handleSubmit(onSubmit)}>
           <h3 className={`${styles.signUp__title} ${darkModeClass}`}>Вход</h3>
-          <NameInput register={register} errors={errors}/>
-          <PasswordInput register={register} errors={errors}/>
+          <span className={styles.error}>{error}</span>
+          <div className={styles.form}>
+            <NameInput register={register} errors={errors}/>
+            <PasswordInput register={register} errors={errors}/>
+          </div>
           <button type={'submit'} className={styles.signUp__btn}>
             Войти
           </button>

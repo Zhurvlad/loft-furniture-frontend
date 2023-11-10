@@ -19,14 +19,14 @@ export const NameInput:FC<IAuthInput> = ({errors, register}) => {
                minLength: 4,
                maxLength: 16,
                pattern: {
-                 value: /^[a-zA-Z]+[a-zA-Z]+$/,
+                 value: /^[a-zA-Z0-9]+$/,
                  message: 'Непривильное имя'
                }
              })}
       />
-      {errors.name && <span className={styles.error_alert}>{errors.name?.message}</span>}
-      {errors.name && errors.name.type === 'minLength' && <span className={styles.error_alert}>Минимум 4 символа!</span>}
-      {errors.name && errors.name.type === 'maxLength' && <span className={styles.error_alert}>Максимум 16 символов!</span>}
+      {errors.username && <span className={styles.error_alert}>{errors.username?.message}</span>}
+      {errors.username && errors.username.type === 'minLength' && <span className={styles.error_alert}>Минимум 4 символа!</span>}
+      {errors.username && errors.username.type === 'maxLength' && <span className={styles.error_alert}>Максимум 16 символов!</span>}
     </label>
   );
 };

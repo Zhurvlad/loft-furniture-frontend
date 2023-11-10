@@ -36,7 +36,7 @@ export const sofaApi = api.injectEndpoints({
       query: (limit: number = 10, offset:number =0) =>({
         url: 'sofas/bestsellers',
         params: {limit: limit, offset: offset},
-
+        method: 'GET',
       })})
   })
 })

@@ -1,6 +1,6 @@
 import {api} from '../api';
 import {ISofas} from '../../models/ISofas';
-import {IRegister, LoginUser, ResponseCreateUser, ResponseLoginUser} from '../../types/auth';
+import {IRegister, LoginUser, LoginUserResponse, ResponseCreateUser, ResponseLoginUser} from '../../types/auth';
 import {createApi, fetchBaseQuery, retry} from '@reduxjs/toolkit/dist/query/react';
 
 
@@ -34,23 +34,23 @@ export const authApi = api.injectEndpoints({
         body: userDto
       })
     }),
-    loginCheck: builder.query({
+    loginCheck: builder.query<LoginUserResponse, void>({
       query: () => ({
-        url: 'users/login-check',
+        url: 'auth/login-check',
         method: 'GET',
 
       })
     }),
-    logOut: builder.query({
+    /*logout: builder.query({
       query: () => ({
-        url: 'users/login-check',
+        url: 'auth/logout',
         method: 'GET',
       })
-    }),
+    }),*/
   })
 })
 
 
-export const {useLoginMutation, useLoginCheckQuery, useRegisterMutation, useLogOutQuery} = authApi
+export const {useLoginMutation, useLoginCheckQuery, useRegisterMutation, useLogoutQuery} = authApi
 
-export const {endpoints: {register, login, loginCheck, logOut}} = authApi
+export const {endpoints: {register, login, loginCheck, logout}} = authApi

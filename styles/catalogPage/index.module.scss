@@ -1,0 +1,157 @@
+@import "../variables";
+
+.catalog {
+
+}
+
+.catalog__inner {
+  display: flex;
+}
+
+.filters {
+  width: 265px;
+}
+
+.catalog__items {
+  width: 265px;
+  margin-right: 25px;
+}
+
+.filter__title {
+  margin-bottom: 20px;
+  color: $text-color;
+}
+
+.filter__title.dark_mode {
+  color: $white;
+}
+
+
+.filters__list {
+  padding: 20px;
+}
+
+.filters__list__item {
+  margin-bottom: 20px;
+}
+
+.filters__price {
+  max-width: 223px;
+}
+
+.filters__price__inputs {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+
+  input {
+    padding: 7px 10px;
+    font-size: 13px;
+    width: 90px;
+    background-color: #f8f8f8;
+    text-align: center;
+    border-radius: 7px;
+    border: 1px solid #EFEFEF;
+    color: $text-color;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+  }
+
+  input:before {
+    content: 'Р';
+  }
+}
+
+.filters__price__inputs__border {
+  width: 19px;
+  height: 2px;
+  background-color: $text-color;
+  margin: 0 12px;
+
+  &.dark_mode {
+    background-color: $white;
+  }
+}
+
+.filters__color__checkbox {
+  width: 18px;
+  height: 18px;
+  appearance: none;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.filters__color__checkbox__span {
+  position: absolute;
+  cursor: pointer;
+  top: 1px;
+  left: 3px;
+}
+
+.checkbox__color {
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.filters__brand {
+  margin-bottom: 10px;
+  position: relative;
+
+  margin-right: 10px;
+
+}
+
+.filters__brand__checkbox {
+  margin-right: 10px;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #245462;
+  border-radius: 3px;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+
+  &.active {
+    background-color: #245462;
+  }
+}
+
+
+.filters__brand__text {
+  color: $text-color;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+
+  &.dark_mode {
+    color: $white;
+  }
+}
+
+.filters__color__checkbox__span {
+  position: absolute;
+}
+
+.items{
+  width: 100%;
+}
+
+.items__sort{
+  display: flex;
+  justify-content: end;
+  margin-bottom: 30px;
+}
+
+
+.items__inner{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+

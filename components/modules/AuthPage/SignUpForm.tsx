@@ -10,6 +10,7 @@ import {PasswordInput} from '../../elements/Auth/PasswordInput';
 import axios from 'axios';
 import {registerUser} from '../../../store/reducers/AuthActions';
 import { useRegisterMutation } from '@/store/user/user.api';
+import {isErrorWithMessage} from '../../../utils/is-error-with-message';
 
 
 export const SignUpForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
@@ -18,6 +19,7 @@ export const SignUpForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
 
   const [registerUser, registerUserResult] = useRegisterMutation()
   const {register, formState: {errors}, handleSubmit, reset} = useForm<IInputs>()
+  const [error, setError] = React.useState('')
 
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
@@ -27,8 +29,13 @@ export const SignUpForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
       await registerUser(dto).unwrap()
       setOpen()
       reset()
-    } catch (e) {
-      console.log(e)
+    } catch (err) {
+      const maybeError = isErrorWithMessage(err)
+      if(maybeError){
+        setError(err.data.message)
+      } else {
+        setError('Произошла неизвестная ошибка')
+      }
     }
   }
 
@@ -37,7 +44,7 @@ export const SignUpForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
       <div className={styles.overlay}>
         <form className={`${styles.signUp} ${darkModeClass}`} onSubmit={handleSubmit(onSubmit)}>
           <h3 className={`${styles.signUp__title} ${darkModeClass}`}>Регистрация</h3>
-
+          <span className={styles.error}>{error}</span>
           <NameInput register={register} errors={errors}/>
           <EmailInput register={register} errors={errors}/>
           <PasswordInput register={register} errors={errors}/>

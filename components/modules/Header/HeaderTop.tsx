@@ -6,10 +6,12 @@ import {UserSvg} from '../../elements/UserSvg/index';
 import {SignInForm} from '../AuthPage/SignInForm';
 import {SignUpForm} from '../AuthPage/SignUpForm';
 import ProfileDropDown from './ProfileDropDown';
+import {useAppSelector} from '../../../hooks/redux';
 
 
 export const HeaderTop = () => {
 
+  const {user} = useAppSelector(state => state.user)
   const [open, setOpen] = React.useState(false)
   const [register, setRegister] = React.useState(false)
 
@@ -20,6 +22,8 @@ export const HeaderTop = () => {
   const toggleOpen = () => {
     setOpen(!open)
   }
+
+
 
   return (
     <div className={styles.header__top}>
@@ -53,7 +57,7 @@ export const HeaderTop = () => {
           <div onClick={toggleOpen} className={styles.header__box}>
             <ProfileDropDown/>
           </div>
-          {open
+          {!user && open
             ? register
               ? <SignUpForm setOpen={toggleOpen} toggleRegister={toggleRegister}/>
               : <SignInForm setOpen={toggleOpen} toggleRegister={toggleRegister}/>

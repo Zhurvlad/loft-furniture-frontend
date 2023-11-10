@@ -24,7 +24,7 @@ export interface ResponseRegisterData {
 export interface IAuthInput {
   register: UseFormRegister<IInputs>
   errors: FieldErrors<IInputs>
-  /*darkModeClass: string*/
+
 }
 
 export interface Interface {

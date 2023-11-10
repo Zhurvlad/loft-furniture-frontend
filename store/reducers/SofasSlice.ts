@@ -1,14 +1,11 @@
 import {ISofas} from '../../models/ISofas';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {themeSlice} from './ThemeSlice';
 import {RootState} from '../store';
-import {fetchSofass} from './ActionCreators';
+import {sofaApi} from '../sofa/sofa.api';
 
 
 interface SofasState {
   sofas: ISofas[],
-  isLoading: boolean,
-  error: string
 }
 
 export enum StatusEnum {
@@ -20,8 +17,6 @@ export enum StatusEnum {
 
 const initialState:SofasState = {
   sofas: [],
-  isLoading: false,
-  error: ''
 }
 
 
@@ -42,20 +37,13 @@ export const sofasSlice = createSlice({
       state.error = action.payload
     }
   },
-  /*extraReducers: {
-    [fetchSofass.fulfilled.type]: (state, action: PayloadAction<ISofas[]>) => {
-      state.isLoading = false
-      state.error = ''
-      state.sofas = action.payload
-    },
-    [fetchSofass.pending.type]: (state) => {
-      state.isLoading = true
-    },
-    [fetchSofass.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false
-      state.error = action.payload
-    },
-  }*/
+  extraReducers: builder => {
+    builder
+      .addMatcher(sofaApi.endpoints.getSofas.matchFulfilled, (state, actions:PayloadAction<ISofas[]>) => {
+        state.sofas = actions.payload
+      })
+  }
+
 })
 
 
