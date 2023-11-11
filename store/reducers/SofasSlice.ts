@@ -24,17 +24,14 @@ export const sofasSlice = createSlice({
   name: 'sofas',
   initialState,
   reducers: {
-    sofasFetching(state){
-      state.isLoading = true
+    setSofasChipFirst(state){
+      state.sofas.rows = state.sofas.rows.sort((a, b) => a.price - b.price)
     },
-    sofasFetchingSuccess(state, action: PayloadAction<ISofas[]>){
-      state.isLoading = false
-      state.error = ''
-      state.sofas = action.payload
+    setSofasExpensiveFirst(state){
+      state.sofas.rows = state.sofas.rows.sort((a, b) => b.price - a.price)
     },
-    sofasFetchingError(state, action: PayloadAction<string>){
-      state.isLoading = false
-      state.error = action.payload
+    setSofasPopularity(state) {
+      state.sofas.rows = state.sofas.rows.sort((a, b) => b.initialRating - a.initialRating)
     }
   },
   extraReducers: builder => {

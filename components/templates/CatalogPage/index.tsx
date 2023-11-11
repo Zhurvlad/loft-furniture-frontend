@@ -44,9 +44,11 @@ export const CatalogPage = () => {
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
-  const {data:sofas, isLoading, error} = sofaApi.useGetSofasQuery(15)
 
-  const sofaItem = sofas  as ISofas
+  const {data:sofasItem, isLoading, error} = sofaApi.useGetSofasQuery(15)
+  const {sofas} = useAppSelector((state => state.sofas))
+
+ /* const sofaItem = sofas  as ISofas*/
 
   const [priceRange, setPriceRange] = React.useState([0, 200000])
   const [isPriceRangeChanged, setIsPriceRangeChanged] = React.useState(false)
@@ -76,7 +78,7 @@ export const CatalogPage = () => {
      }*/
   }
 
-  console.log(activeManufacturer)
+  console.log(sofas)
 
   return (
     <section className={styles.catalog}>
@@ -146,7 +148,7 @@ export const CatalogPage = () => {
                   </ul>
                 ) : (
                   <div className={styles.items__inner}>
-                    {sofas && sofaItem.rows.map(i => (
+                    {sofas && sofas.rows.map(i => (
                       <TopSalesItem sofa={i} key={i.id}/>
                     ))}
                   </div>
