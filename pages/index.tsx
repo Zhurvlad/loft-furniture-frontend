@@ -5,11 +5,13 @@ import {MainPage} from '../components/templates/MainPage/index';
 import {useAppDispatch} from '../hooks/redux';
 import {fetchSofas} from '../store/reducers/ActionCreators';
 import React from 'react';
-import { useGetSofasQuery } from '@/store/sofa/sofa.api';
+import { useGetSofasBestsellersQuery } from '@/store/sofa/sofa.api';
 
 export default function Home() {
 
   const dispatch = useAppDispatch()
+
+  //TODO Сделать Лэйаут
 
 /*  const {data, error, isLoading} = useGetSofasQuery()*/
 

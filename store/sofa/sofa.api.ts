@@ -32,14 +32,19 @@ const baseQueryWithRetry = retry(baseQuery, {maxRetries: 3})
 
 export const sofaApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getSofas: builder.query<ISofas[], number, number>({
-      query: (limit: number = 10, offset:number =0) =>({
-        url: 'sofas/bestsellers',
-        params: {limit: limit, offset: offset},
+    getSofasBestsellers: builder.query({
+      query: ({limit, offset}) =>({
+        url: `sofas/bestsellers?limit=${limit}&offset=${offset}`,
+        /*params: {limit: limit, offset: offset},*/
         method: 'GET',
-      })})
+      })}),
+    getSofas: builder.query({
+      query : ({limit, offset}) =>({
+        url: `sofas?limit=${limit}&offset=${offset}`,
+        method: 'GET',
+      })}),
   })
 })
 
 
-export const {useGetSofasQuery} = sofaApi
+export const {useGetSofasBestsellersQuery, useGetSofasQuery} = sofaApi

@@ -15,7 +15,7 @@ import {ISofas} from '../../../models/ISofas';
 export const TopSales = () => {
 
  /* const {sofas , isLoading} = useAppSelector(sofasSelector)*/
-  const {data:sofas, isLoading, error} = sofaApi.useGetSofasQuery(12)
+  const {data:sofas, isLoading, error} = sofaApi.useGetSofasBestsellersQuery(12)
   const {theme} = useAppSelector((state) => state.theme)
 
 

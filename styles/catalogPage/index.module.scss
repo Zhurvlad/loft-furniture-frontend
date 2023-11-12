@@ -1,7 +1,7 @@
 @import "../variables";
 
 .catalog {
-
+  margin-bottom: 100px;
 }
 
 .catalog__inner {
@@ -154,4 +154,37 @@
   justify-content: space-between;
   margin-bottom: 30px;
 }
+
+.pagination__list{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination__list__item{
+  padding: 13px 19px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin: 0 5px;
+  cursor: pointer;
+  color: $text-color;
+}
+
+.pagination__list__item.dark_mode{
+  color: $white;
+}
+
+.pagination__next, .pagination__prev{
+  cursor: pointer;
+}
+
+.pagination__break__link{
+  color: $text-color;
+
+  &.dark_mode{
+    color: $white;
+  }
+}
+
+
 
