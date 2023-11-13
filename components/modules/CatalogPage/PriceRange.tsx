@@ -34,7 +34,7 @@ export const PriceRange:React.FC<IPriceRAnge> = ({priceRange, setPriceRange, set
                   ...props.style,
                   height: "14px",
                   display: "flex",
-                  width: "223px",
+                  width: "247px",
                   padding: "0 10px"
                 }}
               >

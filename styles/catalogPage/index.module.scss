@@ -9,11 +9,11 @@
 }
 
 .filters {
-  width: 265px;
+  width: 385px;
 }
 
 .catalog__items {
-  width: 265px;
+ /* width: 310px;*/
   margin-right: 25px;
 }
 
@@ -36,7 +36,7 @@
 }
 
 .filters__price {
-  max-width: 223px;
+  width: 247px;
 }
 
 .filters__price__inputs {
@@ -76,11 +76,43 @@
 }
 
 .filters__color__checkbox {
-  width: 18px;
-  height: 18px;
+  width: 32px;
+  height: 32px;
   appearance: none;
   cursor: pointer;
   display: inline-block;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 2px transparent;
+  margin-bottom: 6px;
+
+  &.dark_mode{
+    border: 3px solid #222222;
+    box-shadow: 0 0 0 2px transparent;
+  }
+
+  &.active__color{
+    width: 32px;
+    height: 32px;
+    border: 3px solid #ffffff;
+    box-shadow: 0 0 0 2px $btn;
+  }
+}
+
+.color__name{
+  display: flex;
+  justify-content: center;
+  font-size: 13px;
+  line-height: 20px;
+  color: $text-color;
+
+  &.active__color{
+    font-weight: 700;
+  }
+
+  &.dark_mode{
+    color: #f2f2f2;
+  }
 }
 
 .filters__color__checkbox__span {
@@ -93,8 +125,13 @@
 .checkbox__color {
   position: relative;
   display: inline-block;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  /*margin-right: 10px;
+  margin-bottom: 10px;*/
+  text-align: center;
+  margin-bottom: 20px;
+  width: 82px;
+  height: 53px;
+  cursor: pointer;
 }
 
 .filters__brand {
@@ -115,6 +152,7 @@
   display: inline-block;
   cursor: pointer;
   position: relative;
+
 
   &.active {
     background-color: #245462;

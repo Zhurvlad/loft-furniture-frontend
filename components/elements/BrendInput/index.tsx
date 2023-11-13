@@ -13,12 +13,13 @@ export const BrandInput:React.FC<BrandInputProps> = ({handleActiveManufacturer, 
 
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
+  const activeColor = activeManufacturer.find(i => i === manufacturer) ? `${styles.active}` : ''
 
 
     return (
       <div  className={styles.filters__brand} key={manufacturer}>
         <label className={`${styles.filters__brand__text} ${darkModeClass}`}>
-          <input onClick={() => handleActiveManufacturer(manufacturer)} className={`${styles.filters__brand__checkbox} ${styles.active}`} type="checkbox"/>{manufacturer}
+          <input onClick={() => handleActiveManufacturer(manufacturer)} className={`${styles.filters__brand__checkbox} ${activeColor}`} type="checkbox"/>{manufacturer}
           {activeManufacturer.find(i => i === manufacturer) && <span className={styles.filters__color__checkbox__span}><CheckboxSvg/></span>}
         </label>
       </div>

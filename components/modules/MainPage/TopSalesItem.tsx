@@ -1,11 +1,13 @@
 import React from 'react';
-import styles from '../../../styles/mainPage/index.module.scss';
-import {FavoriteSvg} from '../../elements/FavoriteSvg/index';
-import {SalesSvg} from '../../elements/SalesSvg/index';
+import Link from 'next/link';
+
 import {useAppSelector} from '../../../hooks/redux';
 import {TopSalesItemProps} from '../../../types/main-page';
-import Link from 'next/link';
 import {formatPrice} from '../../../utils/common';
+
+import {FavoriteSvg} from '../../elements/FavoriteSvg/index';
+import {SalesSvg} from '../../elements/SalesSvg/index';
+import styles from '../../../styles/mainPage/index.module.scss';
 
 
 export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa}) => {
@@ -36,8 +38,8 @@ export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa}) => {
           <p className={`${styles.main__card__subtitle} ${darkModeClass}`}>Диваны</p>
           <div className={styles.main__card__price}>
             <p className={`${styles.main__card__price_new} ${darkModeClass}`}>{formatPrice(sofa.price)}₽</p>
-            {itemDiscount
-            && <p className={`${styles.main__card__price_old} ${darkModeClass}`}>{formatPrice(sofa.oldPrice && sofa.oldPrice)}₽</p>}
+            {itemDiscount &&
+            <p className={`${styles.main__card__price_old} ${darkModeClass}`}>{formatPrice(sofa.oldPrice && sofa.oldPrice)}₽</p>}
           </div>
         </div>
       </Link>
