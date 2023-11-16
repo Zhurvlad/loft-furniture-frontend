@@ -185,14 +185,31 @@
 }
 
 .main__card__img{
-  margin-bottom: 55px;
+  margin-bottom: 20px;
   width: 100%;
   height: 200px;
 }
 
+.main__card__color{
+  width: 20px;
+  height: 20px;
+  margin-bottom: 20px;
+}
+
+.main__card__color__name{
+  text-align: left;
+  margin-bottom: 10px;
+
+  &.dark_mode{
+    color: $white;
+  }
+}
+
+
 
 .main__card__info{
   text-align: left;
+
 }
 
 .main__card__title{

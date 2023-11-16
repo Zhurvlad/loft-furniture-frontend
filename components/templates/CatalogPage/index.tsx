@@ -16,6 +16,7 @@ import {useRouter} from 'next/router';
 import axios from 'axios';
 import {PrevArrow} from '../../elements/PrevArrow/index';
 import {NextArrow} from '../../elements/NextArrow/index';
+import {Accordion} from '../../elements/Accordion/index';
 
 const sofaManufacturers = [
   'SCANDICA',
@@ -30,7 +31,7 @@ const sofaManufacturers = [
 
 const sofaColor = [
   {id: 1, hex: '#000000', colorName: 'black', colorNameRu: 'Черный'},
-  {id: 2, hex: '#fafafa', colorName: 'white', colorNameRu: 'Белый'},
+  {id: 2, hex: '#EFEFEF', colorName: 'white', colorNameRu: 'Белый'},
   {id: 3, hex: '#6ECFFF', colorName: 'blue', colorNameRu: 'Голубой'},
   {id: 4, hex: '#008000', colorName: 'green', colorNameRu: 'Зелёный'},
   {id: 5, hex: '#cccccc', colorName: 'grey', colorNameRu: 'Серый'},
@@ -38,6 +39,7 @@ const sofaColor = [
   {id: 7, hex: '#800020', colorName: 'maroon', colorNameRu: 'Бордовый'},
   {id: 8, hex: '#808000', colorName: 'olive', colorNameRu: 'Оливковый'},
   {id: 9, hex: '#FFA500', colorName: 'orange', colorNameRu: 'Оранжевый'},
+  {id: 9, hex: '#FF0', colorName: 'yellow', colorNameRu: 'Желтый'},
   {id: 10, hex: '#F00', colorName: 'red', colorNameRu: 'Красный'},
   {id: 11, hex: '#40E0D0', colorName: 'turquoise', colorNameRu: 'Бирюзовый'},
 ]
@@ -154,11 +156,11 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
       }, undefined, {shallow: true})
 
       setCurrentPage(selected)
+      window.scrollTo(0, 0)
     } catch (e) {
       console.log(e)
     }
   }
-
 
   return (
     <section className={styles.catalog}>
@@ -173,20 +175,29 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                     Тут что то будет
                   </div>
                 </li>
-                <li className={styles.filters__list__item}>
-                  <p className={`${styles.filter__title} ${darkModeClass}`}>Цена</p>
-                  <PriceRange
-                    priceRange={priceRange}
-                    setPriceRange={setPriceRange}
-                    setIsPriceChanged={setIsPriceRangeChanged}
-                  />
-                </li>
-                <li className={styles.filters__list__item}>
-                  <p className={`${styles.filter__title} ${darkModeClass}`}>Цвет</p>
-                  {sofaColor.map(item => (
-                    <ColorEl key={item.id} activeColor={activeColor} item={item} toggleActiveColor={handleActiveColor}/>
-                  ))}
-                  {/*<div className={styles.checkbox}>
+                <div className={styles.vvv}>
+                  <Accordion arrowClass={styles.open} title={'Цена'}>
+                    <li className={styles.filters__list__item}>
+                      {/*<p className={`${styles.filter__title} ${darkModeClass}`}>Цена</p>*/}
+                      <PriceRange
+                        priceRange={priceRange}
+                        setPriceRange={setPriceRange}
+                        setIsPriceChanged={setIsPriceRangeChanged}
+                      />
+
+                    </li>
+                  </Accordion>
+                </div>
+                <div style={{height: 20}}/>
+                <div className={styles.vvv}>
+                  <Accordion arrowClass={styles.open} title={'Цвет'}>
+                    <li className={styles.filters__list__item}>
+                      {/*<p className={`${styles.filter__title} ${darkModeClass}`}>Цвет</p>*/}
+                      {sofaColor.map(item => (
+                        <ColorEl key={item.id} activeColor={activeColor} item={item}
+                                 toggleActiveColor={handleActiveColor}/>
+                      ))}
+                      {/*<div className={styles.checkbox}>
                     <input style={{backgroundColor: '#E94848'}} onClick={toggleActiveColor} className={styles.filters__checkbox} type="checkbox"/>
                     {activeColor && <span className={styles.filters__checkbox__span} onClick={toggleActiveColor}><CheckboxSvg/></span>}
                   </div>
@@ -195,20 +206,30 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                     {activeColor && <span className={styles.filters__checkbox__span} onClick={toggleActiveColor}><CheckboxSvg/></span>}
                   </div>*/}
 
-                </li>
-                <li className={styles.filters__list__item}>
-                  <p className={`${styles.filter__title} ${darkModeClass}`}>Бренд</p>
-                  {sofaManufacturers.map(item => (
-                    <BrandInput
-                      key={item}
-                      activeManufacturer={activeManufacturer}
-                      handleActiveManufacturer={handleActiveManufacturer}
-                      manufacturer={item}/>
+                    </li>
+                  </Accordion>
+                </div>
+                <div style={{height: 20}}/>
+                <div className={styles.vvv}>
+                  <Accordion arrowClass={styles.open} title={'Бренд'}>
+                    <li className={styles.filters__list__item}>
+                      {/* <p className={`${styles.filter__title} ${darkModeClass}`}>Бренд</p>*/}
+                      {sofaManufacturers.map(item => (
+                        <BrandInput
+                          key={item}
+                          activeManufacturer={activeManufacturer}
+                          handleActiveManufacturer={handleActiveManufacturer}
+                          manufacturer={item}/>
 
-                  ))}
-                </li>
+                      ))}
+                    </li>
+                  </Accordion>
+                </div>
               </ul>
             </form>
+            <button className={`${styles.filter__clear} ${darkModeClass}`}>
+               Сбросить все фильтры
+            </button>
           </div>
           <div className={styles.items}>
             <div className={styles.items__sort}>
@@ -229,24 +250,27 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                 ) : (
                   <div className={styles.items__inner}>
                     {sofas && sofas.rows?.map(i => (
-                      <TopSalesItem sofa={i} key={i.id}/>
+                      <TopSalesItem  sofa={i} sofaColor={sofaColor} key={i.id}/>
                     ))}
                   </div>
                 )}
+
             </div>
             <ReactPaginate
               containerClassName={styles.pagination__list}
               pageLinkClassName={`${styles.pagination__list__item} ${darkModeClass}`}
-              previousClassName={styles.pagination__prev}
+              previousClassName={currentPage !== 0 ? `${styles.pagination__prev}`: `${styles.arrow__disable}`}
               nextLabel={<NextArrow/>}
               previousLabel={<PrevArrow/>}
-              nextClassName={styles.pagination__next}
+              nextClassName={pagesCount !== currentPage + 1 ? `${styles.pagination__next}` : `${styles.arrow__disable}`}
               breakLinkClassName={`${styles.pagination__break__link} ${darkModeClass}`}
               breakLabel={'...'}
               pageCount={pagesCount}
               forcePage={currentPage}
               onPageChange={handleChangePage}
             />
+
+
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import {MultiValue, SingleValue} from 'react-select';
+import * as React from 'react';
 
 export interface ISelectInputOption {
   value: string | number,
@@ -6,3 +7,10 @@ export interface ISelectInputOption {
 }
 
 export type SelectOptionType = MultiValue<ISelectInputOption> | SingleValue<ISelectInputOption> | null
+
+
+export interface IAccordion {
+  children: React.ReactNode,
+  title?: string,
+  arrowClass: string
+}

@@ -10,7 +10,7 @@ import {SalesSvg} from '../../elements/SalesSvg/index';
 import styles from '../../../styles/mainPage/index.module.scss';
 
 
-export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa}) => {
+export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa, sofaColor}) => {
 
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
@@ -33,13 +33,23 @@ export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa}) => {
         </div>
         }
         <img className={styles.main__card__img} src={JSON.parse(sofa.images)[0]} alt="content-img-1"/>
+        {sofaColor.find((i) => i.colorName === sofa.color)
+        && sofaColor.map(i => i.colorName === sofa.color
+          ? (
+            <div>
+              <p className={`${styles.main__card__color__name} ${darkModeClass}`}>Цвет :</p>
+              <p className={styles.main__card__color} style={{backgroundColor: `${i.hex}`}}/>
+            </div>
+          )
+          : '')}
         <div className={styles.main__card__info}>
           <h4 className={`${styles.main__card__title} ${darkModeClass}`}>{sofa.name}</h4>
           <p className={`${styles.main__card__subtitle} ${darkModeClass}`}>Диваны</p>
           <div className={styles.main__card__price}>
             <p className={`${styles.main__card__price_new} ${darkModeClass}`}>{formatPrice(sofa.price)}₽</p>
             {itemDiscount &&
-            <p className={`${styles.main__card__price_old} ${darkModeClass}`}>{formatPrice(sofa.oldPrice && sofa.oldPrice)}₽</p>}
+            <p
+              className={`${styles.main__card__price_old} ${darkModeClass}`}>{formatPrice(sofa.oldPrice && sofa.oldPrice)}₽</p>}
           </div>
         </div>
       </Link>
