@@ -85,6 +85,7 @@ button {
   width: auto;
   overflow: visible;
   background: transparent;
+  font-family: Roboto, sans-serif;
 }
 
 :root[data-theme="light"] {

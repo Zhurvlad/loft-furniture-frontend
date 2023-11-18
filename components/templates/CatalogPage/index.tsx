@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../../../styles/catalogPage/index.module.scss'
-import {useAppSelector} from '../../../hooks/redux';
+import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {PriceRange} from '../../modules/CatalogPage/PriceRange';
 import {CheckboxSvg} from '../../elements/CheckboxSvg/index';
 import {ColorEl} from '../../elements/ColorEl/index';
@@ -17,6 +17,8 @@ import axios from 'axios';
 import {PrevArrow} from '../../elements/PrevArrow/index';
 import {NextArrow} from '../../elements/NextArrow/index';
 import {Accordion} from '../../elements/Accordion/index';
+import {sofasSlice} from '../../../store/reducers/SofasSlice';
+import Image from 'next/image'
 
 const sofaManufacturers = [
   'SCANDICA',
@@ -39,33 +41,54 @@ const sofaColor = [
   {id: 7, hex: '#800020', colorName: 'maroon', colorNameRu: 'Бордовый'},
   {id: 8, hex: '#808000', colorName: 'olive', colorNameRu: 'Оливковый'},
   {id: 9, hex: '#FFA500', colorName: 'orange', colorNameRu: 'Оранжевый'},
-  {id: 9, hex: '#FF0', colorName: 'yellow', colorNameRu: 'Желтый'},
-  {id: 10, hex: '#F00', colorName: 'red', colorNameRu: 'Красный'},
-  {id: 11, hex: '#40E0D0', colorName: 'turquoise', colorNameRu: 'Бирюзовый'},
+  {id: 10, hex: '#FF0', colorName: 'yellow', colorNameRu: 'Желтый'},
+  {id: 11, hex: '#F00', colorName: 'red', colorNameRu: 'Красный'},
+  {id: 12, hex: '#40E0D0', colorName: 'turquoise', colorNameRu: 'Бирюзовый'},
 ]
 
 
-//TODO Разобраться со спинером. Подумать над тем что бы дизейблить стрелки пагинации. Подумать над запросом в БД для квери параметров
+//TODO Разобраться со спинером. Подумать над запросом в БД для квери параметров. Добавить сортировку по цвету + доделать БЭК под сортировку для цвета. Подумать над запросом в БД при изменении цены
 
 export const CatalogPage = ({query}: { query: IQueryParams }) => {
 
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
   const router = useRouter()
+  const dispatch = useAppDispatch()
 
   const isValidOffset = query.offset && !isNaN(+query.offset) && +query.offset > 0
   const [currentPage, setCurrentPage] = React.useState(isValidOffset ? +query.offset - 1 : 0)
+  const [priceRange, setPriceRange] = React.useState([0, 200000])
 
+  //TODO Мб можно этот костыль переделать
 
-  const {data: sofasItem, isLoading, error, refetch} = sofaApi.useGetSofasQuery({limit: 15, offset: currentPage})
+  const [priceQuery, setPriceQuery] = React.useState([0, 200000])
+
   const {sofas} = useAppSelector((state => state.sofas))
   const pagesCount = Math.ceil(sofas.count / 15)
+  const priceFrom = priceRange[0]
+  const priceTo = priceRange[1]
+
+  const actualPage = currentPage > pagesCount ? setCurrentPage(0) : currentPage
+
+  const {data: sofasItem, isLoading, error, refetch} = sofaApi.useGetSofasQuery({limit: 15, offset: actualPage, sofasParam: router.query.sofas, priceFrom:priceQuery[0], priceTo: priceQuery[1] })
+
+
   /* const sofaItem = sofas  as ISofas*/
 
-  const [priceRange, setPriceRange] = React.useState([0, 200000])
+  console.log(router.query.sofas )
+
   const [isPriceRangeChanged, setIsPriceRangeChanged] = React.useState(false)
   const [activeColor, setActiveColor] = React.useState<string[]>([])
   const [activeManufacturer, setActiveManufacturer] = React.useState<string[]>([])
+
+  /*
+    const [queryParam, setQueryParam] = React.useState(false)
+  */
+
+  const isAnyActiveColor = activeColor.length !== 0
+  const isAnyActiveManufacturer = activeManufacturer.length !== 0
+  const resetFiltersBtnDisabled = !(isPriceRangeChanged || isAnyActiveColor || isAnyActiveManufacturer)
 
 
   const handleActiveColor = (color: string) => {
@@ -162,6 +185,72 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
     }
   }
 
+  const applyFilter = async () => {
+    try {
+      const priceFrom = priceRange[0]
+      const priceTo = priceRange[1]
+      const encodedSofasManufacturerQuery = encodeURIComponent(JSON.stringify(activeManufacturer))
+
+      const priceQuery = isPriceRangeChanged ? `&priceFrom=${priceFrom}&priceTo=${priceTo}` : ''
+      const sofasQuery = `&sofas=${encodedSofasManufacturerQuery}`
+
+      const initialPage = currentPage > 0 ? 0 : currentPage
+
+      if (activeManufacturer.length && isPriceRangeChanged) {
+
+        router.push({
+          query: {
+            ...router.query,
+            sofas: encodedSofasManufacturerQuery,
+            priceFrom,
+            priceTo,
+            offset: initialPage + 1
+          }
+        })
+
+        const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${priceQuery}${sofasQuery}`)
+
+        dispatch(sofasSlice.actions.setFiltersSofa(data))
+        setPriceQuery([priceFrom, priceTo])
+        return
+      }
+
+      if (isPriceRangeChanged) {
+        router.push({
+          query: {
+            ...router.query,
+            priceFrom,
+            priceTo,
+            offset: initialPage + 1
+          }
+        })
+        const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${priceQuery}`)
+        setPriceQuery([priceFrom, priceTo])
+
+        dispatch(sofasSlice.actions.setFiltersSofa(data))
+        console.log('Мы тут')
+        return
+      }
+
+      if (activeManufacturer.length) {
+        router.push({
+          query: {
+            ...router.query,
+            sofas: encodedSofasManufacturerQuery,
+            offset: initialPage + 1
+          }
+        })
+
+        const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${sofasQuery}`)
+
+        dispatch(sofasSlice.actions.setFiltersSofa(data))
+      }
+
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return (
     <section className={styles.catalog}>
       <div className={'container'}>
@@ -175,7 +264,7 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                     Тут что то будет
                   </div>
                 </li>
-                <div className={styles.vvv}>
+                <div className={styles.filter__list__inner}>
                   <Accordion arrowClass={styles.open} title={'Цена'}>
                     <li className={styles.filters__list__item}>
                       {/*<p className={`${styles.filter__title} ${darkModeClass}`}>Цена</p>*/}
@@ -189,7 +278,7 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                   </Accordion>
                 </div>
                 <div style={{height: 20}}/>
-                <div className={styles.vvv}>
+                <div className={styles.filter__list__inner}>
                   <Accordion arrowClass={styles.open} title={'Цвет'}>
                     <li className={styles.filters__list__item}>
                       {/*<p className={`${styles.filter__title} ${darkModeClass}`}>Цвет</p>*/}
@@ -210,7 +299,7 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                   </Accordion>
                 </div>
                 <div style={{height: 20}}/>
-                <div className={styles.vvv}>
+                <div className={styles.filter__list__inner}>
                   <Accordion arrowClass={styles.open} title={'Бренд'}>
                     <li className={styles.filters__list__item}>
                       {/* <p className={`${styles.filter__title} ${darkModeClass}`}>Бренд</p>*/}
@@ -220,15 +309,23 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                           activeManufacturer={activeManufacturer}
                           handleActiveManufacturer={handleActiveManufacturer}
                           manufacturer={item}/>
-
                       ))}
                     </li>
                   </Accordion>
                 </div>
               </ul>
             </form>
-            <button className={`${styles.filter__clear} ${darkModeClass}`}>
-               Сбросить все фильтры
+            <button
+              className={`${styles.filter__clear} ${darkModeClass}`}
+              disabled={resetFiltersBtnDisabled}
+              onClick={applyFilter}
+            >
+              Показать
+            </button>
+            <button
+              className={`${styles.filter__clear} ${darkModeClass}`}
+              disabled={resetFiltersBtnDisabled}>
+              Сбросить все фильтры
             </button>
           </div>
           <div className={styles.items}>
@@ -248,27 +345,36 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                     ))}
                   </ul>
                 ) : (
-                  <div className={styles.items__inner}>
-                    {sofas && sofas.rows?.map(i => (
-                      <TopSalesItem  sofa={i} sofaColor={sofaColor} key={i.id}/>
-                    ))}
+                  <div>
+                    {sofas.rows?.length
+                      ? <div className={styles.items__inner}>
+                        {sofas && sofas.rows?.map(i => (
+                          <TopSalesItem sofa={i} sofaColor={sofaColor} key={i.id}/>
+                        ))}
+                      </div>
+                      : <div className={styles.not__found}>
+                        <img className={styles.not__found__img} src="/img/notFound1.jpg" alt=""/>
+                        <p>По вашему запросу ничего не нашлось</p>
+                      </div>
+                    }
                   </div>
                 )}
 
             </div>
-            <ReactPaginate
-              containerClassName={styles.pagination__list}
-              pageLinkClassName={`${styles.pagination__list__item} ${darkModeClass}`}
-              previousClassName={currentPage !== 0 ? `${styles.pagination__prev}`: `${styles.arrow__disable}`}
-              nextLabel={<NextArrow/>}
-              previousLabel={<PrevArrow/>}
-              nextClassName={pagesCount !== currentPage + 1 ? `${styles.pagination__next}` : `${styles.arrow__disable}`}
-              breakLinkClassName={`${styles.pagination__break__link} ${darkModeClass}`}
-              breakLabel={'...'}
-              pageCount={pagesCount}
-              forcePage={currentPage}
-              onPageChange={handleChangePage}
-            />
+            {sofas.rows?.length
+              ? <ReactPaginate
+                containerClassName={styles.pagination__list}
+                pageLinkClassName={`${styles.pagination__list__item} ${darkModeClass}`}
+                previousClassName={currentPage !== 0 ? `${styles.pagination__prev}` : `${styles.arrow__disable}`}
+                nextLabel={<NextArrow/>}
+                previousLabel={<PrevArrow/>}
+                nextClassName={pagesCount !== currentPage + 1 ? `${styles.pagination__next}` : `${styles.arrow__disable}`}
+                breakLinkClassName={`${styles.pagination__break__link} ${darkModeClass}`}
+                breakLabel={'...'}
+                pageCount={pagesCount}
+                forcePage={currentPage}
+                onPageChange={handleChangePage}/>
+              : ''}
 
 
           </div>

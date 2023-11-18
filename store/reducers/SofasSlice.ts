@@ -32,6 +32,9 @@ export const sofasSlice = createSlice({
     },
     setSofasPopularity(state) {
       state.sofas.rows = state.sofas.rows.sort((a, b) => b.initialRating - a.initialRating)
+    },
+    setFiltersSofa(state, actions:PayloadAction<ISofas[]>){
+      state.sofas = actions.payload
     }
   },
   extraReducers: builder => {

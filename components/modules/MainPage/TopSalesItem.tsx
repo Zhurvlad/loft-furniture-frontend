@@ -39,6 +39,7 @@ export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa, sofaColor}) => 
             <div>
               <p className={`${styles.main__card__color__name} ${darkModeClass}`}>Цвет :</p>
               <p className={styles.main__card__color} style={{backgroundColor: `${i.hex}`}}/>
+              <p>{sofa.furniture_brand}</p>
             </div>
           )
           : '')}

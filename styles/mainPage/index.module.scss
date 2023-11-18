@@ -257,13 +257,14 @@
 }
 
 .main__card__add_btn{
-  padding: 13px 50px;
+  padding: 13px 20px;
   background-color: $btn;
   color: $white;
   font-size: 13px;
   cursor: pointer;
   border-radius: 8px;
   margin-top: 15px;
+  width: 100%;
 
   &:hover{
     background-color: $btn-hover;
