@@ -7,12 +7,12 @@ export const ColorEl = ({toggleActiveColor, item, activeColor}) => {
 
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
-  const activeColorCss = activeColor.find(i => i === item.hex) ? `${styles.active__color}` : ''
+  const activeColorCss = activeColor.find(i => i === item.colorName) ? `${styles.active__color}` : ''
 
   console.log(activeColor.find(i => i === item.hex) ? `${styles.active__color}` : '')
 
   return (
-    <div onClick={() => toggleActiveColor(item.hex)} className={styles.checkbox__color}>
+    <div onClick={() => toggleActiveColor(item.colorName)} className={styles.checkbox__color}>
       <input
         style={{backgroundColor: `${item.hex}`}}
         className={`${styles.filters__color__checkbox} ${darkModeClass} ${activeColorCss}`}

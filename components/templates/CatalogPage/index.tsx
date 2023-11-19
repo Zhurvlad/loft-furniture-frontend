@@ -47,7 +47,11 @@ const sofaColor = [
 ]
 
 
-//TODO Разобраться со спинером. Подумать над запросом в БД для квери параметров. Добавить сортировку по цвету + доделать БЭК под сортировку для цвета. Подумать над запросом в БД при изменении цены
+//TODO Разобраться со спинером.
+// Подумать над запросом в БД для квери параметров.
+// Добавить сортировку по цвету + доделать БЭК под сортировку для цвета.
+// Подумать над запросом в БД при изменении цены.
+// Подумать о  запросе всех товаров и уже на фронте их разбивать на порции
 
 export const CatalogPage = ({query}: { query: IQueryParams }) => {
 
@@ -60,6 +64,16 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
   const [currentPage, setCurrentPage] = React.useState(isValidOffset ? +query.offset - 1 : 0)
   const [priceRange, setPriceRange] = React.useState([0, 200000])
 
+  const [activeColor, setActiveColor] = React.useState<string[]>([])
+
+
+
+ /* const colorQ = sofaColor.find((i) => i.hex === activeColor) /!*&
+  & sofaColor.map(i => i.colorName === sofa.color)*!/
+  const c = {...activeColor}*/
+
+  console.log(activeColor)
+
   //TODO Мб можно этот костыль переделать
 
   const [priceQuery, setPriceQuery] = React.useState([0, 200000])
@@ -71,15 +85,22 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
 
   const actualPage = currentPage > pagesCount ? setCurrentPage(0) : currentPage
 
-  const {data: sofasItem, isLoading, error, refetch} = sofaApi.useGetSofasQuery({limit: 15, offset: actualPage, sofasParam: router.query.sofas, priceFrom:priceQuery[0], priceTo: priceQuery[1] })
+  const {data: sofasItem, isLoading, error, refetch} = sofaApi.useGetSofasQuery({
+    limit: 15,
+    offset: actualPage,
+    sofasParam: router.query.sofas,
+    priceFrom: priceQuery[0],
+    priceTo: priceQuery[1],
+    colorParam: router.query.color
+  })
 
 
   /* const sofaItem = sofas  as ISofas*/
 
-  console.log(router.query.sofas )
+  console.log(router.query.sofas)
 
   const [isPriceRangeChanged, setIsPriceRangeChanged] = React.useState(false)
-  const [activeColor, setActiveColor] = React.useState<string[]>([])
+
   const [activeManufacturer, setActiveManufacturer] = React.useState<string[]>([])
 
   /*
@@ -189,19 +210,57 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
     try {
       const priceFrom = priceRange[0]
       const priceTo = priceRange[1]
-      const encodedSofasManufacturerQuery = encodeURIComponent(JSON.stringify(activeManufacturer))
+      const encodedSofasBrandQuery = encodeURIComponent(JSON.stringify(activeManufacturer))
+      const encodedColorQuery = encodeURIComponent(JSON.stringify(activeColor))
 
       const priceQuery = isPriceRangeChanged ? `&priceFrom=${priceFrom}&priceTo=${priceTo}` : ''
-      const sofasQuery = `&sofas=${encodedSofasManufacturerQuery}`
+      const sofasQuery = `&sofas=${encodedSofasBrandQuery}`
+      const colorQuery = `&color=${encodedColorQuery}`
 
       const initialPage = currentPage > 0 ? 0 : currentPage
+
+      if (activeManufacturer.length && isPriceRangeChanged && activeColor.length) {
+
+        router.push({
+          query: {
+            ...router.query,
+            sofas: encodedSofasBrandQuery,
+            priceFrom,
+            priceTo,
+            color: encodedColorQuery,
+            offset: initialPage + 1
+          }
+        })
+
+        const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${priceQuery}${sofasQuery}${colorQuery}`)
+
+        dispatch(sofasSlice.actions.setFiltersSofa(data))
+        setPriceQuery([priceFrom, priceTo])
+        return
+      }
+
+      if (activeManufacturer.length && activeColor.length) {
+
+        router.push({
+          query: {
+            ...router.query,
+            sofas: encodedSofasBrandQuery,
+            color: encodedColorQuery,
+            offset: initialPage + 1
+          }
+        })
+
+        const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${sofasQuery}${colorQuery}`)
+        dispatch(sofasSlice.actions.setFiltersSofa(data))
+        return
+      }
 
       if (activeManufacturer.length && isPriceRangeChanged) {
 
         router.push({
           query: {
             ...router.query,
-            sofas: encodedSofasManufacturerQuery,
+            sofas: encodedSofasBrandQuery,
             priceFrom,
             priceTo,
             offset: initialPage + 1
@@ -212,6 +271,52 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
 
         dispatch(sofasSlice.actions.setFiltersSofa(data))
         setPriceQuery([priceFrom, priceTo])
+        return
+      }
+
+      if (isPriceRangeChanged && activeColor.length) {
+
+        router.push({
+          query: {
+            ...router.query,
+            priceFrom,
+            priceTo,
+            color: encodedColorQuery,
+            offset: initialPage + 1
+          }
+        })
+
+        const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${priceQuery}${colorQuery}`)
+        dispatch(sofasSlice.actions.setFiltersSofa(data))
+        setPriceQuery([priceFrom, priceTo])
+        return
+      }
+
+      if (activeColor.length) {
+        router.push({
+          query: {
+            ...router.query,
+            color: encodedColorQuery,
+            offset: initialPage + 1
+          }
+        })
+
+        const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${colorQuery}`)
+        dispatch(sofasSlice.actions.setFiltersSofa(data))
+        return
+      }
+
+      if (activeManufacturer.length) {
+        router.push({
+          query: {
+            ...router.query,
+            sofas: encodedSofasBrandQuery,
+            offset: initialPage + 1
+          }
+        })
+
+        const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${sofasQuery}`)
+        dispatch(sofasSlice.actions.setFiltersSofa(data))
         return
       }
 
@@ -228,22 +333,8 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
         setPriceQuery([priceFrom, priceTo])
 
         dispatch(sofasSlice.actions.setFiltersSofa(data))
-        console.log('Мы тут')
+
         return
-      }
-
-      if (activeManufacturer.length) {
-        router.push({
-          query: {
-            ...router.query,
-            sofas: encodedSofasManufacturerQuery,
-            offset: initialPage + 1
-          }
-        })
-
-        const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${sofasQuery}`)
-
-        dispatch(sofasSlice.actions.setFiltersSofa(data))
       }
 
     } catch (e) {
@@ -361,7 +452,7 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                 )}
 
             </div>
-            {sofas.rows?.length
+            {sofas.rows?.length && pagesCount !== 1
               ? <ReactPaginate
                 containerClassName={styles.pagination__list}
                 pageLinkClassName={`${styles.pagination__list__item} ${darkModeClass}`}
