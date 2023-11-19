@@ -19,6 +19,7 @@ import {NextArrow} from '../../elements/NextArrow/index';
 import {Accordion} from '../../elements/Accordion/index';
 import {sofasSlice} from '../../../store/reducers/SofasSlice';
 import Image from 'next/image'
+import {getQueryParamOnFirstRender} from '../../../utils/common';
 
 const sofaManufacturers = [
   'SCANDICA',
@@ -67,15 +68,20 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
   const [activeColor, setActiveColor] = React.useState<string[]>([])
 
 
+  const [isPriceRangeChanged, setIsPriceRangeChanged] = React.useState(false)
 
- /* const colorQ = sofaColor.find((i) => i.hex === activeColor) /!*&
-  & sofaColor.map(i => i.colorName === sofa.color)*!/
-  const c = {...activeColor}*/
+  const [activeManufacturer, setActiveManufacturer] = React.useState<string[]>([])
 
-  console.log(activeColor)
+  /*
+    const [queryParam, setQueryParam] = React.useState(false)
+  */
+
+  const isAnyActiveColor = activeColor?.length !== 0
+  const isAnyActiveManufacturer = activeManufacturer?.length !== 0
+  const resetFiltersBtnDisabled = !(isPriceRangeChanged || isAnyActiveColor || isAnyActiveManufacturer)
+
 
   //TODO Мб можно этот костыль переделать
-
   const [priceQuery, setPriceQuery] = React.useState([0, 200000])
 
   const {sofas} = useAppSelector((state => state.sofas))
@@ -95,21 +101,118 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
   })
 
 
+  React.useEffect(() => {
+    applyFilterFromQuery()
+  }, [])
+
+  const applyFilterFromQuery = () => {
+    try {
+      const priceFromQueryValue = getQueryParamOnFirstRender('priceFrom', router)
+      const priceToQueryValue = getQueryParamOnFirstRender('priceTo', router)
+      const sofasQueryValue = JSON.parse(decodeURIComponent(getQueryParamOnFirstRender('sofas', router) as string))
+      const colorQueryValue = JSON.parse(decodeURIComponent(getQueryParamOnFirstRender('color', router) as string))
+
+      const isValidSofasQuery = Array.isArray(sofasQueryValue) && !!sofasQueryValue?.length
+      const isValidColorQuery = Array.isArray(colorQueryValue) && !!colorQueryValue?.length
+
+      const sofasQuery = `&sofas=${getQueryParamOnFirstRender('boiler', router)}`
+      const colorQuery = `&color=${getQueryParamOnFirstRender('color', router)}`
+      const priceQuery = `&priceFrom=${priceFromQueryValue}&priceTo=${priceToQueryValue}`
+
+      if (isValidColorQuery && isValidSofasQuery && priceFromQueryValue && priceToQueryValue) {
+        setActiveManufacturer(sofasQueryValue)
+        setActiveColor(colorQueryValue)
+
+        updatePriceFromQuery(+priceFromQueryValue, +priceToQueryValue)
+
+        /*setIsPriceRangeChanged(true)
+        setPriceRange([+priceFromQueryValue, +priceToQueryValue])
+        setPriceQuery([+priceFromQueryValue, +priceToQueryValue])
+        return*/
+      }
+
+      if (isValidColorQuery && isValidSofasQuery) {
+        setActiveManufacturer(sofasQueryValue)
+        setActiveColor(colorQueryValue)
+        /*setIsPriceRangeChanged(true)*/
+      }
+
+      if (priceFromQueryValue && priceToQueryValue) {
+        updatePriceFromQuery(+priceFromQueryValue, +priceToQueryValue)
+
+
+        /* setIsPriceRangeChanged(true)
+         setPriceRange([+priceFromQueryValue, +priceToQueryValue])
+         setPriceQuery([+priceFromQueryValue, +priceToQueryValue])*/
+        return
+      }
+
+      if (isValidColorQuery && priceFromQueryValue && priceToQueryValue) {
+        setActiveColor(colorQueryValue)
+        updatePriceFromQuery(+priceFromQueryValue, +priceToQueryValue)
+
+
+        /*setIsPriceRangeChanged(true)
+        setPriceRange([+priceFromQueryValue, +priceToQueryValue])
+        setPriceQuery([+priceFromQueryValue, +priceToQueryValue])*/
+      }
+
+      if (isValidSofasQuery && priceFromQueryValue && priceToQueryValue) {
+        setActiveManufacturer(sofasQueryValue)
+        updatePriceFromQuery(+priceFromQueryValue, +priceToQueryValue)
+        /* setIsPriceRangeChanged(true)
+         setPriceRange([+priceFromQueryValue, +priceToQueryValue])
+         setPriceQuery([+priceFromQueryValue, +priceToQueryValue])*/
+      }
+
+
+      if (isValidColorQuery) {
+        setActiveColor(colorQueryValue)
+        /*setIsPriceRangeChanged(true)*/
+      }
+
+      if (isValidSofasQuery) {
+        setActiveManufacturer(sofasQueryValue)
+        /* setIsPriceRangeChanged(true)*/
+      }
+
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const updatePriceFromQuery = (priceFrom: number, priceTo: number) => {
+    setIsPriceRangeChanged(true)
+    setPriceRange([priceFrom, priceTo])
+    setPriceQuery([priceFrom, priceTo])
+  }
+
+  async function updateParamsAndFilters<T>(updateParams: T, path: string) {
+
+    const params = router.query
+
+    delete params.sofas
+    delete params.color
+    delete params.priceFrom
+    delete params.priceTo
+    params.sortBy = 'cheap'
+
+    const initialPage = currentPage > 0 ? 0 : currentPage
+
+    router.push({
+      query: {
+        ...params,
+        ...updateParams,
+        offset: initialPage + 1
+      }
+    }, undefined, {shallow: true})
+
+    const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${path}`)
+
+    dispatch(sofasSlice.actions.setFiltersSofa(data))
+  }
+
   /* const sofaItem = sofas  as ISofas*/
-
-  console.log(router.query.sofas)
-
-  const [isPriceRangeChanged, setIsPriceRangeChanged] = React.useState(false)
-
-  const [activeManufacturer, setActiveManufacturer] = React.useState<string[]>([])
-
-  /*
-    const [queryParam, setQueryParam] = React.useState(false)
-  */
-
-  const isAnyActiveColor = activeColor.length !== 0
-  const isAnyActiveManufacturer = activeManufacturer.length !== 0
-  const resetFiltersBtnDisabled = !(isPriceRangeChanged || isAnyActiveColor || isAnyActiveManufacturer)
 
 
   const handleActiveColor = (color: string) => {
@@ -138,7 +241,6 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
 
   React.useEffect(() => {
     loadSofas()
-
   }, [])
 
   const loadSofas = async () => {
@@ -220,44 +322,69 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
       const initialPage = currentPage > 0 ? 0 : currentPage
 
       if (activeManufacturer.length && isPriceRangeChanged && activeColor.length) {
-
-        router.push({
-          query: {
-            ...router.query,
+        await updateParamsAndFilters({
             sofas: encodedSofasBrandQuery,
             priceFrom,
             priceTo,
             color: encodedColorQuery,
-            offset: initialPage + 1
-          }
-        })
+            /*offset: initialPage + 1*/
+          },
+          `${initialPage}${priceQuery}${sofasQuery}${colorQuery}`)
 
-        const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${priceQuery}${sofasQuery}${colorQuery}`)
+        /* router.push({
+           query: {
+             ...router.query,
+             sofas: encodedSofasBrandQuery,
+             priceFrom,
+             priceTo,
+             color: encodedColorQuery,
+             offset: initialPage + 1
 
-        dispatch(sofasSlice.actions.setFiltersSofa(data))
+           }
+         })
+
+         const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${priceQuery}${sofasQuery}${colorQuery}`)
+
+         dispatch(sofasSlice.actions.setFiltersSofa(data))*/
         setPriceQuery([priceFrom, priceTo])
         return
       }
 
       if (activeManufacturer.length && activeColor.length) {
 
-        router.push({
-          query: {
-            ...router.query,
+        await updateParamsAndFilters({
             sofas: encodedSofasBrandQuery,
             color: encodedColorQuery,
-            offset: initialPage + 1
-          }
-        })
+            /*offset: initialPage + 1*/
+          },
+          `${initialPage}${sofasQuery}${colorQuery}`)
 
-        const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${sofasQuery}${colorQuery}`)
-        dispatch(sofasSlice.actions.setFiltersSofa(data))
+        /* router.push({
+           query: {
+             ...router.query,
+             sofas: encodedSofasBrandQuery,
+             color: encodedColorQuery,
+             offset: initialPage + 1
+           }
+         })
+
+         const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${sofasQuery}${colorQuery}`)
+         dispatch(sofasSlice.actions.setFiltersSofa(data))*/
+
         return
       }
 
       if (activeManufacturer.length && isPriceRangeChanged) {
 
-        router.push({
+        await updateParamsAndFilters({
+            sofas: encodedSofasBrandQuery,
+            priceFrom,
+            priceTo,
+            /*offset: initialPage + 1*/
+          },
+          `${initialPage}${priceQuery}${sofasQuery}`)
+
+        /*router.push({
           query: {
             ...router.query,
             sofas: encodedSofasBrandQuery,
@@ -269,31 +396,47 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
 
         const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${priceQuery}${sofasQuery}`)
 
-        dispatch(sofasSlice.actions.setFiltersSofa(data))
+        dispatch(sofasSlice.actions.setFiltersSofa(data))*/
         setPriceQuery([priceFrom, priceTo])
         return
       }
 
       if (isPriceRangeChanged && activeColor.length) {
 
-        router.push({
-          query: {
-            ...router.query,
+        await updateParamsAndFilters({
             priceFrom,
             priceTo,
             color: encodedColorQuery,
-            offset: initialPage + 1
-          }
-        })
+            /*offset: initialPage + 1*/
+          },
+          `${initialPage}${priceQuery}${colorQuery}`)
 
-        const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${priceQuery}${colorQuery}`)
-        dispatch(sofasSlice.actions.setFiltersSofa(data))
+        /* router.push({
+           query: {
+             ...router.query,
+             priceFrom,
+             priceTo,
+             color: encodedColorQuery,
+             offset: initialPage + 1
+           }
+         })
+
+         const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${priceQuery}${colorQuery}`)
+         dispatch(sofasSlice.actions.setFiltersSofa(data))*/
+
         setPriceQuery([priceFrom, priceTo])
         return
       }
 
       if (activeColor.length) {
-        router.push({
+
+        await updateParamsAndFilters({
+            color: encodedColorQuery,
+            /* offset: initialPage + 1*/
+          },
+          `${initialPage}${colorQuery}`)
+
+        /*router.push({
           query: {
             ...router.query,
             color: encodedColorQuery,
@@ -302,41 +445,80 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
         })
 
         const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${colorQuery}`)
-        dispatch(sofasSlice.actions.setFiltersSofa(data))
+        dispatch(sofasSlice.actions.setFiltersSofa(data))*/
+
         return
       }
 
       if (activeManufacturer.length) {
-        router.push({
-          query: {
-            ...router.query,
-            sofas: encodedSofasBrandQuery,
-            offset: initialPage + 1
-          }
-        })
 
-        const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${sofasQuery}`)
-        dispatch(sofasSlice.actions.setFiltersSofa(data))
+        await updateParamsAndFilters({
+            sofas: encodedSofasBrandQuery,
+            /*offset: initialPage + 1*/
+          },
+          `${initialPage}${colorQuery}`)
+
+        /* router.push({
+           query: {
+             ...router.query,
+             sofas: encodedSofasBrandQuery,
+             offset: initialPage + 1
+           }
+         })
+
+         const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${sofasQuery}`)
+         dispatch(sofasSlice.actions.setFiltersSofa(data))*/
         return
       }
 
       if (isPriceRangeChanged) {
-        router.push({
-          query: {
-            ...router.query,
+
+        await updateParamsAndFilters({
             priceFrom,
             priceTo,
-            offset: initialPage + 1
-          }
-        })
-        const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${priceQuery}`)
-        setPriceQuery([priceFrom, priceTo])
+            /*offset: initialPage + 1*/
+          },
+          `${initialPage}${priceQuery}`)
 
-        dispatch(sofasSlice.actions.setFiltersSofa(data))
+        /* router.push({
+           query: {
+             ...router.query,
+             priceFrom,
+             priceTo,
+             offset: initialPage + 1
+           }
+         })
+         const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${initialPage}${priceQuery}`)
+         dispatch(sofasSlice.actions.setFiltersSofa(data))*/
+
+        setPriceQuery([priceFrom, priceTo])
 
         return
       }
 
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const resetFilters = async () => {
+    try {
+      const params = router.query
+
+      delete params.sofas
+      delete params.color
+      delete params.priceFrom
+      delete params.priceTo
+      params.sortBy = 'cheap'
+
+      router.push({query: {...params}}, undefined, {shallow: true})
+
+
+      setCurrentPage(0)
+      setActiveManufacturer([])
+      setActiveColor([])
+      setPriceRange([0, 200000])
+      setIsPriceRangeChanged(false)
     } catch (e) {
       console.log(e)
     }
@@ -363,6 +545,7 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                         priceRange={priceRange}
                         setPriceRange={setPriceRange}
                         setIsPriceChanged={setIsPriceRangeChanged}
+                        allowOverlap={true}
                       />
 
                     </li>
@@ -414,6 +597,7 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
               Показать
             </button>
             <button
+              onClick={resetFilters}
               className={`${styles.filter__clear} ${darkModeClass}`}
               disabled={resetFiltersBtnDisabled}>
               Сбросить все фильтры
