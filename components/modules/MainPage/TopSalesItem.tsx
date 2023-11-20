@@ -9,6 +9,8 @@ import {FavoriteSvg} from '../../elements/FavoriteSvg/index';
 import {SalesSvg} from '../../elements/SalesSvg/index';
 import styles from '../../../styles/mainPage/index.module.scss';
 
+//TODO Переделать название
+
 
 export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa, sofaColor}) => {
 
