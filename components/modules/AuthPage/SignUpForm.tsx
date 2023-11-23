@@ -15,6 +15,8 @@ import {isErrorWithMessage} from '../../../utils/is-error-with-message';
 
 export const SignUpForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
 
+  //TODO: Баг при регистрации когда нажамаешь на иконку юзера
+
   const dispatch = useAppDispatch()
 
   const [registerUser, registerUserResult] = useRegisterMutation()

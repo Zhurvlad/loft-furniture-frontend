@@ -21,7 +21,6 @@ export const SignInForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
 
   const onSubmit = async (dto: CreateUserDto) => {
     try {
-      console.log(dto)
       await loginUser(dto).unwrap()
       setOpen()
       reset()
@@ -40,7 +39,7 @@ export const SignInForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
   return (
     <div>
       <div className={styles.overlay}>
-        <form className={`${styles.signUp} ${darkModeClass}`} onSubmit={() => handleSubmit(onSubmit)}>
+        <form className={`${styles.signUp} ${darkModeClass}`} onSubmit={handleSubmit(onSubmit)}>
           <h3 className={`${styles.signUp__title} ${darkModeClass}`}>Вход</h3>
           <span className={styles.error}>{error}</span>
           <div className={styles.form}>

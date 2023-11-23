@@ -5,12 +5,10 @@ import {Header} from '../../components/modules/Header/Header';
 import {Footer} from '../../components/modules/Footer/Footer';
 import {IQueryParams} from '../../types/catalog';
 
-export default function Catalog({query}: {query: IQueryParams}) {
-
+export default function Catalog({query}: { query: IQueryParams }) {
 
 
   /*  const {data, error, isLoading} = useGetSofasQuery()*/
-
 
 
   /* React.useEffect(() => {
@@ -35,7 +33,7 @@ export default function Catalog({query}: {query: IQueryParams}) {
 }
 
 
-export async function getServerSideProps(context: {query: IQueryParams}) {
+export async function getServerSideProps(context: { query: IQueryParams }) {
   return {
     props: {query: {...context.query}}
   }
