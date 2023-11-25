@@ -20,6 +20,10 @@ import {Accordion} from '../../elements/Accordion/index';
 import {sofasSlice} from '../../../store/reducers/SofasSlice';
 import Image from 'next/image'
 import {getQueryParamOnFirstRender} from '../../../utils/common';
+import {shoppingCartApi} from '../../../store/shoppingCart/shoppingCart.api';
+import {sofaColor} from '../../../utils/color';
+import spinnerStyles from '../../../styles/spinner/index.module.scss';
+import {setTimeout} from 'timers';
 
 const sofaManufacturers = [
   'SCANDICA',
@@ -32,32 +36,21 @@ const sofaManufacturers = [
   'FINSOFFA'
 ]
 
-const sofaColor = [
-  {id: 1, hex: '#000000', colorName: 'black', colorNameRu: 'Черный'},
-  {id: 2, hex: '#EFEFEF', colorName: 'white', colorNameRu: 'Белый'},
-  {id: 3, hex: '#6ECFFF', colorName: 'blue', colorNameRu: 'Голубой'},
-  {id: 4, hex: '#008000', colorName: 'green', colorNameRu: 'Зелёный'},
-  {id: 5, hex: '#cccccc', colorName: 'grey', colorNameRu: 'Серый'},
-  {id: 6, hex: '#FFFDD0', colorName: 'ivory', colorNameRu: 'Кремовый'},
-  {id: 7, hex: '#800020', colorName: 'maroon', colorNameRu: 'Бордовый'},
-  {id: 8, hex: '#808000', colorName: 'olive', colorNameRu: 'Оливковый'},
-  {id: 9, hex: '#FFA500', colorName: 'orange', colorNameRu: 'Оранжевый'},
-  {id: 10, hex: '#FF0', colorName: 'yellow', colorNameRu: 'Желтый'},
-  {id: 11, hex: '#F00', colorName: 'red', colorNameRu: 'Красный'},
-  {id: 12, hex: '#40E0D0', colorName: 'turquoise', colorNameRu: 'Бирюзовый'},
-]
 
 
 //TODO Разобраться со спинером.
 // Подумать над запросом в БД для квери параметров.
-// Добавить сортировку по цвету + доделать БЭК под сортировку для цвета.
 // Подумать над запросом в БД при изменении цены.
-// Подумать о  запросе всех товаров и уже на фронте их разбивать на порции
+// Подумать о  запросе всех товаров и уже на фронте их разбивать на порции.
+
+
 
 export const CatalogPage = ({query}: { query: IQueryParams }) => {
 
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
+
+
   const router = useRouter()
   const dispatch = useAppDispatch()
 
@@ -71,6 +64,16 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
   const [isPriceRangeChanged, setIsPriceRangeChanged] = React.useState(false)
 
   const [activeManufacturer, setActiveManufacturer] = React.useState<string[]>([])
+
+  const [spinnerShow, setSpinnerShow] = React.useState(false)
+  const [spinnerClear, setSpinnerClear] = React.useState(false)
+  const loadingItem = spinnerShow ? `${styles.loading}` : ''
+  const loadingClear = spinnerClear ? `${styles.loading}` : ''
+
+
+  const {user} = useAppSelector(state => state.user)
+  const {data: cartItem} = shoppingCartApi.useGetUserCartQuery({userId: user?.user.userId})
+
 
   /*
     const [queryParam, setQueryParam] = React.useState(false)
@@ -99,6 +102,8 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
     priceTo: priceQuery[1],
     colorParam: router.query.color
   })
+
+  console.log(isLoading, 999)
 
 
   React.useEffect(() => {
@@ -310,6 +315,8 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
 
   const applyFilter = async () => {
     try {
+      setSpinnerShow(true)
+
       const priceFrom = priceRange[0]
       const priceTo = priceRange[1]
       const encodedSofasBrandQuery = encodeURIComponent(JSON.stringify(activeManufacturer))
@@ -495,14 +502,17 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
 
         return
       }
-
+      setTimeout(() => {setSpinnerShow(false)}, 1000)
     } catch (e) {
       console.log(e)
+    } finally {
+      setTimeout(() => {setSpinnerShow(false)}, 1000)
     }
   }
 
   const resetFilters = async () => {
     try {
+      setSpinnerClear(true)
       const params = router.query
 
       delete params.sofas
@@ -521,6 +531,8 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
       setIsPriceRangeChanged(false)
     } catch (e) {
       console.log(e)
+    } finally {
+      setTimeout(() => {setSpinnerClear(false)}, 1000)
     }
   }
 
@@ -590,17 +602,24 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
               </ul>
             </form>
             <button
-              className={`${styles.filter__clear} ${darkModeClass}`}
+              className={`${styles.filter__clear} ${darkModeClass} ${loadingItem}`}
               disabled={resetFiltersBtnDisabled}
               onClick={applyFilter}
             >
-              Показать
+              {spinnerShow ? <span
+                style={{top: '9px', left: '45%'}}
+                className={spinnerStyles.spinner}
+              /> : 'Показать'}
+
             </button>
             <button
               onClick={resetFilters}
-              className={`${styles.filter__clear} ${darkModeClass}`}
+              className={`${styles.filter__clear} ${darkModeClass} ${loadingClear}`}
               disabled={resetFiltersBtnDisabled}>
-              Сбросить все фильтры
+              {spinnerClear ? <span
+                style={{top: '9px', left: '45%'}}
+                className={spinnerStyles.spinner}
+              /> : 'Сбросить все фильтры'}
             </button>
           </div>
           <div className={styles.items}>

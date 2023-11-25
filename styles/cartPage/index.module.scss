@@ -148,25 +148,12 @@
 
 .vvv{
   margin-right: 10px;
-  width: 280px;
+  width: 270px;
 }
 
 .cart__item__price{
-  margin-right: 20px;
-
-  &.dark_mode{
-    color: #F9F9F9;
-  }
-}
-
-
-
-.cart__item__totalPrice{
-  color: #1F2533;
-  font-weight: 500;
+  margin-right: 15px;
   display: grid;
-  font-size: 14px;
-
 
   &.dark_mode{
     color: #F9F9F9;
@@ -180,11 +167,28 @@
   }
 }
 
+
+
+.cart__item__totalPrice{
+  color: #1F2533;
+  font-weight: 500;
+  font-size: 14px;
+  width: 80px;
+
+
+  &.dark_mode{
+    color: #F9F9F9;
+  }
+
+
+}
+
 .cart__item__count{
-  margin-right: 20px;
+  margin-right: 15px;
   padding: 6px 14px;
-  border: 1px solid #EFEFEF;
-  border-radius: 11px;
+  /*border: 1px solid #EFEFEF;
+  border-radius: 11px;*/
+
 
   span{
     margin: 0 6px;
@@ -193,7 +197,11 @@
     color: #1F2533;
     background-color:  #EFEFEF;
     border-radius: 6px;
-    padding: 2px 12px;
+    /*padding: 2px 9px;*/
+    min-width: 30px;
+    display: inline-block;
+    text-align: center;
+    height: 19px;
   }
 
   button{
@@ -203,32 +211,116 @@
   }
 }
 
+.count__empty{
+  font-size: 12px;
+  padding: 2px 3px;
+
+  &.dark_mode{
+    color: $white;
+  }
+}
+
 .btn__delete{
-  margin-left: 30px;
+  margin-left: 15px;
   cursor: pointer;
+  width: 30px;
+  position: relative;
 
   &.dark_mode svg{
     path {
       stroke: #F9F9F9;
     }
   }
+
+  &.spinner{
+    cursor: default;
+  }
 }
 
 .cart__count__minus{
+  width: 20px;
+  height: 20px;
+  background-color: #359740;
+  border-radius: 4px;
+
+  &.dark_mode{
+    &.countDisabled{
+    background-color: rgba(#DAE0E6,1);
+    }
+  }
+
+  svg{
+    path {
+      stroke: #ffffff;
+    }
+  }
+
+  &.countDisabled{
+    cursor: default;
+    background-color: rgba(#DAE0E6,1);
+
+    &:hover{
+      background-color: rgba(#DAE0E6,1);
+    }
+  }
+
+  &:hover{
+    background-color: #2BB159;
+  }
 
   &.dark_mode svg{
     path {
-      stroke: #F9F9F9;
+      stroke: #ffffff;
+    }
+  }
+
+  &.countDisabled svg{
+    path {
+      stroke: #49556D;
     }
   }
 }
 
 .cart__count__plus{
-  &.dark_mode svg{
-    path {
-      stroke: #F9F9F9;
+  width: 20px;
+  height: 20px;
+  background-color: #359740;
+  border-radius: 4px;
+
+  &.dark_mode{
+    &.countDisabled{
+      background-color: rgba(#DAE0E6,1);
     }
   }
+
+  svg{
+    path {
+      stroke: #ffffff;
+    }
+  }
+
+  &.dark_mode svg{
+    path {
+      stroke: #ffffff;
+    }
+  }
+
+  &.countDisabled{
+    cursor: default;
+    background-color: rgba(#DAE0E6,1);
+
+    &:hover{
+      background-color: rgba(#DAE0E6,1);
+    }
+  }
+
+  &.countDisabled svg{
+
+    path {
+      stroke:#49556D;
+    }
+  }
+
 }
 
 .cart__details{
@@ -297,4 +389,58 @@
 .v{
 
 }
+
+
+.emptyCart{
+  text-align: center;
+
+  svg{
+    margin-top: 100px;
+    margin-bottom: 20px;
+  }
+
+  &.dark_mode svg{
+    path {
+      stroke: $white;
+    }
+  }
+}
+
+.emptyCart__title{
+  font-size: 23px;
+  font-weight: 800;
+  width: 550px;
+  margin: 0 auto 15px;
+  text-transform: uppercase;
+  line-height: 36px;
+
+  &.dark_mode{
+    color: $white;
+  }
+}
+
+.emptyCart__text{
+  font-size: 16px;
+  width: 640px;
+  margin: 0 auto 20px;
+  color: #7C8B9D;
+  &.dark_mode{
+    color: $white;
+  }
+}
+
+.return__btn{
+  padding: 23px 27px;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 800;
+  line-height: 20px;
+  border-radius: 5px;
+  background: #49D0FF;
+  cursor: pointer;
+  margin-bottom: 200px;
+  color: #ffffff;
+}
+
+
 

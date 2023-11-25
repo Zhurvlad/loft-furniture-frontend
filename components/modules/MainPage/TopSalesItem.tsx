@@ -7,12 +7,32 @@ import {formatPrice} from '../../../utils/common';
 
 import {FavoriteSvg} from '../../elements/FavoriteSvg/index';
 import {SalesSvg} from '../../elements/SalesSvg/index';
+import {toggleCartItem} from '../../../utils/shopping-cart';
+import {useDispatch} from 'react-redux';
+
+import spinnerStyles from '../../../styles/spinner/index.module.scss'
 import styles from '../../../styles/mainPage/index.module.scss';
 
 //TODO Переделать название
 
 
 export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa, sofaColor}) => {
+
+
+  const {user} = useAppSelector(state => state.user)
+  const {sofas} = useAppSelector(state => state.sofas)
+  const {item} = useAppSelector(state => state.cart)
+
+
+  const isInCart = item?.some((cartItem) => cartItem.itemId === sofa.id)
+
+  const addedToCart = isInCart && `${styles.added}`
+
+  const [spinner, setSpinner] = React.useState(false)
+
+  const dispatch = useDispatch()
+
+  const toggleCart = () => toggleCartItem(user?.user?.username,  sofa.id, isInCart && isInCart, setSpinner, dispatch)
 
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
@@ -35,7 +55,7 @@ export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa, sofaColor}) => 
         </div>
         }
         <img className={styles.main__card__img} src={JSON.parse(sofa.images)[0]} alt="content-img-1"/>
-        {sofaColor.find((i) => i.colorName === sofa.color)
+        {sofaColor && sofaColor.find((i) => i.colorName === sofa.color)
         && sofaColor.map(i => i.colorName === sofa.color
           ? (
             <div>
@@ -56,8 +76,20 @@ export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa, sofaColor}) => 
           </div>
         </div>
       </Link>
-      <button className={styles.main__card__add_btn}>
-        Добавить в корзину
+      <button onClick={toggleCart} className={`${styles.main__card__add_btn} ${addedToCart}`}>
+        {!isInCart
+          ?
+          <p>Добавить в корзину</p>
+          :
+          spinner ? <span
+              className={spinnerStyles.spinner}
+            /> :
+            <Link href={'/cart'}>
+              <p>Перейти в корзину</p>
+            </Link>
+
+
+        }
       </button>
     </div>
   );

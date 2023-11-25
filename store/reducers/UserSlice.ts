@@ -26,16 +26,16 @@ export const userSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addMatcher(authApi.endpoints.login.matchFulfilled, (state, action) => {
+      .addMatcher(authApi.endpoints.login.matchFulfilled, (state:UserState, action) => {
         state.user = action.payload
       })
-      .addMatcher(authApi.endpoints.register.matchFulfilled, (state, action) => {
+      .addMatcher(authApi.endpoints.register.matchFulfilled, (state:UserState, action) => {
         state.user = action.payload
       })
      /* .addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
         state.user = []
       })*/
-      .addMatcher(authApi.endpoints.loginCheck.matchFulfilled, (state, action) => {
+      .addMatcher(authApi.endpoints.loginCheck.matchFulfilled, (state:UserState, action) => {
         state.user = action.payload
       })
 

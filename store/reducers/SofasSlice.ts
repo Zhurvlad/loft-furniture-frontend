@@ -39,7 +39,7 @@ export const sofasSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addMatcher(sofaApi.endpoints.getSofas.matchFulfilled, (state, actions:PayloadAction<ISofas[]>) => {
+      .addMatcher(sofaApi.endpoints.getSofas.matchFulfilled, (state:SofasState, actions:PayloadAction<ISofas[]>) => {
         state.sofas = actions.payload
       })
   }

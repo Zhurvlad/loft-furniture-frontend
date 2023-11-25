@@ -9,13 +9,16 @@ import skeletonStyles from '../../../styles/skeletonStyles/index.module.scss'
 
 import {sofaApi} from '../../../store/sofa/sofa.api';
 import {ISofas} from '../../../models/ISofas';
+import {sofaColor} from '../../../utils/color';
 
 //TODO: Разобраться с типизацией
+
+
 
 export const TopSales = () => {
 
  /* const {sofas , isLoading} = useAppSelector(sofasSelector)*/
-  const {data:sofas, isLoading, error} = sofaApi.useGetSofasBestsellersQuery(12)
+  const {data:sofas, isLoading, error} = sofaApi.useGetSofasBestsellersQuery({limit: 12, offset: 0})
   const {theme} = useAppSelector((state) => state.theme)
 
 
@@ -42,7 +45,7 @@ export const TopSales = () => {
           ) : (
             <div className={styles.main__top_sales__inner}>
               {sofas && sofaItem.rows.map(i => (
-                <TopSalesItem sofa={i} key={i.id}/>
+                <TopSalesItem sofaColor={sofaColor} sofa={i} key={i.id}/>
               ))}
             </div>
           )}

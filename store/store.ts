@@ -4,6 +4,7 @@ import {configureStore, ThunkAction} from '@reduxjs/toolkit';
 import {theme} from './reducers/ThemeSlice';
 import {sofas} from './reducers/SofasSlice';
 import {user} from './reducers/UserSlice';
+import {cart} from './reducers/CartSlice';
 import {sofaApi} from './sofa/sofa.api';
 import {authApi} from './user/user.api';
 import {api} from './api';
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   theme,
   user,
   sofas,
+  cart,
   [api.reducerPath]: api.reducer,
 })
 

@@ -12,6 +12,7 @@ import {FavoriteSvg} from '../../elements/FavoriteSvg/index';
 import {SalesSvg} from '../../elements/SalesSvg/index';
 import {sofasSelector} from '../../../store/reducers/SofasSlice';
 import {TopSales} from '../../modules/MainPage/TopSales';
+import Link from 'next/link';
 
 
 export const MainPage = () => {
@@ -38,10 +39,12 @@ export const MainPage = () => {
               </a>
             </li>
             <li className={styles.menu__categories__item}>
-              <a href="#" className={`${styles.menu__categories__link} ${darkModeClass}`}>
-                <span><SofaSvg/></span>
-                Диваны
-              </a>
+              <Link href={'/catalog'} passHref legacyBehavior>
+                <a href="#" className={`${styles.menu__categories__link} ${darkModeClass}`}>
+                  <span><SofaSvg/></span>
+                  Диваны
+                </a>
+              </Link>
             </li>
             <li className={styles.menu__categories__item}>
               <a href="#" className={`${styles.menu__categories__link} ${darkModeClass}`}>

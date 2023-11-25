@@ -20,9 +20,19 @@ export interface ICart {
 
 
 export interface ICartItems {
+  id: number,
   image: string,
   name: string,
   price: number,
   total_price: number,
-  oldPrice: number
+  oldPrice: number,
+  in_stocks: number,
+  itemId: number,
+  count: number,
+
+}
+
+
+export interface UserCartResponse {
+  item: ICart[]
 }

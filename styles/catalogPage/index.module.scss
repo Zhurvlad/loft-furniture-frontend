@@ -304,6 +304,8 @@
   line-height: 20px;
   background-color: #359740;
   color: $white;
+  position: relative;
+  height: 48px;
 
   &.dark_mode{
     color: $white;
@@ -314,6 +316,12 @@
   }
 
   &:disabled{
+    background-color: #919BA7;
+    cursor: default;
+    color: $white;
+  }
+
+  &.loading{
     background-color: #919BA7;
     cursor: default;
     color: $white;

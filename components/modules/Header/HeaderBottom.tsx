@@ -14,8 +14,11 @@ import {useAppSelector} from '../../../hooks/redux';
 export const HeaderBottom = () => {
 
   const {theme} = useAppSelector((state) => state.theme)
-
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
+
+  const {item} = useAppSelector(state => state.cart)
+
+
 
 
   return (
@@ -49,10 +52,11 @@ export const HeaderBottom = () => {
                 </Link>
               </li>
               <li className={`${styles.user__list__item} ${darkModeClass}`}>
-                <Link href={''} passHref legacyBehavior>
+                <Link href={'/cart'} passHref legacyBehavior>
                   <a className={styles.basket}>
                     <CartSvg/>
-                    <p className={styles.basket__num}>12</p>
+                    {item?.length !== 0  ?  <p className={styles.basket__num}>{item?.length}</p> : ''}
+
                   </a>
                 </Link>
               </li>
