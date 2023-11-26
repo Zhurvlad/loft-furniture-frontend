@@ -29,6 +29,13 @@ export const CartPage = () => {
   const [spinner, setSpinner] = React.useState(false)
 
 
+  const {item: cart} = useAppSelector(state => state.cart)
+
+  const cartTotalCount = cart.reduce((sum, obj) => obj.count + sum , 0)
+  const cartTotalPrice = cart.reduce((sum, obj) => obj.total_price + sum , 0)
+  const totalSales = cart.map((i) => i.oldPrice > i.price ? (i.oldPrice * i.count) - i.price : 0).reduce((sum , obj) =>  obj + sum, 0)
+
+  console.log(totalSales, 9999)
 
 
   const {data: cartItem, isLoading, error} = shoppingCartApi.useGetUserCartQuery({userId: user?.user.userId})
@@ -55,6 +62,7 @@ export const CartPage = () => {
     try {
       setSpinner(true)
       await axios.delete(`http://localhost:3002/shopping-cart/one/${itemId}`)
+
       dispatch(cartSlice.actions.removeCartItem(itemId))
     } catch (e) {
       console.log(e)
@@ -65,32 +73,37 @@ export const CartPage = () => {
     }
   }
 
-  const plusItem = () => {
+ /* const plusItem = async (cartItemId: number, total_price: number, count: number) => {
     try {
-
+      setSpinner(true)
+     await axios.patch(`http://localhost:3002/shopping-cart/total-price/${cartItemId}`, {total_price: total_price})
+     await axios.patch(`http://localhost:3002/shopping-cart/count/${cartItemId}`, {count: count})
+      dispatch(cartSlice.actions.plusItem(cartItemId))
     } catch (e) {
       console.log(e)
     } finally {
-
+      setTimeout(() => {
+        setSpinner(false)
+      }, 1000)
     }
-  }
+  }*/
 
   return (
     <div className={'container'}>
       <div className={styles.title}>
         <h1 className={`${styles.cart__title} ${darkModeClass}`}>Корзина</h1>
         {item && item.length !== 0
-        && <h3 className={`${styles.cart__subtitle} ${darkModeClass}`}>{cartItem?.length} товара</h3>}
+        && <h3 className={`${styles.cart__subtitle} ${darkModeClass}`}>{cartTotalCount} товара</h3>}
       </div>
       {item &&
         item?.length !== 0
           ?
           <div className={styles.cart__inner}>
             <div>
-              {item && item.map((i) => <CartItem removeCartItem={removeCartItem} spinner={spinner} key={i.id}
+              {item && item.map((i) => <CartItem  removeCartItem={removeCartItem} spinner={spinner} key={i.id}
                                                  item={i}/>)}
             </div>
-            <OrderDetails totalCount={cartItem?.length} darkModeClass={darkModeClass}/>
+            <OrderDetails sales={totalSales} cartTotalCount={cartTotalCount} cartTotalPrice={cartTotalPrice} totalCount={cartItem?.length} darkModeClass={darkModeClass}/>
           </div>
           :
           <EmptyCart darkModeClass={darkModeClass}/>

@@ -71,6 +71,8 @@
   border-radius: 16px;
   border: 1px solid #EFEFEF;
   max-width: 100%;
+  position: relative;
+  /*box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.07);*/
 }
 
 .cart__item + .cart__item{
@@ -430,6 +432,7 @@
 }
 
 .return__btn{
+
   padding: 23px 27px;
   font-size: 12px;
   text-transform: uppercase;
@@ -443,4 +446,28 @@
 }
 
 
+.overlay{
+  background-color: rgba(77, 77, 77, .4);
+  z-index: 20 ;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px 10px;
+  height: 127px;
+  margin-right: 20px;
+  border-radius: 15px;
+  border: 1px solid transparent;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 
+
+/*
+position: absolute;
+inset: 32px;
+background: rgba(255,255,255,.7);
+display: flex;
+align-items: center;
+justify-content: center;*/

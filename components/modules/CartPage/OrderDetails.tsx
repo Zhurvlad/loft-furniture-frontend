@@ -4,10 +4,13 @@ import {formatPrice} from '../../../utils/common';
 
 export type OrderDetailsProps = {
   darkModeClass: string,
-  totalCount: number
+  totalCount: number,
+  cartTotalPrice: number,
+  cartTotalCount: number,
+  sales: number
 }
 
-export const OrderDetails: React.FC<OrderDetailsProps> = ({darkModeClass, totalCount}) => {
+export const OrderDetails: React.FC<OrderDetailsProps> = ({darkModeClass, totalCount, cartTotalPrice, cartTotalCount, sales}) => {
 
 
   return (
@@ -15,19 +18,19 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({darkModeClass, totalC
       <div className={`${styles.cart__details} ${darkModeClass}`}>
         <h5 className={styles.cart__details__title}>Детали заказа</h5>
         <div className={styles.cart__details__count}>
-          <p> {totalCount} товара </p>
+          <p> {cartTotalCount} товара </p>
           <div/>
-          <p>{formatPrice(15000)} ₽</p>
+          <p>{formatPrice(cartTotalPrice)} ₽</p>
         </div>
         <div className={styles.cart__details__count}>
           <p> Скидка </p>
           <div/>
-          <p>{formatPrice(15000)} ₽</p>
+          <p>{formatPrice(sales)} ₽</p>
         </div>
         <div className={styles.cart__details__count}>
           <p> Итого </p>
           <div/>
-          <p>{formatPrice(15000)} ₽</p>
+          <p>{formatPrice(cartTotalPrice - sales)} ₽</p>
         </div>
         <button className={styles.cart__details__order}>Оформить заказ</button>
       </div>
