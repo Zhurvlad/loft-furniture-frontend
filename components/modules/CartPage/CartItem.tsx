@@ -11,14 +11,15 @@ import spinnerStyles from '../../../styles/spinner/index.module.scss';
 import {cartSlice} from '../../../store/reducers/CartSlice';
 import {setTimeout} from 'timers';
 import axios from 'axios';
+import {sofaColor} from '../../../utils/color';
 
 export interface CartItemProps {
   item: ICartItems,
   removeCartItem: (id: number) => void,
-
+  setSpinner: (arg: boolean) => void
 }
 
-export const CartItem: FC<CartItemProps> = ({item, removeCartItem}) => {
+export const CartItem: FC<CartItemProps> = ({item, removeCartItem, setSpinner}) => {
 
   const {theme} = useAppSelector((state) => state.theme)
   const {user} = useAppSelector(state => state.user)
@@ -30,18 +31,25 @@ export const CartItem: FC<CartItemProps> = ({item, removeCartItem}) => {
 
   const price = sales && (item.count * item.oldPrice) - item.price
 
-  console.log(price)
-
   /*const isInCart = items.some((cartItem) => cartItem.itemId === item.id)*/
 
-  const [spinner, setSpinner] = React.useState(false)
+  const [spinnerItem, setSpinnerItem] = React.useState(false)
 
-  const cartTotalCount = cart.reduce((sum, obj) => obj.count + sum , 0)
+  const colorName = sofaColor.find((obj) => obj.colorName === item.color)
+
+  const sofaSize = item.size.split('.', ).join(' СМ x ')
+
+
+
+
+
+  const cartTotalCount = cart.reduce((sum, obj) => obj.count + sum, 0)
 
 
   const onPlusItem = async (cartItemId: number, total_price: number, count: number) => {
     try {
       setSpinner(true)
+      setSpinnerItem(true)
       await axios.patch(`http://localhost:3002/shopping-cart/total-price/${cartItemId}`, {total_price: total_price})
       await axios.patch(`http://localhost:3002/shopping-cart/count/${cartItemId}`, {count: count})
       dispatch(cartSlice.actions.plusItem(cartItemId))
@@ -49,6 +57,7 @@ export const CartItem: FC<CartItemProps> = ({item, removeCartItem}) => {
       console.log(e)
     } finally {
       setTimeout(() => {
+        setSpinnerItem(false)
         setSpinner(false)
       }, 1000)
     }
@@ -83,7 +92,7 @@ export const CartItem: FC<CartItemProps> = ({item, removeCartItem}) => {
 
 
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
-  const spinnerClass = spinner ? `${styles.spinner}` : ''
+  const spinnerClass = spinnerItem ? `${styles.spinner}` : ''
   const plus = item.count >= item.in_stocks ? `${styles.countDisabled}` : ''
   const minus = item.count === 1 ? `${styles.countDisabled}` : ''
 
@@ -93,7 +102,7 @@ export const CartItem: FC<CartItemProps> = ({item, removeCartItem}) => {
 
   return (
     <div className={styles.cart__item}>
-      {spinner
+      {spinnerItem
         ?
         <div className={styles.overlay}>
         <span style={{top: '37px', left: '47%', width: '50px', height: '50px'}}
@@ -105,9 +114,9 @@ export const CartItem: FC<CartItemProps> = ({item, removeCartItem}) => {
         <div className={styles.vvv}>
           <h4 className={`${styles.cart__item__name} ${darkModeClass}`}>{item.name}</h4>
           <ul className={`${styles.cart__item__text} ${darkModeClass}`}>
-            <li className={`${styles.cart__item__color} ${darkModeClass}`}>Цвет: <span>Темно-синий</span> <span
-              className={styles.span__color}/></li>
-            <li className={styles.cart__item__size}>Размер(Ш×Д×В): <span>218 СМ × 195 СМ × 190 СМ</span></li>
+            <li className={`${styles.cart__item__color} ${darkModeClass}`}>Цвет: <span>{colorName.colorNameRu}</span>
+              <span className={styles.span__color} style={{backgroundColor: `${colorName.hex}`}}/></li>
+            <li className={styles.cart__item__size}>Размер(Ш×Д×В): <span>{sofaSize} СМ</span></li>
           </ul>
         </div>
       </div>

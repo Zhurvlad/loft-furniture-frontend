@@ -31,9 +31,9 @@ export const CartPage = () => {
 
   const {item: cart} = useAppSelector(state => state.cart)
 
-  const cartTotalCount = cart.reduce((sum, obj) => obj.count + sum , 0)
-  const cartTotalPrice = cart.reduce((sum, obj) => obj.total_price + sum , 0)
-  const totalSales = cart.map((i) => i.oldPrice > i.price ? (i.oldPrice * i.count) - i.price : 0).reduce((sum , obj) =>  obj + sum, 0)
+  const cartTotalCount = cart?.reduce((sum, obj) => obj.count + sum , 0)
+  const cartTotalPrice = cart?.reduce((sum, obj) => obj.total_price + sum , 0)
+  const totalSales = cart?.map((i) => i.oldPrice > i.price ? (i.oldPrice * i.count) - i.price : 0).reduce((sum , obj) =>  obj + sum, 0)
 
   console.log(totalSales, 9999)
 
@@ -100,10 +100,10 @@ export const CartPage = () => {
           ?
           <div className={styles.cart__inner}>
             <div>
-              {item && item.map((i) => <CartItem  removeCartItem={removeCartItem} spinner={spinner} key={i.id}
+              {item && item.map((i) => <CartItem  removeCartItem={removeCartItem}  setSpinner={setSpinner} key={i.id}
                                                  item={i}/>)}
             </div>
-            <OrderDetails sales={totalSales} cartTotalCount={cartTotalCount} cartTotalPrice={cartTotalPrice} totalCount={cartItem?.length} darkModeClass={darkModeClass}/>
+            <OrderDetails spinner={spinner} sales={totalSales} cartTotalCount={cartTotalCount} cartTotalPrice={cartTotalPrice} totalCount={cartItem?.length} darkModeClass={darkModeClass}/>
           </div>
           :
           <EmptyCart darkModeClass={darkModeClass}/>

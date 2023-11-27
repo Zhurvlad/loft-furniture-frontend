@@ -29,7 +29,8 @@ export interface ICartItems {
   in_stocks: number,
   itemId: number,
   count: number,
-
+  color: string,
+  size: string
 }
 
 

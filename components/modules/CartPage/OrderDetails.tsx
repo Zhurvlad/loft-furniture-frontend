@@ -7,10 +7,18 @@ export type OrderDetailsProps = {
   totalCount: number,
   cartTotalPrice: number,
   cartTotalCount: number,
-  sales: number
+  sales: number,
+  spinner: boolean,
+
 }
 
-export const OrderDetails: React.FC<OrderDetailsProps> = ({darkModeClass, totalCount, cartTotalPrice, cartTotalCount, sales}) => {
+export const OrderDetails: React.FC<OrderDetailsProps> = ({
+                                                            darkModeClass,
+                                                            cartTotalPrice,
+                                                            cartTotalCount,
+                                                            sales,
+                                                            spinner
+                                                          }) => {
 
 
   return (
@@ -22,17 +30,17 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({darkModeClass, totalC
           <div/>
           <p>{formatPrice(cartTotalPrice)} ₽</p>
         </div>
-        <div className={styles.cart__details__count}>
+        {sales ? <div className={styles.cart__details__count}>
           <p> Скидка </p>
           <div/>
           <p>{formatPrice(sales)} ₽</p>
-        </div>
+        </div> : ''}
         <div className={styles.cart__details__count}>
           <p> Итого </p>
           <div/>
           <p>{formatPrice(cartTotalPrice - sales)} ₽</p>
         </div>
-        <button className={styles.cart__details__order}>Оформить заказ</button>
+        <button disabled={spinner} className={styles.cart__details__order}>Оформить заказ</button>
       </div>
     </div>
   );
