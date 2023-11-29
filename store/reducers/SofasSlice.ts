@@ -42,6 +42,9 @@ export const sofasSlice = createSlice({
       .addMatcher(sofaApi.endpoints.getSofas.matchFulfilled, (state:SofasState, actions:PayloadAction<ISofas[]>) => {
         state.sofas = actions.payload
       })
+     /* .addMatcher(sofaApi.endpoints.getOneSofa.matchFulfilled, (state, actions: PayloadAction<ISofas>) => {
+
+      })*/
   }
 
 })

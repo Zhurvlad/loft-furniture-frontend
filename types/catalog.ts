@@ -12,5 +12,6 @@ export interface IQueryParams {
   brand: string,
   priceTo: string,
   priceFrom: string,
-  color: string
+  color: string,
+  itemId: string
 }

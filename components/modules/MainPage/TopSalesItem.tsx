@@ -42,7 +42,7 @@ export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa, sofaColor}) => 
 
   return (
     <div key={sofa.id} className={`${styles.main__top_sales__card} ${darkModeClass}`}>
-      <Link href={''}>
+      <Link href={`/catalog/${sofa.id}`}>
         <button className={`${styles.main__card__favorite} ${darkModeClass}`}>
           <FavoriteSvg/>
         </button>
@@ -87,8 +87,6 @@ export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa, sofaColor}) => 
             <Link href={'/cart'}>
               <p>Перейти в корзину</p>
             </Link>
-
-
         }
       </button>
     </div>

@@ -43,8 +43,14 @@ export const sofaApi = api.injectEndpoints({
         url: `sofas?limit=${limit}&offset=${offset}${sofasParam ? `&sofas=${sofasParam}` : ''}${priceFrom ? priceTo && `&priceFrom=${priceFrom}&priceTo=${priceTo}`: '' }${colorParam ? `&color=${colorParam}` : ''}`,
         method: 'GET',
       })}),
+    getOneSofa: builder.query({
+      query: ({itemId}) => ({
+        url: `sofas/find/${itemId}`,
+        method: 'GET'
+      })
+    })
   })
 })
 
 
-export const {useGetSofasBestsellersQuery, useGetSofasQuery} = sofaApi
+export const {useGetSofasBestsellersQuery, useGetSofasQuery, useGetOneSofaQuery} = sofaApi
