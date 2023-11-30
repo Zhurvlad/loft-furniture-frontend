@@ -12,5 +12,9 @@ export type SelectOptionType = MultiValue<ISelectInputOption> | SingleValue<ISel
 export interface IAccordion {
   children: React.ReactNode,
   title?: string,
-  arrowClass: string
+  arrowClass?: string,
+  cartTotalCount?: number,
+  inCart?:boolean,
+  cartContinue: boolean,
+  toggleCartContinue: () => void
 }

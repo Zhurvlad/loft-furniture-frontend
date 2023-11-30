@@ -12,6 +12,10 @@ import {OrderDetails} from '../../modules/CartPage/OrderDetails';
 import styles from '../../../styles/cartPage/index.module.scss'
 import {setTimeout} from "timers";
 import axios from 'axios';
+import {Accordion} from '../../elements/Accordion/index';
+import {sofaColor} from '../../../utils/color';
+import {ColorEl} from '../../elements/ColorEl/index';
+import {ArrowBack} from '../../elements/ArrowBack/index';
 
 export const CartPage = () => {
 
@@ -41,6 +45,7 @@ export const CartPage = () => {
   const {data: cartItem, isLoading, error} = shoppingCartApi.useGetUserCartQuery({userId: user?.user.userId})
 
   const [firstRender, setFirstRender] = React.useState(false)
+  const [cartContinue, setCartContinue] = React.useState(true)
 
   React.useEffect(() => {
     setFirstRender(true)
@@ -73,6 +78,10 @@ export const CartPage = () => {
     }
   }
 
+  const toggleCartContinue = () => {
+    setCartContinue(!cartContinue)
+  }
+
  /* const plusItem = async (cartItemId: number, total_price: number, count: number) => {
     try {
       setSpinner(true)
@@ -88,22 +97,42 @@ export const CartPage = () => {
     }
   }*/
 
+  /*<div className={styles.filter__list__inner}>
+    <Accordion arrowClass={styles.open} title={'Цвет'}>
+      <li className={styles.filters__list__item}>
+        <div>
+          {item && item.map((i) => <CartItem  removeCartItem={removeCartItem}  setSpinner={setSpinner} key={i.id} item={i}/>)}
+        </div>
+      </li>
+    </Accordion>
+  </div>*/
+
   return (
     <div className={'container'}>
       <div className={styles.title}>
-        <h1 className={`${styles.cart__title} ${darkModeClass}`}>Корзина</h1>
-        {item && item.length !== 0
-        && <h3 className={`${styles.cart__subtitle} ${darkModeClass}`}>{cartTotalCount} товара</h3>}
+        <h1 className={`${styles.cart__title} ${darkModeClass}`}>Оформление заказа</h1>
+        {/*{item && item.length !== 0
+        && <h3 className={`${styles.cart__subtitle} ${darkModeClass}`}>{cartTotalCount} товара</h3>}*/}
       </div>
       {item &&
         item?.length !== 0
           ?
           <div className={styles.cart__inner}>
-            <div>
-              {item && item.map((i) => <CartItem  removeCartItem={removeCartItem}  setSpinner={setSpinner} key={i.id}
-                                                 item={i}/>)}
+            <div className={styles.filter__list__inner}>
+              <Accordion inCart title={`Корзина `} cartContinue={cartContinue} cartTotalCount={cartTotalCount} toggleCartContinue={toggleCartContinue}>
+
+                <li className={styles.filters__list__item}>
+                  <div>
+                    {item && item.map((i) => <CartItem  removeCartItem={removeCartItem}  setSpinner={setSpinner} key={i.id} item={i}/>)}
+                  </div>
+
+                </li>
+                <div className={styles.btn__cont}>
+                  <button onClick={toggleCartContinue} className={styles.btn__continue}>Продолжить</button>
+                </div>
+              </Accordion>
             </div>
-            <OrderDetails spinner={spinner} sales={totalSales} cartTotalCount={cartTotalCount} cartTotalPrice={cartTotalPrice} totalCount={cartItem?.length} darkModeClass={darkModeClass}/>
+            <OrderDetails cartContinue={cartContinue} spinner={spinner} sales={totalSales} cartTotalCount={cartTotalCount} cartTotalPrice={cartTotalPrice} totalCount={cartItem?.length} darkModeClass={darkModeClass}/>
           </div>
           :
           <EmptyCart darkModeClass={darkModeClass}/>

@@ -9,6 +9,7 @@ export type OrderDetailsProps = {
   cartTotalCount: number,
   sales: number,
   spinner: boolean,
+  cartContinue: boolean
 
 }
 
@@ -17,7 +18,8 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
                                                             cartTotalPrice,
                                                             cartTotalCount,
                                                             sales,
-                                                            spinner
+                                                            spinner,
+                                                            cartContinue
                                                           }) => {
 
 
@@ -40,7 +42,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
           <div/>
           <p>{formatPrice(cartTotalPrice - sales)} ₽</p>
         </div>
-        <button disabled={spinner} className={styles.cart__details__order}>Оформить заказ</button>
+        <button disabled={cartContinue || spinner} className={styles.cart__details__order}>Оформить заказ</button>
       </div>
     </div>
   );
