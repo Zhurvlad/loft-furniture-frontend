@@ -3,6 +3,7 @@ import {cartSlice} from '../store/reducers/CartSlice';
 import {useDispatch} from 'react-redux';
 import {setTimeout} from 'timers';
 import {ICartItems} from '../types/cart';
+import {Api} from './api/index';
 
 export const toggleCartItem = async (username: string, itemId: number, isInCart: boolean, setSpinner: (arg0: boolean) => void, dispatch) => {
 
@@ -14,9 +15,9 @@ export const toggleCartItem = async (username: string, itemId: number, isInCart:
       return
     }
 
-    const {data} = await axios.post(`http://localhost:3002/shopping-cart/add`, {username, itemId})
+    const data = await Api().cart.addCartItem(username, itemId)
 
-
+    /*const {data} = await axios.post(`http://localhost:3002/shopping-cart/add`, {username, itemId})*/
 
     dispatch(cartSlice.actions.addToCart(data))
 

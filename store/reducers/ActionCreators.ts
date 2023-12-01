@@ -1,4 +1,4 @@
-import {AppDispatch} from '../store';
+/*import {AppDispatch} from '../store';
 import axios from 'axios';
 import {ISofas} from '../../models/ISofas';
 import {sofasSlice} from './SofasSlice';
@@ -14,7 +14,7 @@ export const fetchSofas = async (dispatch: AppDispatch) => {
     } catch (e) {
       dispatch(sofasSlice.actions.sofasFetchingError(e.message))
     }
-}
+}*/
 
 /*
 export const fetchSofass = createAsyncThunk(

@@ -3,6 +3,7 @@ import Select from 'react-select'
 import {SelectOptionType} from '../../../types/common';
 import {controlStyles, inputStyles, menuStyles, optionStyles} from '../../../styles/searchInput/index';
 import {useAppSelector} from '../../../hooks/redux';
+import {useDebounceCallback} from '../../../hooks/useDebounceCallback';
 
 export const SearchInput = () => {
 
@@ -14,7 +15,8 @@ export const SearchInput = () => {
     setSearchOption(selectedOption)
   }
 
-  console.log(theme)
+  const delayCallback = useDebounceCallback(1000)
+
 
   return (
     <Select

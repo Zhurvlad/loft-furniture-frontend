@@ -24,6 +24,7 @@ import {shoppingCartApi} from '../../../store/shoppingCart/shoppingCart.api';
 import {sofaColor} from '../../../utils/color';
 import spinnerStyles from '../../../styles/spinner/index.module.scss';
 import {setTimeout} from 'timers';
+import {Api} from '../../../utils/api/index';
 
 const sofaManufacturers = [
   'SCANDICA',
@@ -212,7 +213,10 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
       }
     }, undefined, {shallow: true})
 
-    const {data} = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${path}`)
+    const data = await Api().sofas.filtersSofa(path)
+
+
+   /* const data = await axios.get(`http://localhost:3002/sofas?limit=15&offset=${path}`)*/
 
     dispatch(sofasSlice.actions.setFiltersSofa(data))
   }
@@ -250,7 +254,10 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
 
   const loadSofas = async () => {
 
+    const {data} = await Api().sofas.getSofas()
+/*
     const {data} = await axios.get(`http://localhost:3002/sofas?limit=20&offset=1`)
+*/
 
     if (!isValidOffset) {
       router.replace({
@@ -264,7 +271,7 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
 
     if (isValidOffset) {
 
-      if (+query.offset > Math.ceil(data.count / 15)) {
+      if (+query.offset > Math.ceil(data?.count / 15)) {
         router.push({
           query: {
             ...query,

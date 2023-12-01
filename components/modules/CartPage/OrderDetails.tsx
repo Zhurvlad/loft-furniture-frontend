@@ -1,6 +1,9 @@
 import React from 'react';
 import styles from '../../../styles/cartPage/index.module.scss';
 import {formatPrice} from '../../../utils/common';
+import {PaymentApi} from '../../../utils/api/payment';
+import {useRouter} from 'next/router';
+import {Api} from '../../../utils/api/index';
 
 export type OrderDetailsProps = {
   darkModeClass: string,
@@ -22,6 +25,18 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
                                                             cartContinue
                                                           }) => {
 
+  const router = useRouter()
+
+  const makePay = async () => {
+    try {
+      const data =  await Api().payment.makePayment({amount: cartTotalPrice, description: 'Заказ #1'})
+      console.log(data)
+      router.push(data.confirmation.confirmation_url)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
 
   return (
     <div className={styles.v}>
@@ -42,7 +57,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
           <div/>
           <p>{formatPrice(cartTotalPrice - sales)} ₽</p>
         </div>
-        <button disabled={cartContinue || spinner} className={styles.cart__details__order}>Оформить заказ</button>
+        <button onClick={makePay} disabled={cartContinue || spinner} className={styles.cart__details__order}>Оформить заказ</button>
       </div>
     </div>
   );

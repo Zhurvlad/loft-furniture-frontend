@@ -5,7 +5,7 @@ import url from '../../utils/api'
 
 //TODO: Можно удалить
 
-export const registerUser = createAsyncThunk(
+/*export const registerUser = createAsyncThunk(
   'auth/register',
   async ({dto: CreateUserDto}, {rejectWithValue}) => {
     try {
@@ -18,4 +18,4 @@ export const registerUser = createAsyncThunk(
       }
     }
   }
-)
+)*/

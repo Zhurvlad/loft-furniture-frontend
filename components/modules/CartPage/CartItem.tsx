@@ -12,6 +12,7 @@ import {cartSlice} from '../../../store/reducers/CartSlice';
 import {setTimeout} from 'timers';
 import axios from 'axios';
 import {sofaColor} from '../../../utils/color';
+import {Api} from '../../../utils/api/index';
 
 export interface CartItemProps {
   item: ICartItems,
@@ -20,6 +21,8 @@ export interface CartItemProps {
 }
 
 export const CartItem: FC<CartItemProps> = ({item, removeCartItem, setSpinner}) => {
+
+  //TODO Сделать лодинг при минусе аитема в карте
 
   const {theme} = useAppSelector((state) => state.theme)
   const {user} = useAppSelector(state => state.user)
@@ -37,10 +40,7 @@ export const CartItem: FC<CartItemProps> = ({item, removeCartItem, setSpinner}) 
 
   const colorName = sofaColor.find((obj) => obj.colorName === item.color)
 
-  const sofaSize = item.size.split('.', ).join(' СМ x ')
-
-
-
+  const sofaSize = item.size.split('.',).join(' СМ x ')
 
 
   const cartTotalCount = cart.reduce((sum, obj) => obj.count + sum, 0)
@@ -50,8 +50,12 @@ export const CartItem: FC<CartItemProps> = ({item, removeCartItem, setSpinner}) 
     try {
       setSpinner(true)
       setSpinnerItem(true)
-      await axios.patch(`http://localhost:3002/shopping-cart/total-price/${cartItemId}`, {total_price: total_price})
-      await axios.patch(`http://localhost:3002/shopping-cart/count/${cartItemId}`, {count: count})
+
+      await Api().cart.updateTotalPrice(cartItemId, total_price)
+      await Api().cart.updateTotalCount(cartItemId, count)
+
+      /*await axios.patch(`http://localhost:3002/shopping-cart/total-price/${cartItemId}`, {total_price: total_price})*/
+      /*await axios.patch(`http://localhost:3002/shopping-cart/count/${cartItemId}`, {count: count})*/
       dispatch(cartSlice.actions.plusItem(cartItemId))
     } catch (e) {
       console.log(e)
@@ -66,8 +70,12 @@ export const CartItem: FC<CartItemProps> = ({item, removeCartItem, setSpinner}) 
   const onMinusItem = async (cartItemId: number, total_price: number, count: number) => {
     try {
       setSpinner(true)
-      await axios.patch(`http://localhost:3002/shopping-cart/total-price/${cartItemId}`, {total_price: total_price})
-      await axios.patch(`http://localhost:3002/shopping-cart/count/${cartItemId}`, {count: count})
+
+      await Api().cart.updateTotalPrice(cartItemId, total_price)
+      await Api().cart.updateTotalCount(cartItemId, count)
+
+      /*await axios.patch(`http://localhost:3002/shopping-cart/total-price/${cartItemId}`, {total_price: total_price})
+      await axios.patch(`http://localhost:3002/shopping-cart/count/${cartItemId}`, {count: count})*/
       dispatch(cartSlice.actions.minusItem(cartItemId))
     } catch (e) {
       console.log(e)

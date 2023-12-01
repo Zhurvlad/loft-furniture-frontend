@@ -16,6 +16,7 @@ import {Accordion} from '../../elements/Accordion/index';
 import {sofaColor} from '../../../utils/color';
 import {ColorEl} from '../../elements/ColorEl/index';
 import {ArrowBack} from '../../elements/ArrowBack/index';
+import {Api} from '../../../utils/api/index';
 
 export const CartPage = () => {
 
@@ -66,7 +67,9 @@ export const CartPage = () => {
   const removeCartItem = async (itemId: number) => {
     try {
       setSpinner(true)
-      await axios.delete(`http://localhost:3002/shopping-cart/one/${itemId}`)
+
+      await Api().cart.removeCartItem(itemId)
+      /*await axios.delete(`http://localhost:3002/shopping-cart/one/${itemId}`)*/
 
       dispatch(cartSlice.actions.removeCartItem(itemId))
     } catch (e) {
