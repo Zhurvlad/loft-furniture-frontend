@@ -1,7 +1,5 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
-import {IMakePayment} from '../../types/order';
-import {FiltersSofaDto, GetSofasDto, ResponseAddToCart, ResponseMakePayment} from './types';
+import {FiltersSofaDto, GetSofasDto} from './types';
 
 
 /*export const makePayment = createAsyncThunk*/

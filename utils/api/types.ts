@@ -35,6 +35,10 @@ export interface IMakePayment {
   amount: number
 }
 
+export interface ICheckPayment {
+  paymentId: string
+}
+
 export interface GetSofasDto extends ISofas {}
 
 export interface FiltersSofaDto extends ISofas {}

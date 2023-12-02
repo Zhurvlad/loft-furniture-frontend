@@ -1,10 +1,6 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import axios, {AxiosInstance} from 'axios';
-import {IMakePayment} from '../../types/order';
-import {ResponseAddToCart, ResponseMakePayment} from './types';
+import  {AxiosInstance} from 'axios';
+import {ResponseAddToCart} from './types';
 
-
-/*export const makePayment = createAsyncThunk*/
 
 export const CartApi = (instance: AxiosInstance) => (
   {
@@ -20,6 +16,10 @@ export const CartApi = (instance: AxiosInstance) => (
 
     async removeCartItem (itemId: number){
       await instance.delete<number>(`/shopping-cart/one/${itemId}`)
+    },
+
+    async removeAllCartItem (userId: number){
+      await instance.delete<number>(`/shopping-cart/all/${userId}`)
     },
 
     async addCartItem (username: string, itemId: number) : Promise<ResponseAddToCart> {

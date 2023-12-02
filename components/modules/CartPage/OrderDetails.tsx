@@ -4,6 +4,10 @@ import {formatPrice} from '../../../utils/common';
 import {PaymentApi} from '../../../utils/api/payment';
 import {useRouter} from 'next/router';
 import {Api} from '../../../utils/api/index';
+import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
+import {LoginUserResponse, ResponseLoginUser} from '../../../types/auth';
+import {useDispatch} from 'react-redux';
+import {cartSlice} from '../../../store/reducers/CartSlice';
 
 export type OrderDetailsProps = {
   darkModeClass: string,
@@ -25,16 +29,56 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
                                                             cartContinue
                                                           }) => {
 
+  const {user} = useAppSelector(state => state.user)
+
+
+
   const router = useRouter()
+  const dispatch = useAppDispatch()
+
+  React.useEffect(() => {
+    const paymentId = sessionStorage.getItem('paymentId')
+
+    if(paymentId){
+      checkPayment(paymentId)
+    }
+  }, [])
 
   const makePay = async () => {
     try {
       const data =  await Api().payment.makePayment({amount: cartTotalPrice, description: 'Заказ #1'})
-      console.log(data)
-      router.push(data.confirmation.confirmation_url)
+
+      sessionStorage.setItem('paymentId', data.id)
+
+      await router.push(data.confirmation.confirmation_url)
+
+
     } catch (e) {
       console.log(e)
     }
+  }
+
+  const resetCart = async () => {
+    sessionStorage.removeItem('paymentId')
+    await Api().cart.removeAllCartItem(+user?.user.userId)
+    dispatch(cartSlice.actions.setCartItem([]))
+  }
+
+  const checkPayment = async (paymentId: string) => {
+
+   try {
+     const data = await Api().payment.checkPayment(paymentId)
+
+     if(data.status === 'succeeded'){
+       await resetCart()
+     }
+
+   } catch (e) {
+     console.log(e)
+     await resetCart()
+   }
+
+
   }
 
 

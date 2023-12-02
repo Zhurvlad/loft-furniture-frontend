@@ -43,7 +43,7 @@ export type ResponseLoginUser = {
 }
 
 export type LoginUserResponse = {
-  userId: string
+  userId: number
   username: string,
   email: string,
 }
