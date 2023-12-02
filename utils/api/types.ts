@@ -1,4 +1,4 @@
-import {ISofas} from '../../models/ISofas';
+import {ISofa, ISofas} from '../../models/ISofas';
 import {ICart} from '../../types/cart';
 
 export type ErrorWithMessage = {
@@ -43,9 +43,11 @@ export interface GetSofasDto extends ISofas {}
 
 export interface FiltersSofaDto extends ISofas {}
 
-export interface ResponseAddToCart extends ICart{
+export interface ResponseAddToCart extends ICart{}
+
+export interface ResponseSearchSofa extends ISofas{}
+
+export interface PromiseSearchSofa extends ISofa{
 
 }
-
-
 

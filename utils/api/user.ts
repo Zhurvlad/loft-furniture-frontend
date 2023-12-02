@@ -1,5 +1,6 @@
 import {AxiosInstance} from 'axios';
-import {CreateUserDto, ResponseCreateUser} from './types';
+import {CreateUserDto, ResponseCreateUser} from '../../types/auth';
+
 
 
 export const UserApi = (instance : AxiosInstance) => (

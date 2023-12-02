@@ -35,9 +35,9 @@ export const HeaderBottom = () => {
 
           <div className={styles.search}>
             <SearchInput/>
-            <button className={`${styles.searchSvg} ${darkModeClass}`}>
-                <SearchSvg/>{/**/}
-            </button>
+            {/*<button className={`${styles.searchSvg} ${darkModeClass}`}>
+                <SearchSvg/>
+            </button>*/}
           </div>
 
           <div className={styles.header__box}>

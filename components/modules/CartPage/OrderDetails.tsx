@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../../../styles/cartPage/index.module.scss';
-import {formatPrice} from '../../../utils/common';
+import {createSelectOption, formatPrice} from '../../../utils/common';
 import {PaymentApi} from '../../../utils/api/payment';
 import {useRouter} from 'next/router';
 import {Api} from '../../../utils/api/index';
@@ -35,6 +35,8 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
 
   const router = useRouter()
   const dispatch = useAppDispatch()
+
+
 
   React.useEffect(() => {
     const paymentId = sessionStorage.getItem('paymentId')
@@ -74,12 +76,11 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
      }
 
    } catch (e) {
-     console.log(e)
+     console.log(e, 'ашибка')
      await resetCart()
    }
-
-
   }
+
 
 
   return (

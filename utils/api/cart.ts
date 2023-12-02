@@ -1,5 +1,5 @@
 import  {AxiosInstance} from 'axios';
-import {ResponseAddToCart} from './types';
+import {PromiseSearchSofa, ResponseAddToCart, ResponseSearchSofa} from './types';
 
 
 export const CartApi = (instance: AxiosInstance) => (
@@ -27,6 +27,8 @@ export const CartApi = (instance: AxiosInstance) => (
       const {data} = await instance.post<{username: string, itemId: number}, {data: ResponseAddToCart}>(`/shopping-cart/add`, {username, itemId})
 
       return data
-    }
+    },
+
+
   }
 )

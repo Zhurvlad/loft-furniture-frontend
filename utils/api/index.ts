@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {PaymentApi} from './payment';
 import {CartApi} from './cart';
-import {SofasApi} from './sofa';
+import {SofasApi} from './sofas';
 
 
 export type ApiReturnType = {
@@ -15,7 +15,6 @@ export type ApiReturnType = {
 export const Api = (): ApiReturnType => {
 
   const instance = axios.create({
-    string: undefined,
     withCredentials: true,
     baseURL: `${process.env.NEXT_PUBLIC_SERVER_URL}`
 
