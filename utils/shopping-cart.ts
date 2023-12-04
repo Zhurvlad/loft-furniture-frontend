@@ -14,10 +14,7 @@ export const toggleCartItem = async (username: string, itemId: number, isInCart:
     if(isInCart){
       return
     }
-
     const data = await Api().cart.addCartItem(username, itemId)
-
-    /*const {data} = await axios.post(`http://localhost:3002/shopping-cart/add`, {username, itemId})*/
 
     dispatch(cartSlice.actions.addToCart(data))
 

@@ -30,6 +30,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
                                                           }) => {
 
   const {user} = useAppSelector(state => state.user)
+  const {city} = useAppSelector(state => state.city)
 
 
 
@@ -48,7 +49,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
 
   const makePay = async () => {
     try {
-      const data =  await Api().payment.makePayment({amount: cartTotalPrice, description: 'Заказ #1'})
+      const data =  await Api().payment.makePayment({amount: cartTotalPrice, description: `Заказ №1 ${city.city.length ? `Город: ${city.city}, улица: ${city.street}` : ''}`})
 
       sessionStorage.setItem('paymentId', data.id)
 

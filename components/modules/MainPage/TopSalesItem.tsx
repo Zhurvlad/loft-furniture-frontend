@@ -1,14 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
+import {useDispatch} from 'react-redux';
 
 import {useAppSelector} from '../../../hooks/redux';
 import {TopSalesItemProps} from '../../../types/main-page';
 import {formatPrice} from '../../../utils/common';
+import {sofaColor} from '../../../utils/color';
+import {toggleCartItem} from '../../../utils/shopping-cart';
 
 import {FavoriteSvg} from '../../elements/FavoriteSvg/index';
 import {SalesSvg} from '../../elements/SalesSvg/index';
-import {toggleCartItem} from '../../../utils/shopping-cart';
-import {useDispatch} from 'react-redux';
 
 import spinnerStyles from '../../../styles/spinner/index.module.scss'
 import styles from '../../../styles/mainPage/index.module.scss';
@@ -16,7 +17,7 @@ import styles from '../../../styles/mainPage/index.module.scss';
 //TODO Переделать название
 
 
-export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa, sofaColor}) => {
+export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa}) => {
 
 
   const {user} = useAppSelector(state => state.user)
@@ -40,6 +41,8 @@ export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa, sofaColor}) => 
   const itemDiscount = sofa.oldPrice > sofa.price
   const percentDiscount = sofa.oldPrice > sofa.price && Math.ceil(((sofa.oldPrice - sofa.price) / sofa.oldPrice) * 100)
 
+  const colorHex = sofaColor.filter((i) => i.colorName === sofa.color).map(i => i.hex)
+
   return (
     <div key={sofa.id} className={`${styles.main__top_sales__card} ${darkModeClass}`}>
       <Link href={`/catalog/${sofa.id}`}>
@@ -55,16 +58,18 @@ export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa, sofaColor}) => 
         </div>
         }
         <img className={styles.main__card__img} src={JSON.parse(sofa.images)[0]} alt="content-img-1"/>
-        {sofaColor && sofaColor.find((i) => i.colorName === sofa.color)
-        && sofaColor.map(i => i.colorName === sofa.color
+        {/*sofaColor.find((i) => i.colorName === sofa.color)
+        &&*/}
+        {/*{ sofaColor.map(i => i.colorName === sofa.color
           ? (
-            <div>
-              <p className={`${styles.main__card__color__name} ${darkModeClass}`}>Цвет :</p>
-              <p className={styles.main__card__color} style={{backgroundColor: `${i.hex}`}}/>
-              <p>{sofa.furniture_brand}</p>
-            </div>
+
           )
-          : '')}
+          : '')}*/}
+        <div>
+          <p className={`${styles.main__card__color__name} ${darkModeClass}`}>Цвет :</p>
+          <p className={styles.main__card__color} style={{backgroundColor: `${colorHex}`}}/>
+          <p>{sofa.furniture_brand}</p>
+        </div>
         <div className={styles.main__card__info}>
           <h4 className={`${styles.main__card__title} ${darkModeClass}`}>{sofa.name}</h4>
           <p className={`${styles.main__card__subtitle} ${darkModeClass}`}>Диваны</p>

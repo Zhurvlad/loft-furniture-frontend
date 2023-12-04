@@ -2,13 +2,14 @@ import axios from 'axios';
 import {PaymentApi} from './payment';
 import {CartApi} from './cart';
 import {SofasApi} from './sofas';
+import {GeolocationApi} from './geolocation';
 
 
 export type ApiReturnType = {
   payment: ReturnType<typeof PaymentApi>,
   cart: ReturnType<typeof CartApi>,
   sofas : ReturnType<typeof SofasApi>
-
+  location: ReturnType<typeof GeolocationApi>
 }
 
 
@@ -23,6 +24,7 @@ export const Api = (): ApiReturnType => {
   return {
     payment: PaymentApi(instance),
     cart: CartApi(instance),
-    sofas: SofasApi(instance)
+    sofas: SofasApi(instance),
+    location: GeolocationApi(instance)
   }
 }

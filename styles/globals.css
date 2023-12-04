@@ -113,13 +113,17 @@ button {
 }*/
 
 
-flex-container {
+.flex-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  color: white;
+  color: black;
   animation: colorSlide 15s cubic-bezier(0.075, 0.82, 0.165, 1) infinite;
+}
+
+.flex-container.dark{
+  color: white;
 }
 
 .flex-container .text-center {
@@ -156,22 +160,28 @@ flex-container {
 }
 
 .flex-container .text-center button {
-  border: 1px solid white;
+  border: 1px solid black;
   background: transparent;
   outline: none;
   padding: 10px 20px;
   font-size: 1.1rem;
   font-weight: bold;
-  color: white;
+  color: black;
   text-transform: uppercase;
   transition: background-color 200ms ease-in;
   margin: 20px 0;
 }
 
+.flex-container .text-center button.dark {
+  color: white;
+  border: 1px solid white;
+}
+
 .flex-container .text-center button:hover {
-  background-color: white;
-  color: #555;
+  background-color: black;
+  color: white;
   cursor: pointer;
+
 }
 
 

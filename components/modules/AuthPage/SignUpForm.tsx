@@ -11,6 +11,7 @@ import axios from 'axios';
 import {registerUser} from '../../../store/reducers/AuthActions';
 import { useRegisterMutation } from '@/store/user/user.api';
 import {isErrorWithMessage} from '../../../utils/is-error-with-message';
+import {showAuthError} from '../../../utils/errors';
 
 
 export const SignUpForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
@@ -32,9 +33,12 @@ export const SignUpForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
       setOpen()
       reset()
     } catch (err) {
+
       const maybeError = isErrorWithMessage(err)
+      console.log(maybeError, 4234)
       if(maybeError){
         setError(err.data.message)
+        showAuthError(maybeError)
       } else {
         setError('Произошла неизвестная ошибка')
       }

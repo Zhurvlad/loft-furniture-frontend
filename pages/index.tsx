@@ -6,6 +6,7 @@ import {useAppDispatch} from '../hooks/redux';
 import {fetchSofas} from '../store/reducers/ActionCreators';
 import React from 'react';
 import { useGetSofasBestsellersQuery } from '@/store/sofa/sofa.api';
+import {Breadcrumbs} from '../components/modules/Breadcrumbs/Breadcrumbs';
 
 export default function Home() {
 
@@ -15,7 +16,12 @@ export default function Home() {
 
 /*  const {data, error, isLoading} = useGetSofasQuery()*/
 
+  /*const getDefaultTextGenerator = React.useCallback(() => '', [])
+  const getTextGenerator = React.useCallback((param: string) => ({}[param]), []);*/
 
+  const getDefaultTextGenerator = () => ''
+
+  const getTextGenerator = () => ''
 
  /* React.useEffect(() => {
     fetchSofas(dispatch)
@@ -33,6 +39,10 @@ export default function Home() {
 
       </Head>
       <Header/>
+      <Breadcrumbs
+        getDefaultTextGenerator={getDefaultTextGenerator}
+        getTextGenerator={getTextGenerator}
+      />
       <MainPage/>
       <Footer/>
     </>

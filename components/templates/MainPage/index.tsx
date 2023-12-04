@@ -13,16 +13,21 @@ import {SalesSvg} from '../../elements/SalesSvg/index';
 import {sofasSelector} from '../../../store/reducers/SofasSlice';
 import {TopSales} from '../../modules/MainPage/TopSales';
 import Link from 'next/link';
-
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const MainPage = () => {
 
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
+  const notify = () => toast("Hello coders it was easy!");
 
 
   return (
     <section className={styles.main}>
+
+
+      <button onClick={notify}>Click me!</button>
       <div className="container">
         <div className={styles.categories}>
           <ul className={styles.menu__categories}>

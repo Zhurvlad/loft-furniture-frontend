@@ -1,5 +1,4 @@
 import * as React from "react";
-import {useState} from "react";
 import {motion, AnimatePresence} from "framer-motion";
 import {IAccordion} from '../../../types/common';
 import styles from '../../../styles/catalogPage/index.module.scss';
@@ -16,7 +15,7 @@ export const Accordion: React.FC<IAccordion> = ({children, title, arrowClass, to
     if(!inCart){
       setExpanded(!expanded)
     } else {
-      toggleCartContinue()
+      toggleCartContinue && toggleCartContinue()
     }
   }
 

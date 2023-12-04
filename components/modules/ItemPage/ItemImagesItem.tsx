@@ -10,7 +10,7 @@ export interface ItemImagesItemProps {
 
 export const ItemImagesItem = ({src, callback, alt}) => {
 
-  console.log(src)
+ /* console.log(src)*/
 
   const changeMainSrc = () => callback(src)
 

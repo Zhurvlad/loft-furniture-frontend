@@ -15,6 +15,13 @@ export interface IAccordion {
   arrowClass?: string,
   cartTotalCount?: number,
   inCart?:boolean,
-  cartContinue: boolean,
-  toggleCartContinue: () => void
+  cartContinue?: boolean,
+  toggleCartContinue?: () => void
+}
+
+export interface ICrumbProps {
+  text: string,
+  textGenerator: () => string,
+  href: string,
+  last: boolean
 }

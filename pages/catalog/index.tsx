@@ -4,12 +4,16 @@ import {CatalogPage} from '../../components/templates/CatalogPage/index';
 import {Header} from '../../components/modules/Header/Header';
 import {Footer} from '../../components/modules/Footer/Footer';
 import {IQueryParams} from '../../types/catalog';
+import {Breadcrumbs} from '../../components/modules/Breadcrumbs/Breadcrumbs';
+import {MainLayout} from '../../components/layout/MainLayout';
 
 export default function Catalog({query}: { query: IQueryParams }) {
 
 
   /*  const {data, error, isLoading} = useGetSofasQuery()*/
 
+  const getDefaultTextGenerator = React.useCallback(() => 'Каталог', [])
+  const getTextGenerator = React.useCallback((param: string) => ({}[param]), []);
 
   /* React.useEffect(() => {
      fetchSofas(dispatch)
@@ -25,8 +29,16 @@ export default function Catalog({query}: { query: IQueryParams }) {
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link rel={'icon'} type={'image/svg'} size={'32x32'} href={'/img/LogoSmall.svg'}/>
       </Head>
-      <Header/>
-      <CatalogPage query={query}/>
+
+      <MainLayout>
+        <main>
+          <Breadcrumbs
+            getDefaultTextGenerator={getDefaultTextGenerator}
+            getTextGenerator={getTextGenerator}
+          />
+          <CatalogPage query={query}/>
+        </main>
+      </MainLayout>
       <Footer/>
     </>
   )

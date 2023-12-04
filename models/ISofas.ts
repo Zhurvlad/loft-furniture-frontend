@@ -12,11 +12,13 @@ export interface ISofa {
   price: number;
   color: string;
   in_stocks: number;
-  size: string[];
+  size: string;
   description: string;
   furniture_brand: string;
   oldPrice?: number;
   images: string;
-  bestseller: boolean
-  new: boolean
+  bestseller: boolean;
+  new: boolean;
+  createdAt: string;
+  updatedAt: string;
 }

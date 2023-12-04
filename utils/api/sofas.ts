@@ -1,5 +1,5 @@
 import {AxiosInstance} from 'axios';
-import {FiltersSofaDto, GetSofasDto, PromiseSearchSofa, ResponseSearchSofa} from './types';
+import {FiltersSofaDto, GetSofasDto, PromiseGetOneSofa, PromiseSearchSofa, ResponseSearchSofa} from './types';
 
 
 /*export const makePayment = createAsyncThunk*/
@@ -26,6 +26,12 @@ export const SofasApi = (instance: AxiosInstance) => (
 
     async searchSofaByName (name: string): Promise<PromiseSearchSofa> {
       const {data} = await instance.post<string, {data: PromiseSearchSofa}>('/sofas/name', {name})
+
+      return data
+    },
+
+    async getOne(itemId: string) :Promise<PromiseGetOneSofa>{
+      const {data} = await instance.get<string, {data: PromiseGetOneSofa}>(`sofas/find/${itemId}`)
 
       return data
     }

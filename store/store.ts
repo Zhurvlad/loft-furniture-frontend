@@ -8,6 +8,8 @@ import {cart} from './reducers/CartSlice';
 import {sofaApi} from './sofa/sofa.api';
 import {authApi} from './user/user.api';
 import {api} from './api';
+import {city} from './reducers/CitySlice';
+import {sofa} from './reducers/SofaSlice';
 
 
 const rootReducer = combineReducers({
@@ -15,6 +17,8 @@ const rootReducer = combineReducers({
   user,
   sofas,
   cart,
+  city,
+  sofa,
   [api.reducerPath]: api.reducer,
 })
 

@@ -1,6 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../store';
-import {registerUser} from './AuthActions';
 import {ResponseCreateUser, ResponseLoginUser} from '../../types/auth';
 import {authApi} from '../user/user.api';
 import axios from 'axios';
@@ -13,10 +12,6 @@ export interface UserState {
 const initialState: UserState = {
   user: null,
 }
-
-/*export const logout = createAsyncThunk("auth/logout", async () => {
-  await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/logout`);
-});*/
 
 export const userSlice = createSlice({
   name: 'auth',

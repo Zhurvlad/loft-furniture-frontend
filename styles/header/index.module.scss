@@ -72,19 +72,63 @@
   margin-bottom: 20px;
 }
 
-.city{
+
+
+.city {
   margin-left: 8px;
   margin-right: 30px;
   text-decoration: underline;
   cursor: pointer;
   height: 17px;
   color: $white;
+
   svg{
     height: 12px;
     width: 12px;
     margin-right: 8px;
     margin-top: 2px;
   }
+
+  &:hover &__text {
+    fill: #FFC540;
+    color: #FFC540;
+    transition: color .2s ease-in-out;
+  }
+
+  &:hover &__span > svg {
+    fill: #FFC540;
+    transition: fill .2s ease-in-out;
+  }
+
+}
+
+.city__span {
+  padding-top: 4px;
+  margin-right: 9px;
+
+  & svg {
+    fill: #FAFBFC;
+    width: 11px;
+    height: 11px;
+    transition: fill .2s ease-in-out;
+
+
+  }
+
+  &.dark_mode svg {
+    fill: #f2f2f2;
+  }
+}
+
+.city__text {
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.002em;
+  text-decoration-line: underline;
+  color: #FAFBFC;
+  transition: color .2s ease-in-out;
 }
 
 /*.logo path{

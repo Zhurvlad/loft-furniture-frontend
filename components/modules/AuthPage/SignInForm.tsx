@@ -8,6 +8,9 @@ import {useForm} from 'react-hook-form';
 import {CreateUserDto, IAuthFrom, IInputs} from '../../../types/auth';
 import {useLoginMutation} from '@/store/user/user.api';
 import {isErrorWithMessage} from '../../../utils/is-error-with-message';
+import {showAuthError} from '../../../utils/errors';
+import {HTTPStatus} from '../../../constans/index';
+import {toast} from 'react-toastify';
 
 
 export const SignInForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
@@ -19,26 +22,44 @@ export const SignInForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
+  console.log(loginUserResult, 9898989)
+
   const onSubmit = async (dto: CreateUserDto) => {
     try {
       await loginUser(dto).unwrap()
       setOpen()
       reset()
     } catch (err) {
+
+
       const maybeError = isErrorWithMessage(err)
       if(maybeError){
         setError(err.data.message)
+        toast.error((error as Error).message)
       } else {
         setError('Произошла неизвестная ошибка')
       }
     }
   }
 
-  console.log(errors)
+  console.log(error, 8989)
+
+  React.useEffect(() => {
+
+  }, [error])
+
+  const err = () =>  toast.error((error as Error).message)
+
+
+  const notify = () => toast("Hello coders it was easy!");
+ /* console.log(errors)*/
 
   return (
     <div>
+
+
       <div className={styles.overlay}>
+        <button onClick={notify}>Click me!</button>
         <form className={`${styles.signUp} ${darkModeClass}`} onSubmit={handleSubmit(onSubmit)}>
           <h3 className={`${styles.signUp__title} ${darkModeClass}`}>Вход</h3>
           <span className={styles.error}>{error}</span>
