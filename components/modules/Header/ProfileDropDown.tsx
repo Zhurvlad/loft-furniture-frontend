@@ -1,34 +1,41 @@
 import React, {forwardRef} from 'react';
-import { AnimatePresence, motion } from 'framer-motion'
-import styles from '../../../styles/profileDropDown/index.module.scss';
+import {AnimatePresence, motion} from 'framer-motion'
+import {toast} from 'react-toastify';
+import {useDispatch} from 'react-redux';
+
+import {userSlice} from '../../../store/reducers/UserSlice'
+import {useAppSelector} from '../../../hooks/redux';
 import {IWrappedComponentProps, withClickOutside} from '../../../utils/withClickOutside';
-import {useRouter} from 'next/router';
+import {ResponseLoginUser} from '../../../types/auth';
+
 import {LogoutSvg} from '../../elements/LogoutSvg/index';
 import {UserSvg} from '../../elements/UserSvg/index';
-import {useAppSelector} from '../../../hooks/redux';
-import {useDispatch} from 'react-redux';
-import { useLogoutQuery, useRegisterMutation } from '@/store/user/user.api';
-import {logOut} from '../../../store/reducers/UserSlice'
-import axios from 'axios';
+
+import styles from '../../../styles/profileDropDown/index.module.scss';
+
 
 
 
 const ProfileDropDown = forwardRef<HTMLDivElement, IWrappedComponentProps>(({opened, setOpened}, ref) => {
 
   const dispatch = useDispatch()
-/*  const [log] = useLogoutQuery()*/
+
   const {theme} = useAppSelector((state) => state.theme)
   const {user} = useAppSelector(state => state.user)
+
+  const userData = user as ResponseLoginUser
 
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
   const toggleProfileDropDown = () => setOpened(!opened)
 
   const handleLogout = async () => {
-    dispatch(logOut())
-/*
-    await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/logout`)
-*/
+    try {
+      dispatch(userSlice.actions.logOut())
+      toast.success('Вы успешно вышли из учётной записи')
+    } catch (e) {
+      toast.warning('Произошла неизвестная ошибка')
+    }
   }
 
   return (
@@ -49,8 +56,8 @@ const ProfileDropDown = forwardRef<HTMLDivElement, IWrappedComponentProps>(({ope
             style={{transformOrigin: 'right top'}}
           >
             <li className={styles.profile__dropdown__user}>
-              <span className={`${styles.profile__dropdown__username} ${darkModeClass}`}>{user?.user.username}</span>
-              <span className={`${styles.profile__dropdown__email} ${darkModeClass}`}>{user?.user.email}</span>
+              <span className={`${styles.profile__dropdown__username} ${darkModeClass}`}>{userData.user.username}</span>
+              <span className={`${styles.profile__dropdown__email} ${darkModeClass}`}>{userData.user.email}</span>
             </li>
             <li className={styles.profile__dropdown__item}>
               <button onClick={handleLogout} className={styles.profile__dropdown__item__btn}>

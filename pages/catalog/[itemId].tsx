@@ -3,11 +3,9 @@ import React from 'react';
 import {useDispatch} from 'react-redux';
 import {useRouter} from 'next/router';
 
-import {Header} from '../../components/modules/Header/Header';
 import {Footer} from '../../components/modules/Footer/Footer';
 import {Custom404} from '../404';
 import {Breadcrumbs} from '../../components/modules/Breadcrumbs/Breadcrumbs';
-import {ItemCharacteristics} from '../../components/elements/ItemCharacteristics/index';
 import {OneItemPage} from '../../components/templates/ItemPage/index';
 
 import {Api} from '../../utils/api/index';
@@ -17,22 +15,38 @@ import {IQueryParams} from '../../types/catalog';
 
 import styles from '../../styles/itemPage/index.module.scss'
 import {MainLayout} from '../../components/layout/MainLayout';
+import {userSlice} from '../../store/reducers/UserSlice';
+import {shoppingCartApi} from '../../store/shoppingCart/shoppingCart.api';
 
-//TODO Разобраться с отрисовкой ссылок.
 
 export default function ItemPage({query}: { query: IQueryParams }) {
+
+  const router = useRouter()
 
 
   const {sofa} = useAppSelector((state) => state.sofa)
   const {theme} = useAppSelector((state) => state.theme)
+  const {user} = useAppSelector((state) => state.user)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
-  const router = useRouter()
+  const {data: cartItem} = shoppingCartApi.useGetUserCartQuery({userId: user?.user.userId})
+
 
 
   const [error, setError] = React.useState(false)
 
   const dispatch = useDispatch()
+
+  const checkUser = async () => {
+    if(!user?.user){
+      const data = await Api().user.checkUser()
+      dispatch(userSlice.actions.checkUser(data))
+    }
+  }
+
+  React.useEffect(() => {
+    checkUser()
+  }, [])
 
   const getDefaultTextGenerator = React.useCallback((subpath) => subpath.replace('catalog', 'Каталог'), [])
   const getTextGenerator = React.useCallback((param: string) => ({}[param]), []);
@@ -82,8 +96,6 @@ export default function ItemPage({query}: { query: IQueryParams }) {
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link rel={'icon'} type={'image/svg'} sizes={'32x32'} href={'/img/LogoSmall.svg'}/>
       </Head>
-      <Header/>
-
       {error
         ?
         <Custom404 darkModeClass={darkModeClass}/>

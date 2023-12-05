@@ -1,7 +1,15 @@
 import { Html, Head, Main, NextScript } from 'next/document'
 import {Header} from '../components/modules/Header/Header';
+import {useAppDispatch, useAppSelector} from '../hooks/redux';
+import React, {useRef} from 'react';
+import {Api} from '../utils/api/index';
+import {userSlice} from '../store/reducers/UserSlice';
+import {shoppingCartApi} from '../store/shoppingCart/shoppingCart.api';
 
 export default function Document() {
+
+
+
   return (
     <Html lang="en">
       <Head>

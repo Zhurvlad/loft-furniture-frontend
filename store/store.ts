@@ -5,8 +5,6 @@ import {theme} from './reducers/ThemeSlice';
 import {sofas} from './reducers/SofasSlice';
 import {user} from './reducers/UserSlice';
 import {cart} from './reducers/CartSlice';
-import {sofaApi} from './sofa/sofa.api';
-import {authApi} from './user/user.api';
 import {api} from './api';
 import {city} from './reducers/CitySlice';
 import {sofa} from './reducers/SofaSlice';
@@ -43,15 +41,4 @@ export type AppDispatch = RootStore['dispatch']
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
 
-/*
-export const store = configureStore({
-  reducer: {
-    theme,
-    [sofaApi.reducerPath]: sofaApi.reducer,
-  },
-  // Adding the api middleware enables caching, invalidation, polling,
-  // and other useful features of `rtk-query`.
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(sofaApi.middleware),
-})
-*/
+

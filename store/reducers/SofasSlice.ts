@@ -2,21 +2,15 @@ import {ISofas} from '../../models/ISofas';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../store';
 import {sofaApi} from '../sofa/sofa.api';
+import {number} from 'prop-types';
 
 
 interface SofasState {
-  sofas: ISofas[],
+  sofas: ISofas,
 }
-
-export enum StatusEnum {
-  LOADING = 'loading',
-  SUCCESS = 'success',
-  ERROR = 'error'
-}
-
 
 const initialState:SofasState = {
-  sofas: [],
+  sofas: {} as ISofas,
 }
 
 
@@ -24,22 +18,22 @@ export const sofasSlice = createSlice({
   name: 'sofas',
   initialState,
   reducers: {
-    setSofasChipFirst(state){
+    setSofasChipFirst(state: SofasState){
       state.sofas.rows = state.sofas.rows.sort((a, b) => a.price - b.price)
     },
-    setSofasExpensiveFirst(state){
+    setSofasExpensiveFirst(state: SofasState){
       state.sofas.rows = state.sofas.rows.sort((a, b) => b.price - a.price)
     },
-    setSofasPopularity(state) {
+    setSofasPopularity(state: SofasState) {
       state.sofas.rows = state.sofas.rows.sort((a, b) => b.initialRating - a.initialRating)
     },
-    setFiltersSofa(state, actions:PayloadAction<ISofas[]>){
+    setFiltersSofa(state: SofasState, actions:PayloadAction<ISofas>){
       state.sofas = actions.payload
     }
   },
   extraReducers: builder => {
     builder
-      .addMatcher(sofaApi.endpoints.getSofas.matchFulfilled, (state:SofasState, actions:PayloadAction<ISofas[]>) => {
+      .addMatcher(sofaApi.endpoints.getSofas.matchFulfilled, (state:SofasState, actions:PayloadAction<ISofas>) => {
         state.sofas = actions.payload
       })
      /* .addMatcher(sofaApi.endpoints.getOneSofa.matchFulfilled, (state, actions: PayloadAction<ISofas>) => {

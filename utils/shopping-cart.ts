@@ -4,13 +4,18 @@ import {useDispatch} from 'react-redux';
 import {setTimeout} from 'timers';
 import {ICartItems} from '../types/cart';
 import {Api} from './api/index';
+import {toast} from 'react-toastify';
 
 export const toggleCartItem = async (username: string, itemId: number, isInCart: boolean, setSpinner: (arg0: boolean) => void, dispatch) => {
 
 
   try {
-    setSpinner(true)
+    if(!username ){
+      toast.warning('Пожайлуста авторизуйтесь для того что бы добавить в корзину')
+      return
+    }
 
+    setSpinner(true)
     if(isInCart){
       return
     }
@@ -20,6 +25,7 @@ export const toggleCartItem = async (username: string, itemId: number, isInCart:
 
   } catch (e) {
     console.log(e)
+
   } finally {
     setTimeout(() => {
       setSpinner(false)

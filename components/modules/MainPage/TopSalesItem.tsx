@@ -21,7 +21,6 @@ export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa}) => {
 
 
   const {user} = useAppSelector(state => state.user)
-  const {sofas} = useAppSelector(state => state.sofas)
   const {item} = useAppSelector(state => state.cart)
 
 
@@ -33,7 +32,7 @@ export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa}) => {
 
   const dispatch = useDispatch()
 
-  const toggleCart = () => toggleCartItem(user?.user?.username,  sofa.id, isInCart && isInCart, setSpinner, dispatch)
+  const toggleCart = () => toggleCartItem(user?.user?.username, sofa.id, isInCart && isInCart, setSpinner, dispatch)
 
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
@@ -58,17 +57,9 @@ export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa}) => {
         </div>
         }
         <img className={styles.main__card__img} src={JSON.parse(sofa.images)[0]} alt="content-img-1"/>
-        {/*sofaColor.find((i) => i.colorName === sofa.color)
-        &&*/}
-        {/*{ sofaColor.map(i => i.colorName === sofa.color
-          ? (
-
-          )
-          : '')}*/}
         <div>
           <p className={`${styles.main__card__color__name} ${darkModeClass}`}>Цвет :</p>
           <p className={styles.main__card__color} style={{backgroundColor: `${colorHex}`}}/>
-          <p>{sofa.furniture_brand}</p>
         </div>
         <div className={styles.main__card__info}>
           <h4 className={`${styles.main__card__title} ${darkModeClass}`}>{sofa.name}</h4>

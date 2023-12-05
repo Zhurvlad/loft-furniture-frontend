@@ -27,6 +27,7 @@ export const SignInForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
   const onSubmit = async (dto: CreateUserDto) => {
     try {
       await loginUser(dto).unwrap()
+      toast.success('Вход выполнен!')
       setOpen()
       reset()
     } catch (err) {
@@ -35,7 +36,7 @@ export const SignInForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
       const maybeError = isErrorWithMessage(err)
       if(maybeError){
         setError(err.data.message)
-        toast.error((error as Error).message)
+        toast.error("*Неправильный логин или пароль!")
       } else {
         setError('Произошла неизвестная ошибка')
       }
@@ -59,7 +60,6 @@ export const SignInForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
 
 
       <div className={styles.overlay}>
-        <button onClick={notify}>Click me!</button>
         <form className={`${styles.signUp} ${darkModeClass}`} onSubmit={handleSubmit(onSubmit)}>
           <h3 className={`${styles.signUp__title} ${darkModeClass}`}>Вход</h3>
           <span className={styles.error}>{error}</span>

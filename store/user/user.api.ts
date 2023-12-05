@@ -36,7 +36,7 @@ export const authApi = api.injectEndpoints({
     }),
     loginCheck: builder.query<LoginUserResponse, void>({
       query: () => ({
-        url: 'auth/login-check',
+        url: 'users/login-check',
         method: 'GET',
 
       })

@@ -32,7 +32,7 @@ export const OneItemPage = ({darkModeClass}: {darkModeClass: string}) => {
   const toggleCart = () => toggleCartItem(user && user.user.username, +sofa.id, isInCart && isInCart, setSpinner, dispatch)
   const addedToCart = isInCart && `${styles.added}`
 
-  const colorHex = sofaColor.filter((i) => i.colorName === sofa.color).map(i => i.hex)
+  const color = sofaColor.filter((i) => i.colorName === sofa.color)
 
   return (
     <div className={'container'}>
@@ -62,9 +62,9 @@ export const OneItemPage = ({darkModeClass}: {darkModeClass: string}) => {
             </div>
           </div>
           <div className={`${styles.item__color} ${darkModeClass}`}>
-            <p>Цвет:<span>Белый</span></p>
+            <p>Цвет:<span>{color.map(i => i.colorNameRu)}</span></p>
             <input
-              style={{backgroundColor: `${colorHex}`}}
+              style={{backgroundColor: `${color.map(i => i.hex)}`}}
               className={`${styles.filters__color__checkbox} ${darkModeClass}  ${styles.active__color}`}
               type="checkbox"/>
           </div>

@@ -1,5 +1,4 @@
 
-
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ISofa} from '../../models/ISofas';
 
@@ -13,7 +12,7 @@ const initialState: SofaState = {
 }
 
 export const sofaSlice = createSlice({
-  name: 'city',
+  name: 'sofa',
   initialState,
   reducers: {
     getOneSofa(state: SofaState, action: PayloadAction<ISofa>) {

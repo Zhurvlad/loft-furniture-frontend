@@ -17,36 +17,40 @@ import {sofaColor} from '../../../utils/color';
 import {ColorEl} from '../../elements/ColorEl/index';
 import {ArrowBack} from '../../elements/ArrowBack/index';
 import {Api} from '../../../utils/api/index';
+import {userSlice} from '../../../store/reducers/UserSlice';
 
 export const CartPage = () => {
 
-  //TODO: Проверить cookies
-
-  const {theme} = useAppSelector((state) => state.theme)
-  const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
-
   const dispatch = useDispatch()
 
-
-  const {user} = useAppSelector(state => state.user)
+  const {theme} = useAppSelector((state) => state.theme)
+  const {user } = useAppSelector(state => state.user)
   const {item} = useAppSelector(state => state.cart)
+  const {item: cart} = useAppSelector(state => state.cart)
+
+  const {data: cartItem, isLoading, error} = shoppingCartApi.useGetUserCartQuery({userId: user?.user.userId})
 
   const [spinner, setSpinner] = React.useState(false)
+  const [firstRender, setFirstRender] = React.useState(false)
+  const [cartContinue, setCartContinue] = React.useState(true)
+
+  const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
 
-  const {item: cart} = useAppSelector(state => state.cart)
+  const checkUser = async () => {
+    if(!user?.user){
+      const data = await Api().user.checkUser()
+      dispatch(userSlice.actions.checkUser(data))
+    }
+  }
+
+  React.useEffect(() => {
+    checkUser()
+  }, [])
 
   const cartTotalCount = cart?.reduce((sum, obj) => obj.count + sum , 0)
   const cartTotalPrice = cart?.reduce((sum, obj) => obj.total_price + sum , 0)
   const totalSales = cart?.map((i) => i.oldPrice > i.price ? (i.oldPrice * i.count) - i.price : 0).reduce((sum , obj) =>  obj + sum, 0)
-
-  console.log(totalSales, 9999)
-
-
-  const {data: cartItem, isLoading, error} = shoppingCartApi.useGetUserCartQuery({userId: user?.user.userId})
-
-  const [firstRender, setFirstRender] = React.useState(false)
-  const [cartContinue, setCartContinue] = React.useState(true)
 
   React.useEffect(() => {
     setFirstRender(true)

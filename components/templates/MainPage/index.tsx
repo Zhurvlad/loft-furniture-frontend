@@ -27,7 +27,7 @@ export const MainPage = () => {
     <section className={styles.main}>
 
 
-      <button onClick={notify}>Click me!</button>
+
       <div className="container">
         <div className={styles.categories}>
           <ul className={styles.menu__categories}>

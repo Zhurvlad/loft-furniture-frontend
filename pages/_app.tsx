@@ -3,9 +3,13 @@ import type {AppProps} from 'next/app'
 import {Provider} from 'react-redux';
 import {store} from '../store/store';
 import NextNProgress from 'nextjs-progressbar';
-import React from 'react';
+import React, {useRef} from 'react';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import {useAppDispatch, useAppSelector} from '../hooks/redux';
+import {Api} from '../utils/api/index';
+import {userSlice} from '../store/reducers/UserSlice';
+import {shoppingCartApi} from '../store/shoppingCart/shoppingCart.api';
 
 export default function App({Component, pageProps}: AppProps) {
 
@@ -14,6 +18,8 @@ export default function App({Component, pageProps}: AppProps) {
   React.useEffect(() => {
     setMounted(true)
   })
+
+
 
   return mounted &&<Provider store={store}>
      <>

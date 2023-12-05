@@ -1,12 +1,12 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../store';
-import {ResponseCreateUser, ResponseLoginUser} from '../../types/auth';
+import {LoginUserResponse, ResponseCreateUser, ResponseLoginUser} from '../../types/auth';
 import {authApi} from '../user/user.api';
 import axios from 'axios';
 
 
 export interface UserState {
-  user: ResponseLoginUser | null
+  user: ResponseLoginUser | LoginUserResponse | null
 }
 
 const initialState: UserState = {
@@ -17,6 +17,10 @@ export const userSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    checkUser(state:UserState , actions: PayloadAction<LoginUserResponse>){
+      state.user = actions.payload
+
+    },
     logOut: () => initialState
   },
   extraReducers: builder => {

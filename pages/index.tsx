@@ -2,17 +2,38 @@ import Head from 'next/head'
 import {Header} from '../components/modules/Header/Header';
 import {Footer} from '../components/modules/Footer/Footer';
 import {MainPage} from '../components/templates/MainPage/index';
-import {useAppDispatch} from '../hooks/redux';
+import {useAppDispatch, useAppSelector} from '../hooks/redux';
 import {fetchSofas} from '../store/reducers/ActionCreators';
-import React from 'react';
+import React, {useRef} from 'react';
 import { useGetSofasBestsellersQuery } from '@/store/sofa/sofa.api';
 import {Breadcrumbs} from '../components/modules/Breadcrumbs/Breadcrumbs';
+import {Api} from '../utils/api/index';
+
+import {userSlice} from '../store/reducers/UserSlice';
+import {shoppingCartApi} from '../store/shoppingCart/shoppingCart.api';
+import {useCheckUserLogin} from '../hooks/useCheckUserLogin';
 
 export default function Home() {
 
   const dispatch = useAppDispatch()
 
-  //TODO Сделать Лэйаут
+  const {user} = useAppSelector(state => state.user)
+  const {data: cartItem} = shoppingCartApi.useGetUserCartQuery({userId: user?.user.userId})
+
+ /* const shouldCheckAuth = useRef(true)*/
+
+  //TODO Подумать как переделать
+  const checkUser = async () => {
+    if(!user?.user){
+      const data = await Api().user.checkUser()
+      dispatch(userSlice.actions.checkUser(data))
+    }
+  }
+
+  React.useEffect(() => {
+      checkUser()
+  }, [])
+
 
 /*  const {data, error, isLoading} = useGetSofasQuery()*/
 
