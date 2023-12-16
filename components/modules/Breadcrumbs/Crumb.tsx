@@ -1,12 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
-import {ICrumbProps} from '../../../types/common';
-import styles from '../../../styles/breadcrumbs/index.module.scss';
+
 import {useAppSelector} from '../../../hooks/redux';
 
+import {ICrumbProps} from '../../../types/common';
 
-
-
+import styles from '../../../styles/breadcrumbs/index.module.scss';
 
 export const Crumb = ({text: defaultText, textGenerator, href, last = false}: ICrumbProps) => {
 
@@ -38,7 +37,6 @@ export const Crumb = ({text: defaultText, textGenerator, href, last = false}: IC
       <span className={`last-crumb ${styles.breadcrumbs__item__text}`}>{text}</span>
     </a>
   }
-
 
 
   return (

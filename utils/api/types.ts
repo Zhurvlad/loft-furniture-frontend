@@ -47,7 +47,7 @@ export interface ResponseAddToCart extends ICart{}
 
 export interface ResponseSearchSofa extends ISofas{}
 
-export interface PromiseSearchSofa extends ISofa{}
+export interface PromiseSearchSofa extends ISofas{}
 
 export interface PromiseGetOneSofa extends ISofa{}
 

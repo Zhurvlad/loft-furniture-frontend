@@ -1,12 +1,13 @@
 import {NoticeProps,  GroupBase, components} from 'react-select';
 import {ISelectInputOption} from '../../../types/common';
-import React from 'react';
+import React, {useRef} from 'react';
 import spinnerStyles from '../../../styles/spinner/index.module.scss'
+
 
 
 export const NoOptionsMessage = (props: NoticeProps<ISelectInputOption, boolean, GroupBase<ISelectInputOption>>) => (
   <components.NoOptionsMessage {...props}>
-    <span>Ничего не найдено</span>
+   <span>Ничего не найдено</span>
   </components.NoOptionsMessage>
 )
 

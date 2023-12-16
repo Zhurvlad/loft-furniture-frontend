@@ -1,21 +1,34 @@
 import React, {useState} from 'react';
 import Select from 'react-select'
-import {ISelectInputOption, SelectOptionType} from '../../../types/common';
-import {controlStyles, inputStyles, menuStyles, optionStyles} from '../../../styles/searchInput/index';
+import {toast} from 'react-toastify';
+import {useRouter} from 'next/router';
+
 import {useAppSelector} from '../../../hooks/redux';
 import {useDebounceCallback} from '../../../hooks/useDebounceCallback';
-import {createSelectOption, toggleClassNamesForOverlayAndBody} from '../../../utils/common';
+
+import {createSelectOption} from '../../../utils/common';
 import {Api} from '../../../utils/api/index';
-import {useRouter} from 'next/router';
-import {NoOptionsMessage, NoOptionsSpinner} from '../SelectOptionsMessage/index';
-import styles from '../../../styles/header/index.module.scss';
+
+import {ISelectInputOption, SelectOptionType} from '../../../types/common';
+
 import {SearchSvg} from '../SearchSvg/index';
+
+import {NoOptionsMessage, NoOptionsSpinner} from '../SelectOptionsMessage/index';
+import {controlStyles, inputStyles, menuStyles, optionStyles} from '../../../styles/searchInput/index';
+import styles from '../../../styles/header/index.module.scss';
 
 export const SearchInput = () => {
 
+  React.useEffect(() => {
+    (async () => {
+    const d =  await Api().sofas.searchSofa('')
+      const names = d.rows.map((item) => item.name).map(createSelectOption)
+      setOptions(names)
+    })()
+  }, [])
+
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
-
 
   const [searchOption, setSearchOption] = useState<SelectOptionType>(null)
   const [options, setOptions] = React.useState([])
@@ -41,10 +54,6 @@ export const SearchInput = () => {
 
   }
 
-/*  const onFocusSearch = () => {
-    toggleClassNamesForOverlayAndBody('open-search')
-  }*/
-
   const delayCallback = useDebounceCallback(1000)
 
   const handleSearchClick = async () => {
@@ -61,15 +70,15 @@ export const SearchInput = () => {
     try {
       setInputValue(search)
       setSpinner(true)
-      const data = await Api().sofas.searchSofa(search)
-      const names = data.map((item) => item.name).map(createSelectOption)
+      const data  = await Api().sofas.searchSofa(search)
+      const names = data.rows.map((item) => item.name).map(createSelectOption)
       setOptions(names)
 
       if(data.count === 0){
         setSpinner(false)
       }
     } catch (e) {
-      console.log(e)
+      toast.warning('Произошла неизвестная ошибка')
     } finally {
       setSpinner(false)
     }
@@ -80,25 +89,24 @@ export const SearchInput = () => {
       const data = await Api().sofas.searchSofaByName(name)
 
       if(!data.id) {
-        console.log('Товар не найден')
+        toast.warning('Товар не найден')
         return
       }
 
-      router.push(`/catalog/${data.id}`)
+      await router.push(`/catalog/${data.id}`)
 
     } catch (e) {
-      console.log(e)
+      toast.warning('Произошла неизвестная ошибка')
     }
   }
 
   const onSearchInputChange = (text: string) => {
-
     delayCallback(() => searchSofa(text))
   }
 
   return (
     <div>
-      <Select components={{NoOptionsMessage: spinner ? NoOptionsSpinner : NoOptionsMessage}}
+      <Select components={{NoOptionsMessage: spinner ? NoOptionsSpinner :  NoOptionsMessage }}
               placeholder={'Поиск'}
               value={searchOption}
               onChange={handleSearchOptionChange}
@@ -121,9 +129,10 @@ export const SearchInput = () => {
               }}
               onInputChange={onSearchInputChange}
               options = {options}
+
       />
       <button onClick={handleSearchClick} className={`${styles.searchSvg} ${darkModeClass}`}>
-        <SearchSvg/>{/**/}
+        <SearchSvg/>
       </button>
     </div>
   )

@@ -106,7 +106,7 @@ export default function ItemPage({query}: { query: IQueryParams }) {
              getDefaultTextGenerator={getDefaultTextGenerator}
              getTextGenerator={getTextGenerator}
            />
-           <OneItemPage darkModeClass={theme === 'dark'}/>
+           <OneItemPage darkModeClass={darkModeClass}/>
          </main>
         </MainLayout>
       }

@@ -1,24 +1,26 @@
 import React from 'react';
-import styles from '../../../styles/authPage/index.module.scss'
-import {CloseSvg} from '../../elements/CloseSvg/index';
-import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {useForm} from 'react-hook-form';
+
+import {useRegisterMutation} from '../../../store/user/user.api';
+
+import {useAppSelector} from '../../../hooks/redux';
+
+import {isErrorWithMessage} from '../../../utils/is-error-with-message';
+import {showAuthError} from '../../../utils/errors';
+
 import {CreateUserDto, IAuthFrom, IInputs} from '../../../types/auth';
+
 import {EmailInput} from '../../elements/Auth/EmailInput';
 import {NameInput} from '../../elements/Auth/NameInput';
 import {PasswordInput} from '../../elements/Auth/PasswordInput';
-import axios from 'axios';
-import {registerUser} from '../../../store/reducers/AuthActions';
-import { useRegisterMutation } from '@/store/user/user.api';
-import {isErrorWithMessage} from '../../../utils/is-error-with-message';
-import {showAuthError} from '../../../utils/errors';
+import {CloseSvg} from '../../elements/CloseSvg/index';
+
+import styles from '../../../styles/authPage/index.module.scss'
 
 
 export const SignUpForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
 
   //TODO: Баг при регистрации когда нажамаешь на иконку юзера
-
-  const dispatch = useAppDispatch()
 
   const [registerUser, registerUserResult] = useRegisterMutation()
   const {register, formState: {errors}, handleSubmit, reset} = useForm<IInputs>()
@@ -33,10 +35,9 @@ export const SignUpForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
       setOpen()
       reset()
     } catch (err) {
-
       const maybeError = isErrorWithMessage(err)
       console.log(maybeError, 4234)
-      if(maybeError){
+      if (maybeError) {
         setError(err.data.message)
         showAuthError(maybeError)
       } else {
@@ -54,7 +55,6 @@ export const SignUpForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
           <NameInput register={register} errors={errors}/>
           <EmailInput register={register} errors={errors}/>
           <PasswordInput register={register} errors={errors}/>
-
           <button type={'submit'} className={styles.signUp__btn}>
             Зарегестрироваться
           </button>

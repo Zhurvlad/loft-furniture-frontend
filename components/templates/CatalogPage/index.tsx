@@ -454,7 +454,6 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                 <div className={styles.filter__list__inner}>
                   <Accordion arrowClass={styles.open} title={'Бренд'}>
                     <li className={styles.filters__list__item}>
-                      {/* <p className={`${styles.filter__title} ${darkModeClass}`}>Бренд</p>*/}
                       {sofaManufacturers.map(item => (
                         <BrandInput
                           key={item}
@@ -492,10 +491,10 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
             <div className={styles.items__sort}>
               <FilterSelect/>
             </div>
-            <div className={styles.items__inner}>
+            <div>
               {isLoading
                 ? (
-                  <ul className={skeletonStyles.skeleton}>
+                  <ul className={skeletonStyles.skeleton__catalog}>
                     {Array.from(new Array(20)).map((i, index) => (
                       <li
                         className={`${skeletonStyles.skeleton__item} ${theme === 'dark' ? `${skeletonStyles.dark_mode}` : ''}`}
@@ -505,7 +504,7 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                     ))}
                   </ul>
                 ) : (
-                  <div>
+                  <div className={styles.items__inner}>
                     {sofas.rows?.length
                       ? <div className={styles.items__inner}>
                         {sofas && sofas.rows?.map(i => (

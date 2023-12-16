@@ -8,9 +8,8 @@ export interface ItemImagesItemProps {
   alt: string
 }
 
-export const ItemImagesItem = ({src, callback, alt}) => {
+export const ItemImagesItem:React.FC<ItemImagesItemProps> = ({src, callback, alt}) => {
 
- /* console.log(src)*/
 
   const changeMainSrc = () => callback(src)
 

@@ -32,8 +32,8 @@ export const CartItem: FC<CartItemProps> = ({item, removeCartItem, setSpinner}) 
 
   const [spinnerItem, setSpinnerItem] = React.useState(false)
 
-  const plus = item.count >= item.in_stocks ? `${styles.countDisabled}` : ''
-  const minus = item.count === 1 ? `${styles.countDisabled}` : ''
+  /*const plus = item.count >= item.in_stocks ? `${styles.countDisabled}` : ''
+  const minus = item.count === 1 ? `${styles.countDisabled}` : ''*/
   const sales = item.oldPrice > item.price
   const colorName = sofaColor.find((obj) => obj.colorName === item.color)
   const sofaSize = item.size.split('.',).join(' СМ x ')

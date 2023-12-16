@@ -1,13 +1,18 @@
 import React, {useState} from 'react';
-import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
-import {ISelectInputOption, SelectOptionType} from '../../../types/common';
-import Select from 'react-select';
-import {controlStyles, menuStyles, selectStyles} from '../../../styles/catalogPage/select';
-import {createSelectOption} from '../../../utils/common';
-import {optionStyles} from '../../../styles/searchInput/index';
-import {categoriesOptions} from '../../../utils/selectContents';
-import {sofasSlice} from '../../../store/reducers/SofasSlice';
 import {useRouter} from 'next/router';
+import Select from 'react-select';
+
+import {sofasSlice} from '../../../store/reducers/SofasSlice';
+
+import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
+
+import {createSelectOption} from '../../../utils/common';
+import {categoriesOptions} from '../../../utils/selectContents';
+
+import {ISelectInputOption, SelectOptionType} from '../../../types/common';
+
+import {optionStyles} from '../../../styles/searchInput/index';
+import {controlStyles, menuStyles, selectStyles} from '../../../styles/catalogPage/select';
 
 export const FilterSelect = () => {
 
@@ -71,9 +76,6 @@ export const FilterSelect = () => {
         break
     }
   }
-
-  const {sofasItem} = useAppSelector((state => state.sofas))
-
 
   return (
     <Select

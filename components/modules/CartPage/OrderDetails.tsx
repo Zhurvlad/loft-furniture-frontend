@@ -1,13 +1,15 @@
 import React from 'react';
-import styles from '../../../styles/cartPage/index.module.scss';
-import {createSelectOption, formatPrice} from '../../../utils/common';
-import {PaymentApi} from '../../../utils/api/payment';
 import {useRouter} from 'next/router';
-import {Api} from '../../../utils/api/index';
-import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
-import {LoginUserResponse, ResponseLoginUser} from '../../../types/auth';
-import {useDispatch} from 'react-redux';
+import {toast} from 'react-toastify';
+
 import {cartSlice} from '../../../store/reducers/CartSlice';
+
+import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
+
+import {formatPrice} from '../../../utils/common';
+import {Api} from '../../../utils/api/index';
+
+import styles from '../../../styles/cartPage/index.module.scss';
 
 export type OrderDetailsProps = {
   darkModeClass: string,
@@ -33,23 +35,24 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
   const {city} = useAppSelector(state => state.city)
 
 
-
   const router = useRouter()
   const dispatch = useAppDispatch()
-
 
 
   React.useEffect(() => {
     const paymentId = sessionStorage.getItem('paymentId')
 
-    if(paymentId){
+    if (paymentId) {
       checkPayment(paymentId)
     }
   }, [])
 
   const makePay = async () => {
     try {
-      const data =  await Api().payment.makePayment({amount: cartTotalPrice, description: `Заказ №1 ${city.city.length ? `Город: ${city.city}, улица: ${city.street}` : ''}`})
+      const data = await Api().payment.makePayment({
+        amount: cartTotalPrice,
+        description: `Заказ №1 ${city.city.length ? `Город: ${city.city}, улица: ${city.street}` : ''}`
+      })
 
       sessionStorage.setItem('paymentId', data.id)
 
@@ -69,19 +72,18 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
 
   const checkPayment = async (paymentId: string) => {
 
-   try {
-     const data = await Api().payment.checkPayment(paymentId)
+    try {
+      const data = await Api().payment.checkPayment(paymentId)
 
-     if(data.status === 'succeeded'){
-       await resetCart()
-     }
+      if (data.status === 'succeeded') {
+        await resetCart()
+      }
 
-   } catch (e) {
-     console.log(e, 'ашибка')
-     await resetCart()
-   }
+    } catch (e) {
+      toast.error('Произошла неизвестная ошибка!')
+      await resetCart()
+    }
   }
-
 
 
   return (
@@ -103,7 +105,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
           <div/>
           <p>{formatPrice(cartTotalPrice - sales)} ₽</p>
         </div>
-        <button onClick={makePay} disabled={cartContinue || spinner} className={styles.cart__details__order}>Оформить заказ</button>
+        <button onClick={makePay} disabled={cartContinue || spinner} className={styles.cart__details__order}>Оформить
+          заказ
+        </button>
       </div>
     </div>
   );

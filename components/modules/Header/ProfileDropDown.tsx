@@ -14,8 +14,6 @@ import {UserSvg} from '../../elements/UserSvg/index';
 import styles from '../../../styles/profileDropDown/index.module.scss';
 
 
-
-
 const ProfileDropDown = forwardRef<HTMLDivElement, IWrappedComponentProps>(({opened, setOpened}, ref) => {
 
   const dispatch = useDispatch()

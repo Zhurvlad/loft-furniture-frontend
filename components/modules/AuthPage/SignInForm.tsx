@@ -1,16 +1,19 @@
 import React from 'react';
-import styles from '../../../styles/authPage/index.module.scss'
+import {toast} from 'react-toastify';
+import {useForm} from 'react-hook-form';
+
+import {useLoginMutation} from '../../../store/user/user.api';
+
+import {useAppSelector} from '../../../hooks/redux';
+
+import {isErrorWithMessage} from '../../../utils/is-error-with-message';
+
+import {CreateUserDto, IAuthFrom, IInputs} from '../../../types/auth';
+
 import {NameInput} from '../../elements/Auth/NameInput';
 import {PasswordInput} from '../../elements/Auth/PasswordInput';
 import {CloseSvg} from '../../elements/CloseSvg/index';
-import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
-import {useForm} from 'react-hook-form';
-import {CreateUserDto, IAuthFrom, IInputs} from '../../../types/auth';
-import {useLoginMutation} from '@/store/user/user.api';
-import {isErrorWithMessage} from '../../../utils/is-error-with-message';
-import {showAuthError} from '../../../utils/errors';
-import {HTTPStatus} from '../../../constans/index';
-import {toast} from 'react-toastify';
+import styles from '../../../styles/authPage/index.module.scss'
 
 
 export const SignInForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
@@ -31,10 +34,8 @@ export const SignInForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
       setOpen()
       reset()
     } catch (err) {
-
-
       const maybeError = isErrorWithMessage(err)
-      if(maybeError){
+      if (maybeError) {
         setError(err.data.message)
         toast.error("*Неправильный логин или пароль!")
       } else {
@@ -43,22 +44,13 @@ export const SignInForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
     }
   }
 
-  console.log(error, 8989)
 
   React.useEffect(() => {
 
   }, [error])
 
-  const err = () =>  toast.error((error as Error).message)
-
-
-  const notify = () => toast("Hello coders it was easy!");
- /* console.log(errors)*/
-
   return (
     <div>
-
-
       <div className={styles.overlay}>
         <form className={`${styles.signUp} ${darkModeClass}`} onSubmit={handleSubmit(onSubmit)}>
           <h3 className={`${styles.signUp__title} ${darkModeClass}`}>Вход</h3>

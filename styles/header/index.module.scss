@@ -1,70 +1,5 @@
 @import "../variables";
 
-/*
-.header{
-  color: #ffffff
-
-}
-
-.header__top__container{
-  display: flex;
-  justify-content: space-between;
-
-}
-
-.header__left, .header__right{
-  display: flex;
-  justify-content: space-between;
-  text-align: center;
-
-  button{
-    font-size: 14px;
-    font-weight: 400;
-    display: flex;
-    color: #ffffff
-
-  }
-}
-
-.header__left__nav{
-  display: flex;
-  text-align: center;
-}
-
-.header__left__nav__list{
-  &:last-child{
-    margin-left: 30px;
-  }
-}
-
-
-
-.header__left__nav__list__item {
-
-}
-
-.header__left__nav__list__item{
-}
-
-.header__left__nav__list__item__link{
-
-}
-
-
-
-.header__right__nav__list{
-  text-align: center;
-}
-
-.header__right__nav__list__item__link{
-
-  span{
-
-  }
-}
-
-*/
-
 .header__top{
   height: 38px;
   background-color: $header-top;
@@ -131,22 +66,15 @@
   transition: color .2s ease-in-out;
 }
 
-/*.logo path{
-  fill: chocolate;
-}*/
-
 .logo.dark_mode path{
   fill: $white;
 }
-
-
 
 .header__top__inner{
   display: flex;
   justify-content: space-between;
   align-items: center;
   min-height: 38px;
-
 }
 
 .menu__list{

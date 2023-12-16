@@ -1,25 +1,23 @@
 import React from 'react';
-import styles from '../../../styles/header/index.module.scss'
-import {LogoSvg} from '../../elements/LogoSvg/index';
 import Link from 'next/link';
-import {SearchSvg} from '../../elements/SearchSvg/index';
+
+import {useAppSelector} from '../../../hooks/redux';
+
+import {LogoSvg} from '../../elements/LogoSvg/index';
 import {FavoriteSvg} from '../../elements/FavoriteSvg/index';
 import {CartSvg} from '../../elements/CartSvg/index';
 import {SearchInput} from '../../elements/SearchInput/index';
-
 import {ThemeToggle} from '../../elements/ThemeToggler/index';
-import {useAppSelector} from '../../../hooks/redux';
+
+import styles from '../../../styles/header/index.module.scss'
 
 
-export const HeaderBottom = () => {
+export const HeaderBottom:React.FC = () => {
 
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
   const {item} = useAppSelector(state => state.cart)
-
-
-
 
   return (
     <div className={styles.header__bottom}>
@@ -32,14 +30,9 @@ export const HeaderBottom = () => {
               </a>
             </Link>
           </div>
-
           <div className={styles.search}>
             <SearchInput/>
-            {/*<button className={`${styles.searchSvg} ${darkModeClass}`}>
-                <SearchSvg/>
-            </button>*/}
           </div>
-
           <div className={styles.header__box}>
             <ul className={styles.user__list}>
               <ThemeToggle/>
@@ -55,8 +48,7 @@ export const HeaderBottom = () => {
                 <Link href={'/cart'} passHref legacyBehavior>
                   <a className={styles.basket}>
                     <CartSvg/>
-                    {item?.length !== 0  ?  <p className={styles.basket__num}>{item?.length}</p> : ''}
-
+                    {item?.length !== 0 ? <p className={styles.basket__num}>{item?.length}</p> : ''}
                   </a>
                 </Link>
               </li>

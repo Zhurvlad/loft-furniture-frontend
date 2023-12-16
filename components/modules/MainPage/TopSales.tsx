@@ -1,23 +1,20 @@
 import React from 'react';
-import styles from '../../../styles/mainPage/index.module.scss';
-import {FavoriteSvg} from '../../elements/FavoriteSvg/index';
-import {SalesSvg} from '../../elements/SalesSvg/index';
-import {TopSalesItem} from './TopSalesItem';
-import {useAppSelector} from '../../../hooks/redux';
-import {sofasSelector} from '../../../store/reducers/SofasSlice';
-import skeletonStyles from '../../../styles/skeletonStyles/index.module.scss'
 
 import {sofaApi} from '../../../store/sofa/sofa.api';
-import {ISofas} from '../../../models/ISofas';
+
+import {useAppSelector} from '../../../hooks/redux';
+
 import {sofaColor} from '../../../utils/color';
 
-//TODO: Разобраться с типизацией
+import {ISofas} from '../../../models/ISofas';
 
+import {TopSalesItem} from './TopSalesItem';
 
+import skeletonStyles from '../../../styles/skeletonStyles/index.module.scss'
+import styles from '../../../styles/mainPage/index.module.scss';
 
 export const TopSales = () => {
 
- /* const {sofas , isLoading} = useAppSelector(sofasSelector)*/
   const {data:sofas, isLoading, error} = sofaApi.useGetSofasBestsellersQuery({limit: 12, offset: 0})
   const {theme} = useAppSelector((state) => state.theme)
 

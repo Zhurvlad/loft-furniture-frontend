@@ -8,7 +8,7 @@ export interface ItemPageListProps {
 }
 
 
-export const ItemPageList = ({sofaItem}) => {
+export const ItemPageList:React.FC = ({sofaItem}) => {
 
   const images = sofaItem.images ? JSON.parse(sofaItem.images) : []
   const [currentImgSrc, setCurrentImgSrc] = React.useState('')
