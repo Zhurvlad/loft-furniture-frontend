@@ -141,14 +141,14 @@
   }
 }
 
-.cart__item__order_info{
+.cart__item__price__inner{
   display: flex;
   justify-content: flex-start;
   align-items: center;
 
 }
 
-.vvv{
+.cart__item__info{
   margin-right: 10px;
   width: 270px;
 }
@@ -210,15 +210,6 @@
     cursor: pointer;
     display: inline-block;
     text-align: center;
-  }
-}
-
-.count__empty{
-  font-size: 12px;
-  padding: 2px 3px;
-
-  &.dark_mode{
-    color: $white;
   }
 }
 

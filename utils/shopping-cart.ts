@@ -9,15 +9,17 @@ import {Api} from './api/index';
 
 export const toggleCartItem = async (username: string, itemId: number, isInCart: boolean, setSpinner: (arg0: boolean) => void, dispatch) => {
   try {
-    if(!username ){
+    if(!username){
       toast.warning('Пожайлуста авторизуйтесь для того что бы добавить в корзину')
       return
     }
 
-    setSpinner(true)
     if(isInCart){
       return
     }
+
+      setSpinner(true)
+
     const data = await Api().cart.addCartItem(username, itemId)
 
     dispatch(cartSlice.actions.addToCart(data))

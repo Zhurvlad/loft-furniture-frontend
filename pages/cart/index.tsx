@@ -1,23 +1,10 @@
 import Head from 'next/head'
 import React from 'react';
-import {CatalogPage} from '../../components/templates/CatalogPage/index';
-import {Header} from '../../components/modules/Header/Header';
-import {Footer} from '../../components/modules/Footer/Footer';
-import {IQueryParams} from '../../types/catalog';
+
 import {CartPage} from '../../components/templates/CartPage/index';
 import {MainLayout} from '../../components/layout/MainLayout';
 
 export default function Cart() {
-
-
-
-  /*  const {data, error, isLoading} = useGetSofasQuery()*/
-
-
-
-  /* React.useEffect(() => {
-     fetchSofas(dispatch)
-   }, [])*/
 
   return (
     <>
@@ -39,10 +26,3 @@ export default function Cart() {
 }
 
 
-/*
-export async function getServerSideProps(context: {query: IQueryParams}) {
-  return {
-    props: {query: {...context.query}}
-  }
-}
-*/

@@ -25,11 +25,5 @@ export const useTheme = () => {
     }
   }, [theme])
 
-  /*React.useEffect(() => {
-    document.documentElement.dataset.theme = theme
-    /!*localStorage.setItem('theme', theme)*!/
-  }, [ theme ])*/
-
-
   return {toggleTheme}
 }

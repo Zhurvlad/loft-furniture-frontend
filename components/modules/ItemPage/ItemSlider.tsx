@@ -1,12 +1,15 @@
 import React from 'react';
 
+import {useMediaQuery} from '../../../hooks/useMediaQuery';
+
+import {MainSliderArrowNext} from '../../elements/MainSliderArrowNext/index';
+import {MainSliderArrowPrev} from '../../elements/MainSliderArrowPrev/index';
+
 import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import {MainSliderArrowNext} from '../../elements/MainSliderArrowNext/index';
-import {MainSliderArrowPrev} from '../../elements/MainSliderArrowPrev/index';
+
 import styles from '../../../styles/itemPage/index.module.scss';
-import {useMediaQuery} from '../../../hooks/useMediaQuery';
 
 export const ItemSlider = ({images}: { images: string[] }) => {
 

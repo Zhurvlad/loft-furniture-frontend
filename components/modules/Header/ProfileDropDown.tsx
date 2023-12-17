@@ -38,7 +38,7 @@ const ProfileDropDown = forwardRef<HTMLDivElement, IWrappedComponentProps>(({ope
 
   return (
     <>
-      <div ref={ref} className={styles.profile}>
+      <div key={1} ref={ref} className={styles.profile}>
         <button onClick={toggleProfileDropDown}>
               <span>
                 <UserSvg/>

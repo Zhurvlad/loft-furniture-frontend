@@ -3,10 +3,12 @@ import Link from 'next/link';
 import {useDispatch} from 'react-redux';
 
 import {useAppSelector} from '../../../hooks/redux';
-import {TopSalesItemProps} from '../../../types/main-page';
+
 import {formatPrice} from '../../../utils/common';
 import {sofaColor} from '../../../utils/color';
 import {toggleCartItem} from '../../../utils/shopping-cart';
+
+import {TopSalesItemProps} from '../../../types/main-page';
 
 import {FavoriteSvg} from '../../elements/FavoriteSvg/index';
 import {SalesSvg} from '../../elements/SalesSvg/index';
@@ -14,48 +16,44 @@ import {SalesSvg} from '../../elements/SalesSvg/index';
 import spinnerStyles from '../../../styles/spinner/index.module.scss'
 import styles from '../../../styles/mainPage/index.module.scss';
 
-//TODO Переделать название
 
-
-export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa}) => {
-
+export const CatalogItem: React.FC<TopSalesItemProps> = ({sofa}) => {
 
   const {user} = useAppSelector(state => state.user)
   const {item} = useAppSelector(state => state.cart)
+  const {theme} = useAppSelector((state) => state.theme)
 
+  const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
   const isInCart = item?.some((cartItem) => cartItem.itemId === sofa.id)
-
-  const addedToCart = isInCart && `${styles.added}`
+  const addedToCartCSS = isInCart && `${styles.added}`
 
   const [spinner, setSpinner] = React.useState(false)
 
   const dispatch = useDispatch()
 
+
   const toggleCart = () => toggleCartItem(user?.user?.username, sofa.id, isInCart && isInCart, setSpinner, dispatch)
 
-  const {theme} = useAppSelector((state) => state.theme)
-  const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
-
   const itemDiscount = sofa.oldPrice > sofa.price
-  const percentDiscount = sofa.oldPrice > sofa.price && Math.ceil(((sofa.oldPrice - sofa.price) / sofa.oldPrice) * 100)
+  const percentDiscount = itemDiscount && Math.ceil(((sofa.oldPrice - sofa.price) / sofa.oldPrice) * 100)
 
   const colorHex = sofaColor.filter((i) => i.colorName === sofa.color).map(i => i.hex)
 
   return (
     <div key={sofa.id} className={`${styles.main__top_sales__card} ${darkModeClass}`}>
-      <Link href={`/catalog/${sofa.id}`}>
-        <button className={`${styles.main__card__favorite} ${darkModeClass}`}>
-          <FavoriteSvg/>
-        </button>
-        {itemDiscount &&
-        <div>
+      <button className={`${styles.main__card__favorite} ${darkModeClass}`}>
+        <FavoriteSvg/>
+      </button>
+      {itemDiscount &&
+      <div>
         <span className={`${styles.main__card__sales} ${darkModeClass}`}>
           <SalesSvg/>
           <span>-{percentDiscount}%</span>
         </span>
-        </div>
-        }
+      </div>
+      }
+      <Link href={`/catalog/${sofa.id}`}>
         <img className={styles.main__card__img} src={JSON.parse(sofa.images)[0]} alt="content-img-1"/>
         <div>
           <p className={`${styles.main__card__color__name} ${darkModeClass}`}>Цвет :</p>
@@ -72,19 +70,26 @@ export const TopSalesItem: React.FC<TopSalesItemProps> = ({sofa}) => {
           </div>
         </div>
       </Link>
-      <button onClick={toggleCart} className={`${styles.main__card__add_btn} ${addedToCart}`}>
-        {!isInCart
-          ?
-          <p>Добавить в корзину</p>
+      {
+        sofa.in_stocks !== 0
+          ? <button onClick={toggleCart} className={`${styles.main__card__add_btn} ${addedToCartCSS}`}>
+            {
+              !isInCart
+                ?
+                <p>Добавить в корзину</p>
+                :
+                spinner
+                  ?
+                  <span className={spinnerStyles.spinner} style={{left: '45%'}}/>
+                  :
+                  <Link href={'/cart'}>
+                    <p>Перейти в корзину</p>
+                  </Link>
+            }
+          </button>
           :
-          spinner ? <span
-              className={spinnerStyles.spinner}
-            /> :
-            <Link href={'/cart'}>
-              <p>Перейти в корзину</p>
-            </Link>
-        }
-      </button>
+          <p className={`${styles.main__card__empty} ${darkModeClass}`}>Нет на складе</p>
+      }
     </div>
   );
 };

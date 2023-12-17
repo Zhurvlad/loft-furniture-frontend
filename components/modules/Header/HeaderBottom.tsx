@@ -61,4 +61,3 @@ export const HeaderBottom:React.FC = () => {
 };
 
 
-/*https://youtu.be/qK1ENlEucpc?t=19654*/

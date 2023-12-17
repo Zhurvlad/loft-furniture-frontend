@@ -19,7 +19,7 @@ export const Accordion: React.FC<IAccordion> = ({children, title, arrowClass, to
     }
   }
 
-  console.log(expanded)
+
 
 
   const {theme} = useAppSelector((state) => state.theme)

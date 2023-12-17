@@ -13,6 +13,7 @@ import {CreateUserDto, IAuthFrom, IInputs} from '../../../types/auth';
 import {NameInput} from '../../elements/Auth/NameInput';
 import {PasswordInput} from '../../elements/Auth/PasswordInput';
 import {CloseSvg} from '../../elements/CloseSvg/index';
+
 import styles from '../../../styles/authPage/index.module.scss'
 
 
@@ -25,7 +26,7 @@ export const SignInForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
-  console.log(loginUserResult, 9898989)
+ /* console.log(loginUserResult, 9898989)*/
 
   const onSubmit = async (dto: CreateUserDto) => {
     try {

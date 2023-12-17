@@ -384,8 +384,14 @@
   width: 100%;
   position: relative;
   height: 42px;
+}
 
+.item__empty{
+  line-height: 42px;
 
+  &.dark_mode{
+    color: $white;
+  }
 }
 
 

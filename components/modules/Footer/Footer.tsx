@@ -1,20 +1,22 @@
 import React from 'react';
-import styles from '../../../styles/footer/index.module.scss'
 import Link from 'next/link';
+
 import {LogoSmallSvg} from '../../elements/LogoSmall/index';
 import {MarkerSvg} from '../../elements/MarkerSvg/index';
 import {PhoneSvg} from '../../elements/PhoneSvg/index';
 import {MailSvg} from '../../elements/MailSvg/index';
 
+import styles from '../../../styles/footer/index.module.scss'
+
 
 const AvailableCategories = [
-  {category: 'Кухни', link: '/kitchen'},
-  {category: 'Кровати', link: '/kitchen'},
-  {category: 'Диваны', link: '/kitchen'},
-  {category: 'Шкафы', link: '/kitchen'},
-  {category: 'Офисная мебель', link: '/kitchen'},
-  {category: 'Детские', link: '/kitchen'},
-  {category: 'Акции', link: '/kitchen'},
+  {category: 'Кухни', link: '/catalog'},
+  {category: 'Кровати', link: '/catalog'},
+  {category: 'Диваны', link: '/catalog'},
+  {category: 'Шкафы', link: '/catalog'},
+  {category: 'Офисная мебель', link: '/catalog'},
+  {category: 'Детские', link: '/catalog'},
+  {category: 'Акции', link: '/catalog'},
 ]
 
 export const Footer = () => {

@@ -1,16 +1,15 @@
 import React from 'react';
 
-
-import {MainSliderArrowNext} from '../../elements/MainSliderArrowNext/index';
 import {useMediaQuery} from '../../../hooks/useMediaQuery';
-
 
 import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-import styles from '../../../styles/mainPage/index.module.scss'
+import {MainSliderArrowNext} from '../../elements/MainSliderArrowNext/index';
 import {MainSliderArrowPrev} from '../../elements/MainSliderArrowPrev/index';
+
+import styles from '../../../styles/mainPage/index.module.scss'
 
 const mainSlider = [
   {id: 1, img: 'img/main-slider-1.png', alt: 'main-slider-1'},
@@ -37,18 +36,18 @@ export const MainSlider = () => {
     prevArrow: <MainSliderArrowPrev/>
   };
 
-    return (
-        <Slider {...settings}>
-          {mainSlider.map(i => (
-            <div
-              className={styles.main__slider}
-              key={i.id}
-              style={{width: isMedia320 ? 320 : isMedia768 ? 768 : isMedia960 ? 960 : 1140 }}
-            >
-              <img  src={i.img} alt={i.alt}/>
-            </div>
-          ))}
-        </Slider>
-    );
+  return (
+    <Slider {...settings}>
+      {mainSlider.map(i => (
+        <div
+          className={styles.main__slider}
+          key={i.id}
+          style={{width: isMedia320 ? 320 : isMedia768 ? 768 : isMedia960 ? 960 : 1140}}
+        >
+          <img src={i.img} alt={i.alt}/>
+        </div>
+      ))}
+    </Slider>
+  );
 };
 

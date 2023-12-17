@@ -1,23 +1,23 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
+import {setTimeout} from "timers";
 
-import {useAppSelector} from '../../../hooks/redux';
 import {shoppingCartApi} from '../../../store/shoppingCart/shoppingCart.api';
 import {cartSlice} from '../../../store/reducers/CartSlice';
+import {userSlice} from '../../../store/reducers/UserSlice';
+
+import {useAppSelector} from '../../../hooks/redux';
+
+import {Api} from '../../../utils/api/index';
 
 import {CartItem} from '../../modules/CartPage/CartItem';
 import {EmptyCart} from '../../modules/CartPage/EmptyCart';
 import {OrderDetails} from '../../modules/CartPage/OrderDetails';
 
-import styles from '../../../styles/cartPage/index.module.scss'
-import {setTimeout} from "timers";
-import axios from 'axios';
 import {Accordion} from '../../elements/Accordion/index';
-import {sofaColor} from '../../../utils/color';
-import {ColorEl} from '../../elements/ColorEl/index';
-import {ArrowBack} from '../../elements/ArrowBack/index';
-import {Api} from '../../../utils/api/index';
-import {userSlice} from '../../../store/reducers/UserSlice';
+
+import styles from '../../../styles/cartPage/index.module.scss'
+import {toast} from 'react-toastify';
 
 export const CartPage = () => {
 
@@ -73,11 +73,10 @@ export const CartPage = () => {
       setSpinner(true)
 
       await Api().cart.removeCartItem(itemId)
-      /*await axios.delete(`http://localhost:3002/shopping-cart/one/${itemId}`)*/
 
       dispatch(cartSlice.actions.removeCartItem(itemId))
     } catch (e) {
-      console.log(e)
+      toast.error('Произошла неизвестная ошибка')
     } finally {
       setTimeout(() => {
         setSpinner(false)
@@ -88,31 +87,6 @@ export const CartPage = () => {
   const toggleCartContinue = () => {
     setCartContinue(!cartContinue)
   }
-
- /* const plusItem = async (cartItemId: number, total_price: number, count: number) => {
-    try {
-      setSpinner(true)
-     await axios.patch(`http://localhost:3002/shopping-cart/total-price/${cartItemId}`, {total_price: total_price})
-     await axios.patch(`http://localhost:3002/shopping-cart/count/${cartItemId}`, {count: count})
-      dispatch(cartSlice.actions.plusItem(cartItemId))
-    } catch (e) {
-      console.log(e)
-    } finally {
-      setTimeout(() => {
-        setSpinner(false)
-      }, 1000)
-    }
-  }*/
-
-  /*<div className={styles.filter__list__inner}>
-    <Accordion arrowClass={styles.open} title={'Цвет'}>
-      <li className={styles.filters__list__item}>
-        <div>
-          {item && item.map((i) => <CartItem  removeCartItem={removeCartItem}  setSpinner={setSpinner} key={i.id} item={i}/>)}
-        </div>
-      </li>
-    </Accordion>
-  </div>*/
 
   return (
     <div className={'container'}>

@@ -2,20 +2,21 @@ import React from 'react';
 import Link from 'next/link';
 import {useDispatch} from 'react-redux';
 
-import {ItemPageList} from '../../modules/ItemPage/ItemPageList';
-import {FavoriteSvg} from '../../elements/FavoriteSvg/index';
-
 import {useAppSelector} from '../../../hooks/redux';
+
+import {sofaColor} from '../../../utils/color';
 import {toggleCartItem} from '../../../utils/shopping-cart';
 import {formatPrice} from '../../../utils/common';
 
-import spinnerStyles from '../../../styles/spinner/index.module.scss';
-import styles from '../../../styles/itemPage/index.module.scss';
-import {sofaColor} from '../../../utils/color';
+import {ItemPageList} from '../../modules/ItemPage/ItemPageList';
+import {FavoriteSvg} from '../../elements/FavoriteSvg/index';
 import {ItemCharacteristics} from '../../elements/ItemCharacteristics/index';
 
+import spinnerStyles from '../../../styles/spinner/index.module.scss';
+import styles from '../../../styles/itemPage/index.module.scss';
 
-export const OneItemPage = ({darkModeClass}: {darkModeClass: string}) => {
+
+export const OneItemPage = ({darkModeClass}: { darkModeClass: string }) => {
 
 
   const {sofa} = useAppSelector((state) => state.sofa)
@@ -29,7 +30,7 @@ export const OneItemPage = ({darkModeClass}: {darkModeClass: string}) => {
   const dispatch = useDispatch()
 
   const isInCart = item?.some((cartItem) => cartItem.itemId === +sofa.id)
-  const toggleCart = () => toggleCartItem(user && user.user.username, +sofa.id, isInCart && isInCart, setSpinner, dispatch)
+  const toggleCart = () => toggleCartItem(user && user.user?.username, +sofa.id, isInCart && isInCart, setSpinner, dispatch)
   const addedToCart = isInCart && `${styles.added}`
 
   const color = sofaColor.filter((i) => i.colorName === sofa.color)
@@ -43,19 +44,27 @@ export const OneItemPage = ({darkModeClass}: {darkModeClass: string}) => {
           <p className={`${styles.item__subtitle} ${darkModeClass}`}>Диваны</p>
           <div className={styles.item__inner}>
             <p className={`${styles.item__price} ${darkModeClass}`}>{formatPrice(+sofa.price)} ₽</p>
-            <button onClick={toggleCart} className={`${styles.item__btn} ${addedToCart}`}>
-              {!isInCart
+            {
+              sofa.in_stocks !== 0
                 ?
-                <p>Добавить в корзину</p>
+                <button onClick={toggleCart} className={`${styles.item__btn} ${addedToCart}`}>
+                  {
+                    !isInCart
+                      ?
+                      <p>Добавить в корзину</p>
+                      :
+                      spinner
+                        ?
+                        <span className={spinnerStyles.spinner}/>
+                        :
+                        <Link href={'/cart'}>
+                          <p>Перейти в корзину</p>
+                        </Link>
+                  }
+                </button>
                 :
-                spinner ? <span
-                    className={spinnerStyles.spinner}
-                  /> :
-                  <Link href={'/cart'}>
-                    <p>Перейти в корзину</p>
-                  </Link>
-              }
-            </button>
+                <p className={`${styles.item__empty} ${darkModeClass}`}>Нет на складе</p>
+            }
             <div className={`${styles.item__favorite} ${darkModeClass} ${styles.active}`}>
               <FavoriteSvg/>
               <span>Добавить в желаемое</span>
@@ -81,7 +90,6 @@ export const OneItemPage = ({darkModeClass}: {darkModeClass: string}) => {
       </div>
       <ItemCharacteristics darkModeClass={darkModeClass}/>
     </div>
-
   );
 };
 
