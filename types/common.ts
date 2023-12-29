@@ -8,6 +8,10 @@ export interface ISelectInputOption {
 
 export type SelectOptionType = MultiValue<ISelectInputOption> | SingleValue<ISelectInputOption> | null
 
+export type OptionProps = {
+  value: string,
+  label: string
+}[]
 
 export interface IAccordion {
   children: React.ReactNode,

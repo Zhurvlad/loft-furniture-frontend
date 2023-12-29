@@ -22,7 +22,7 @@ export const SignUpForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
 
   //TODO: Баг при регистрации когда нажамаешь на иконку юзера
 
-  const [registerUser, registerUserResult] = useRegisterMutation()
+  const [registerUser] = useRegisterMutation()
   const {register, formState: {errors}, handleSubmit, reset} = useForm<IInputs>()
   const [error, setError] = React.useState('')
 

@@ -1,20 +1,16 @@
-import cn from 'classnames'
-import styles from '../../../styles/theme/index.module.scss'
-import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
-import {useDispatch} from 'react-redux';
 import React from 'react';
-import {setTheme} from '../../../store/reducers/ThemeSlice';
+import cn from 'classnames'
+
+import {useAppSelector} from '../../../hooks/redux';
 import {useTheme} from '../../../hooks/useTheme';
+
+import styles from '../../../styles/theme/index.module.scss'
 
 
 export const ThemeToggle = ({className}) => {
 
   const {theme} = useAppSelector((state) => state.theme)
-
-  const dispatch = useAppDispatch()
   const {toggleTheme} = useTheme()
-
-
 
   const handleChange = () => {
     toggleTheme()
@@ -25,14 +21,12 @@ export const ThemeToggle = ({className}) => {
     document.body.classList.add(theme === 'dark' ? 'dark_mode' : 'body')
   }, [theme])
 
-  /*console.log(document.body.classList)*/
-
   return (
     <div
       className={cn(
         className,
         styles.theme,
-        theme === 'light' ?  styles.light : styles.dark)}
+        theme === 'light' ? styles.light : styles.dark)}
       onClick={handleChange}
     />
   )

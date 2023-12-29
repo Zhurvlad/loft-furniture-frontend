@@ -1,6 +1,8 @@
 import React from 'react';
-import styles from '../../../styles/itemPage/index.module.scss';
+
 import {SofaInfo} from '../../../utils/sofaInfo';
+
+import styles from '../../../styles/itemPage/index.module.scss';
 
 export type  ItemCharacteristicsProps = {
   darkModeClass: string

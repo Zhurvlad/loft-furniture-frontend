@@ -1,15 +1,22 @@
 import React from 'react';
-import styles from '../../../styles/catalogPage/index.module.scss';
-import {CheckboxSvg} from '../CheckboxSvg/index';
+
 import {useAppSelector} from '../../../hooks/redux';
 
-export const ColorEl = ({toggleActiveColor, item, activeColor}) => {
+import {sofaColorProps} from '../../../utils/color';
+
+import styles from '../../../styles/catalogPage/index.module.scss';
+
+export interface ColorElProps {
+  toggleActiveColor: (color: string) => void,
+  item: sofaColorProps,
+  activeColor: string[],
+}
+
+export const ColorEl:React.FC<ColorElProps> = ({toggleActiveColor, item, activeColor}) => {
 
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
   const activeColorCss = activeColor.find(i => i === item.colorName) ? `${styles.active__color}` : ''
-
-/*  console.log(activeColor.find(i => i === item.hex) ? `${styles.active__color}` : '')*/
 
   return (
     <div onClick={() => toggleActiveColor(item.colorName)} className={styles.checkbox__color}>

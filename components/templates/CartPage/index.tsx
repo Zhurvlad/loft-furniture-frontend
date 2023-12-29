@@ -1,6 +1,7 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import {setTimeout} from "timers";
+import {toast} from 'react-toastify';
 
 import {shoppingCartApi} from '../../../store/shoppingCart/shoppingCart.api';
 import {cartSlice} from '../../../store/reducers/CartSlice';
@@ -17,7 +18,6 @@ import {OrderDetails} from '../../modules/CartPage/OrderDetails';
 import {Accordion} from '../../elements/Accordion/index';
 
 import styles from '../../../styles/cartPage/index.module.scss'
-import {toast} from 'react-toastify';
 
 export const CartPage = () => {
 
@@ -28,10 +28,10 @@ export const CartPage = () => {
   const {item} = useAppSelector(state => state.cart)
   const {item: cart} = useAppSelector(state => state.cart)
 
-  const {data: cartItem, isLoading, error} = shoppingCartApi.useGetUserCartQuery({userId: user?.user.userId})
+  const {data: cartItem} = shoppingCartApi.useGetUserCartQuery({userId: user?.user.userId})
 
   const [spinner, setSpinner] = React.useState(false)
-  const [firstRender, setFirstRender] = React.useState(false)
+  /*const [firstRender, setFirstRender] = React.useState(false)*/
   const [cartContinue, setCartContinue] = React.useState(true)
 
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
@@ -52,9 +52,9 @@ export const CartPage = () => {
   const cartTotalPrice = cart?.reduce((sum, obj) => obj.total_price + sum , 0)
   const totalSales = cart?.map((i) => i.oldPrice > i.price ? (i.oldPrice * i.count) - i.price : 0).reduce((sum , obj) =>  obj + sum, 0)
 
-  React.useEffect(() => {
+/*  React.useEffect(() => {
     setFirstRender(true)
-  }, [])
+  }, [])*/
 
   React.useEffect(() => {
     loadCartItems()

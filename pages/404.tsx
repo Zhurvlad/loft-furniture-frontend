@@ -1,6 +1,7 @@
+import React from 'react';
 import Link from 'next/link'
 
-export const Custom404 = ({darkModeClass}: {darkModeClass: string}) => (
+const Custom404 = ({darkModeClass}: {darkModeClass: string}) => (
 
 
   <div className={`flex-container ${darkModeClass ? 'dark' : ''}`}>
@@ -25,3 +26,6 @@ export const Custom404 = ({darkModeClass}: {darkModeClass: string}) => (
     </div>
   </div>
 )
+
+
+export default  Custom404

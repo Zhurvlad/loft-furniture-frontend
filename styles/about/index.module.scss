@@ -1,0 +1,47 @@
+@import "../variables";
+
+.about__title{
+  font-size: 40px;
+  margin-bottom: 20px;
+  color: #245462;
+
+  &.dark_mode{
+    color: $white;
+  }
+}
+
+.about__inner{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+
+}
+
+.about__text__inner{
+  width: 425px;
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  line-height: normal;
+
+
+}
+
+.about__subtitle{
+  font-size: 24px;
+  color: $text-color;
+  margin-bottom: 16px;
+  &.dark_mode{
+    color: $white;
+  }
+}
+
+
+.about__text{
+  color: #686868;
+
+  &.dark_mode{
+    color: $white;
+  }
+
+}

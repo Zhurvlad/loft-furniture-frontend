@@ -1,13 +1,12 @@
-import Head from 'next/head'
 import React from 'react';
-
-import {CartPage} from '../../components/templates/CartPage/index';
+import Head from 'next/head';
 import {MainLayout} from '../../components/layout/MainLayout';
 import {Breadcrumbs} from '../../components/modules/Breadcrumbs/Breadcrumbs';
+import {ContactsPage} from '../../components/templates/Contacts/index';
 
-export default function Cart() {
+export default function Contacts() {
 
-  const getDefaultTextGenerator = React.useCallback(() => 'Корзина', [])
+  const getDefaultTextGenerator = React.useCallback(() => 'Контакты', [])
   const getTextGenerator = React.useCallback((param: string) => ({}[param]), []);
 
   return (
@@ -26,11 +25,9 @@ export default function Cart() {
             getDefaultTextGenerator={getDefaultTextGenerator}
             getTextGenerator={getTextGenerator}
           />
-          <CartPage/>
+          <ContactsPage/>
         </main>
       </MainLayout>
     </>
   )
 }
-
-

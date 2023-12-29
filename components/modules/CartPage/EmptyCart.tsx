@@ -5,7 +5,6 @@ import {EmptyCartSvg} from '../../elements/EmptyCartSvg/index';
 
 import styles from '../../../styles/cartPage/index.module.scss';
 
-
 export type EmptyCartProps = {
   darkModeClass: string,
 }

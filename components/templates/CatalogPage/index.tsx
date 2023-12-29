@@ -18,14 +18,6 @@ import {NextArrow} from '../../elements/NextArrow/index';
 import skeletonStyles from '../../../styles/skeletonStyles/index.module.scss';
 import styles from '../../../styles/catalogPage/index.module.scss'
 
-
-
-
-//TODO
-// Подумать над запросом в БД для квери параметров.
-// Подумать над запросом в БД при изменении цены.
-
-
 export const CatalogPage = ({query}: { query: IQueryParams }) => {
 
   const {theme} = useAppSelector((state) => state.theme)
@@ -138,9 +130,10 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                           <CatalogItem sofa={i} sofaColor={sofaColor} key={i.id}/>
                         ))}
                       </div>
-                      : <div className={styles.not__found}>
+                      : <div className={`${styles.not__found} ${darkModeClass}`}>
                         <img className={styles.not__found__img} src="/img/notFound1.jpg" alt=""/>
-                        <p>По вашему запросу ничего не нашлось</p>
+                        <p>По вашему запросу ничего не нашлось.</p>
+                        <p>Попробуйте изменить критерии поиска.</p>
                       </div>
                     }
                   </div>

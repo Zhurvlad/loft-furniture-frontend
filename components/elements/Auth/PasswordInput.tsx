@@ -1,7 +1,9 @@
 import React, {FC} from 'react';
-import styles from '../../../styles/authPage/index.module.scss'
-import {IAuthInput} from '../../../types/auth';
 import {useAppSelector} from '../../../hooks/redux';
+
+import {IAuthInput} from '../../../types/auth';
+
+import styles from '../../../styles/authPage/index.module.scss'
 
 export const PasswordInput: FC<IAuthInput> = ({errors, register}) => {
 

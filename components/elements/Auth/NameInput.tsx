@@ -1,9 +1,12 @@
 import React, {FC} from 'react';
-import styles from '../../../styles/authPage/index.module.scss';
-import {IAuthInput} from '../../../types/auth';
+
 import {useAppSelector} from '../../../hooks/redux';
 
-export const NameInput:FC<IAuthInput> = ({errors, register}) => {
+import {IAuthInput} from '../../../types/auth';
+
+import styles from '../../../styles/authPage/index.module.scss';
+
+export const NameInput: FC<IAuthInput> = ({errors, register}) => {
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
@@ -25,8 +28,10 @@ export const NameInput:FC<IAuthInput> = ({errors, register}) => {
              })}
       />
       {errors.username && <span className={styles.error_alert}>{errors.username?.message}</span>}
-      {errors.username && errors.username.type === 'minLength' && <span className={styles.error_alert}>Минимум 4 символа!</span>}
-      {errors.username && errors.username.type === 'maxLength' && <span className={styles.error_alert}>Максимум 16 символов!</span>}
+      {errors.username && errors.username.type === 'minLength' &&
+      <span className={styles.error_alert}>Минимум 4 символа!</span>}
+      {errors.username && errors.username.type === 'maxLength' &&
+      <span className={styles.error_alert}>Максимум 16 символов!</span>}
     </label>
   );
 };

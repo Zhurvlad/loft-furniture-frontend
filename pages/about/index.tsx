@@ -4,10 +4,11 @@ import React from 'react';
 import {CartPage} from '../../components/templates/CartPage/index';
 import {MainLayout} from '../../components/layout/MainLayout';
 import {Breadcrumbs} from '../../components/modules/Breadcrumbs/Breadcrumbs';
+import {AboutPage} from '../../components/templates/About/index';
 
-export default function Cart() {
+export default function About() {
 
-  const getDefaultTextGenerator = React.useCallback(() => 'Корзина', [])
+  const getDefaultTextGenerator = React.useCallback(() => 'О нас', [])
   const getTextGenerator = React.useCallback((param: string) => ({}[param]), []);
 
   return (
@@ -26,7 +27,7 @@ export default function Cart() {
             getDefaultTextGenerator={getDefaultTextGenerator}
             getTextGenerator={getTextGenerator}
           />
-          <CartPage/>
+          <AboutPage/>
         </main>
       </MainLayout>
     </>

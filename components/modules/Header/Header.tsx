@@ -11,7 +11,7 @@ export const Header:React.FC = () => {
   const isMedia950 = useMediaQuery(768)
 
     return (
-        <header className={styles.header}>
+        <header>
           <HeaderTop/>
           <HeaderBottom/>
         </header>

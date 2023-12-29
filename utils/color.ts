@@ -1,3 +1,11 @@
+
+export interface sofaColorProps {
+  id: number,
+  hex: string,
+  colorName: string,
+  colorNameRu: string
+}
+
 export const sofaColor = [
   {id: 1, hex: '#000000', colorName: 'black', colorNameRu: 'Черный'},
   {id: 2, hex: '#EFEFEF', colorName: 'white', colorNameRu: 'Белый'},

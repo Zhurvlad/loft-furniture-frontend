@@ -9,21 +9,22 @@ import {useDebounceCallback} from '../../../hooks/useDebounceCallback';
 import {createSelectOption} from '../../../utils/common';
 import {Api} from '../../../utils/api/index';
 
-import {ISelectInputOption, SelectOptionType} from '../../../types/common';
+import {ISelectInputOption, OptionProps, SelectOptionType} from '../../../types/common';
 
 import {SearchSvg} from '../SearchSvg/index';
 
 import {NoOptionsMessage, NoOptionsSpinner} from '../SelectOptionsMessage/index';
 import {controlStyles, inputStyles, menuStyles, optionStyles} from '../../../styles/searchInput/index';
+
 import styles from '../../../styles/header/index.module.scss';
 
 export const SearchInput = () => {
 
   React.useEffect(() => {
     (async () => {
-    const d =  await Api().sofas.searchSofa('')
+      const d = await Api().sofas.searchSofa('')
       const names = d.rows.map((item) => item.name).map(createSelectOption)
-      setOptions(names)
+      setOptions(names as OptionProps)
     })()
   }, [])
 
@@ -31,22 +32,24 @@ export const SearchInput = () => {
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
   const [searchOption, setSearchOption] = useState<SelectOptionType>(null)
-  const [options, setOptions] = React.useState([])
+  const [options, setOptions] = React.useState<OptionProps>([])
   const [inputValue, setInputValue] = React.useState('')
+
+  console.log(options)
 
   const [spinner, setSpinner] = React.useState(false)
 
   const router = useRouter()
 
   const handleSearchOptionChange = (selectedOption: SelectOptionType) => {
-    if(!selectedOption){
+    if (!selectedOption) {
       setSearchOption(null)
       return
     }
 
     const name = (selectedOption as ISelectInputOption)?.value as string
 
-    if(name) {
+    if (name) {
       getSofaByName(name)
     }
 
@@ -57,7 +60,7 @@ export const SearchInput = () => {
   const delayCallback = useDebounceCallback(1000)
 
   const handleSearchClick = async () => {
-    if(!inputValue){
+    if (!inputValue) {
       return
     }
 
@@ -70,11 +73,11 @@ export const SearchInput = () => {
     try {
       setInputValue(search)
       setSpinner(true)
-      const data  = await Api().sofas.searchSofa(search)
+      const data = await Api().sofas.searchSofa(search)
       const names = data.rows.map((item) => item.name).map(createSelectOption)
       setOptions(names)
 
-      if(data.count === 0){
+      if (data.count === 0) {
         setSpinner(false)
       }
     } catch (e) {
@@ -88,7 +91,7 @@ export const SearchInput = () => {
     try {
       const data = await Api().sofas.searchSofaByName(name)
 
-      if(!data.id) {
+      if (!data.id) {
         toast.warning('Товар не найден')
         return
       }
@@ -106,7 +109,7 @@ export const SearchInput = () => {
 
   return (
     <div>
-      <Select components={{NoOptionsMessage: spinner ? NoOptionsSpinner :  NoOptionsMessage }}
+      <Select components={{NoOptionsMessage: spinner ? NoOptionsSpinner : NoOptionsMessage}}
               placeholder={'Поиск'}
               value={searchOption}
               onChange={handleSearchOptionChange}
@@ -128,7 +131,7 @@ export const SearchInput = () => {
                 })
               }}
               onInputChange={onSearchInputChange}
-              options = {options}
+              options={options}
 
       />
       <button onClick={handleSearchClick} className={`${styles.searchSvg} ${darkModeClass}`}>
