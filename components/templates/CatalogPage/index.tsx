@@ -127,6 +127,7 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                     {sofas.rows?.length
                       ? <div className={styles.items__inner}>
                         {sofas && sofas.rows?.map(i => (
+                          //@ts-ignore
                           <CatalogItem sofa={i} sofaColor={sofaColor} key={i.id}/>
                         ))}
                       </div>

@@ -6,7 +6,7 @@ import {shoppingCartApi} from '../store/shoppingCart/shoppingCart.api';
 
 
 
-export const useCheckUserLogin = ({dispatch}) => {
+export const useCheckUserLogin = () => {
 
 /*
   const shouldCheckAuth = useRef(true)

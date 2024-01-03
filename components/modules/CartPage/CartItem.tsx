@@ -90,8 +90,8 @@ export const CartItem: FC<CartItemProps> = ({item, removeCartItem, setSpinner}) 
         <div className={styles.cart__item__info}>
           <h4 className={`${styles.cart__item__name} ${darkModeClass}`}>{item.name}</h4>
           <ul className={`${styles.cart__item__text} ${darkModeClass}`}>
-            <li className={`${styles.cart__item__color} ${darkModeClass}`}>Цвет: <span>{colorName.colorNameRu}</span>
-              <span className={styles.span__color} style={{backgroundColor: `${colorName.hex}`}}/></li>
+            <li className={`${styles.cart__item__color} ${darkModeClass}`}>Цвет: <span>{colorName?.colorNameRu}</span>
+              <span className={styles.span__color} style={{backgroundColor: `${colorName?.hex}`}}/></li>
             <li className={styles.cart__item__size}>Размер(Ш×Д×В): <span>{sofaSize} СМ</span></li>
           </ul>
         </div>

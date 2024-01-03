@@ -7,6 +7,7 @@ import {ICartItems} from '../types/cart';
 
 import {Api} from './api/index';
 
+//@ts-ignore
 export const toggleCartItem = async (username: string, itemId: number, isInCart: boolean, setSpinner: (arg0: boolean) => void, dispatch) => {
   try {
     if(!username){

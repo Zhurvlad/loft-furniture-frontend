@@ -32,11 +32,11 @@ export const CatalogItem: React.FC<TopSalesItemProps> = ({sofa}) => {
 
   const dispatch = useDispatch()
 
-
+//@ts-ignore
   const toggleCart = () => toggleCartItem(user?.user?.username, sofa.id, isInCart && isInCart, setSpinner, dispatch)
 
-  const itemDiscount = sofa.oldPrice > sofa.price
-  const percentDiscount = itemDiscount && Math.ceil(((sofa.oldPrice - sofa.price) / sofa.oldPrice) * 100)
+  const itemDiscount =  sofa.oldPrice && sofa.oldPrice > sofa.price
+  const percentDiscount = sofa.oldPrice && itemDiscount && Math.ceil((( sofa.oldPrice - sofa.price) / sofa.oldPrice) * 100)
 
   const colorHex = sofaColor.filter((i) => i.colorName === sofa.color).map(i => i.hex)
 
@@ -64,7 +64,7 @@ export const CatalogItem: React.FC<TopSalesItemProps> = ({sofa}) => {
           <p className={`${styles.main__card__subtitle} ${darkModeClass}`}>Диваны</p>
           <div className={styles.main__card__price}>
             <p className={`${styles.main__card__price_new} ${darkModeClass}`}>{formatPrice(sofa.price)}₽</p>
-            {itemDiscount &&
+            {sofa.oldPrice && itemDiscount &&
             <p
               className={`${styles.main__card__price_old} ${darkModeClass}`}>{formatPrice(sofa.oldPrice && sofa.oldPrice)}₽</p>}
           </div>

@@ -1,6 +1,5 @@
 import {CSSObjectWithLabel, GroupBase, OptionProps, StylesConfig} from 'react-select';
 import {ISelectInputOption} from '../../types/common';
-import {defaultStyles} from 'react-select/dist/declarations/src/styles';
 
 
 export const controlStyles = (

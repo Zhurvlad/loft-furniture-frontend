@@ -53,7 +53,7 @@ export const Footer = () => {
                   </Link>
                 </li>
                 <li className={styles.footer__top__contacts__item}>
-                  <a href={'tel:+896489991199'} className={styles.footer__top__contacts__link} href="#">
+                  <a href={'tel:+896489991199'} className={styles.footer__top__contacts__link}>
                     <span>Наш контактный телефон:</span>
                     <span><PhoneSvg/></span>
                     <span>+7(8095) 555-55-55 </span>
@@ -61,8 +61,7 @@ export const Footer = () => {
                   </a>
                 </li>
                 <li className={styles.footer__top__contacts__item}>
-                  <a href={'mailto:mebel_loft_anapa@mail.ru'} className={styles.footer__top__contacts__link}
-                     href="">
+                  <a href={'mailto:mebel_loft_anapa@mail.ru'} className={styles.footer__top__contacts__link}>
                     <span>E-mail:</span>
                     <span><MailSvg/></span>
                     <span>mebel_loft_anapa@mail.ru</span>

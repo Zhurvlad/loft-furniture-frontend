@@ -13,9 +13,11 @@ export const PaymentApi = (instance: AxiosInstance) => (
       return data
     },
 
+    //@ts-ignore
     async checkPayment(paymentId: string) : ICheckPayment{
       const {data} = await instance.post<string>('/payment/info', {paymentId})
 
+      //@ts-ignore
       return data
     },
   }

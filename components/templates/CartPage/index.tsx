@@ -28,6 +28,7 @@ export const CartPage = () => {
   const {item} = useAppSelector(state => state.cart)
   const {item: cart} = useAppSelector(state => state.cart)
 
+  //@ts-ignore
   const {data: cartItem} = shoppingCartApi.useGetUserCartQuery({userId: user?.user.userId})
 
   const [spinner, setSpinner] = React.useState(false)
@@ -38,6 +39,7 @@ export const CartPage = () => {
 
 
   const checkUser = async () => {
+    //@ts-ignore
     if(!user?.user){
       const data = await Api().user.checkUser()
       dispatch(userSlice.actions.checkUser(data))
@@ -113,6 +115,7 @@ export const CartPage = () => {
                 </div>
               </Accordion>
             </div>
+            {/*//@ts-ignore*/}
             <OrderDetails cartContinue={cartContinue} spinner={spinner} sales={totalSales} cartTotalCount={cartTotalCount} cartTotalPrice={cartTotalPrice} totalCount={cartItem?.length} darkModeClass={darkModeClass}/>
           </div>
           :

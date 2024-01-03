@@ -46,6 +46,7 @@ export const sofasSlice = createSlice({
 
 export const sofasSelector = (state: RootState) => state.sofas
 
-export const { sofasFetchingSuccess } = sofasSlice.actions
+//@ts-ignore
+/*export const { sofasFetchingSuccess } = sofasSlice.actions*/
 
 export const sofas = sofasSlice.reducer

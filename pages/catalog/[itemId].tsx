@@ -3,20 +3,25 @@ import React from 'react';
 import {useDispatch} from 'react-redux';
 import {useRouter} from 'next/router';
 
-import {Footer} from '../../components/modules/Footer/Footer';
-import {Custom404} from '../404';
-import {Breadcrumbs} from '../../components/modules/Breadcrumbs/Breadcrumbs';
-import {OneItemPage} from '../../components/templates/ItemPage/index';
-
-import {Api} from '../../utils/api/index';
-import {useAppSelector} from '../../hooks/redux';
-import {sofaSlice} from '../../store/reducers/SofaSlice';
-import {IQueryParams} from '../../types/catalog';
-
-import styles from '../../styles/itemPage/index.module.scss'
-import {MainLayout} from '../../components/layout/MainLayout';
 import {userSlice} from '../../store/reducers/UserSlice';
 import {shoppingCartApi} from '../../store/shoppingCart/shoppingCart.api';
+import {sofaSlice} from '../../store/reducers/SofaSlice';
+
+
+import {useAppSelector} from '../../hooks/redux';
+
+import {Api} from '../../utils/api/index';
+
+import {IQueryParams} from '../../types/catalog';
+
+import Custom404 from '../404';
+import {Footer} from '../../components/modules/Footer/Footer';
+import {Breadcrumbs} from '../../components/modules/Breadcrumbs/Breadcrumbs';
+import {OneItemPage} from '../../components/templates/ItemPage/index';
+import {MainLayout} from '../../components/layout/MainLayout';
+
+import styles from '../../styles/itemPage/index.module.scss'
+
 
 
 export default function ItemPage({query}: { query: IQueryParams }) {
@@ -29,6 +34,7 @@ export default function ItemPage({query}: { query: IQueryParams }) {
   const {user} = useAppSelector((state) => state.user)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
+  //@ts-ignore
   const {data: cartItem} = shoppingCartApi.useGetUserCartQuery({userId: user?.user.userId})
 
 
@@ -38,6 +44,7 @@ export default function ItemPage({query}: { query: IQueryParams }) {
   const dispatch = useDispatch()
 
   const checkUser = async () => {
+    //@ts-ignore
     if(!user?.user){
       const data = await Api().user.checkUser()
       dispatch(userSlice.actions.checkUser(data))
@@ -48,6 +55,7 @@ export default function ItemPage({query}: { query: IQueryParams }) {
     checkUser()
   }, [])
 
+  //@ts-ignore
   const getDefaultTextGenerator = React.useCallback((subpath) => subpath.replace('catalog', 'Каталог'), [])
   const getTextGenerator = React.useCallback((param: string) => ({}[param]), []);
 
@@ -64,7 +72,7 @@ export default function ItemPage({query}: { query: IQueryParams }) {
       if (lastCrumb) {
         lastCrumb.textContent = sofa.name
       }
-      console.log(lastCrumb, 898989)
+
     }, [lastCrumb, sofa])
   }
 
@@ -73,7 +81,7 @@ export default function ItemPage({query}: { query: IQueryParams }) {
     try {
       const data = await Api().sofas.getOne(query.itemId)
 
-      console.log(data)
+
       if (!data) {
         setError(true)
         return

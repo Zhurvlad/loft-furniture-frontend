@@ -23,7 +23,7 @@ export const MainSlider = () => {
   const isMedia960 = useMediaQuery(960)
   const isMedia768 = useMediaQuery(768)
   const isMedia320 = useMediaQuery(320)
-  console.log(isMedia1140)
+
 
   const settings = {
     dots: false,

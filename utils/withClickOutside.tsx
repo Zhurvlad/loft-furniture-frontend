@@ -19,8 +19,10 @@ export function withClickOutside(WrappedComponent: ForwardRefExoticComponent<IWr
           setOpened(false)
         }
       }
+      //@ts-ignore
       document.addEventListener('mousedown', handleClickOutside)
 
+      //@ts-ignore
       return () => document.removeEventListener('mousedown', handleClickOutside)
 
     }, [ref])

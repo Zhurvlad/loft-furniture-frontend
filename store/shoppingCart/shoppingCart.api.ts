@@ -5,6 +5,7 @@ import {UserCartResponse} from '../../types/cart';
 export const shoppingCartApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getUserCart : builder.query<UserCartResponse, void>({
+      //@ts-ignore
       query: ({userId}) => ({
         url: `shopping-cart/${userId}`,
         method: 'GET'

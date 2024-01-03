@@ -42,7 +42,7 @@ export const TopSales = () => {
         ) : (
           <div className={styles.main__top_sales__inner}>
             {sofas && sofaItem.rows.map(i => (
-              <CatalogItem sofaColor={sofaColor} sofa={i} key={i.id}/>
+              <CatalogItem  sofa={i} key={i.id}/>
             ))}
           </div>
         )}

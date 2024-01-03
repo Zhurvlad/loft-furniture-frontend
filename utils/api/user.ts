@@ -12,6 +12,7 @@ export const UserApi = (instance : AxiosInstance) => (
 
       return data
     },
+    //@ts-ignore
     async checkUser (): Promise<LoginUserResponse>{
      try {
        const {data} = await instance.get<void, {data: LoginUserResponse}>('users/login-check')
@@ -22,6 +23,7 @@ export const UserApi = (instance : AxiosInstance) => (
 
        if(axiosError.response){
          if(axiosError.response.status === HTTPStatus.FORBIDDEN){
+           //@ts-ignore
            return
          }
        }

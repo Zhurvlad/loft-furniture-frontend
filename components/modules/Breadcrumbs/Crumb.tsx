@@ -18,7 +18,9 @@ export const Crumb = ({text: defaultText, textGenerator, href, last = false}: IC
     if (!Boolean(textGenerator)) {
       return;
     }
+
     const finalText = await textGenerator();
+    //@ts-ignore
     setText(finalText);
   }
 

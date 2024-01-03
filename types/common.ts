@@ -25,7 +25,7 @@ export interface IAccordion {
 
 export interface ICrumbProps {
   text: string,
-  textGenerator: () => string,
+  textGenerator: () => void ,
   href: string,
   last: boolean
 }

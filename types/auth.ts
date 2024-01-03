@@ -1,4 +1,6 @@
+//@ts-ignore
 import {UseFormRegister} from 'react-hook-form/dist/types/form';
+//@ts-ignore
 import {FieldErrors} from 'react-hook-form/dist/types/errors';
 
 export interface IInputs {
@@ -8,7 +10,7 @@ export interface IInputs {
 }
 
 export interface IRegister {
-  name: string,
+  username: string,
   email: string,
   password: string
 }

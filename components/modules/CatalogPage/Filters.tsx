@@ -43,7 +43,7 @@ export interface FiltersProps {
   setActiveColor: (color: string[]) => void,
   setPriceQuery: (item: number[]) => void,
   currentPage: number,
-  isValidOffset: boolean,
+  isValidOffset: boolean | string,
   setCurrentPage: (obj: number) => void,
   setLoading: (arg: boolean) => void,
   query: IQueryParams
@@ -76,6 +76,7 @@ export const Filters:React.FC<FiltersProps> = ({handleActiveColor, handleActiveM
 
 
   const {user} = useAppSelector(state => state.user)
+  //@ts-ignore
   const {data: cartItem} = shoppingCartApi.useGetUserCartQuery({userId: user?.user?.userId})
 
 
@@ -84,6 +85,7 @@ export const Filters:React.FC<FiltersProps> = ({handleActiveColor, handleActiveM
   const resetFiltersBtnDisabled = !(isPriceRangeChanged || isAnyActiveColor || isAnyActiveManufacturer)
 
   const checkUser = async () => {
+    //@ts-ignore
     if (!user?.user) {
       const data = await Api().user.checkUser()
       dispatch(userSlice.actions.checkUser(data))
@@ -191,6 +193,7 @@ export const Filters:React.FC<FiltersProps> = ({handleActiveColor, handleActiveM
 
   const loadSofas = async () => {
 
+  //@ts-ignore
     const {data} = await Api().sofas.getSofas()
 
     if (!isValidOffset) {
@@ -369,6 +372,7 @@ export const Filters:React.FC<FiltersProps> = ({handleActiveColor, handleActiveM
                     priceRange={priceRange}
                     setPriceRange={setPriceRange}
                     setIsPriceChanged={setIsPriceRangeChanged}
+                    //@ts-ignore
                     allowOverlap={true}
                   />
 

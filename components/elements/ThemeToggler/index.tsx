@@ -7,7 +7,7 @@ import {useTheme} from '../../../hooks/useTheme';
 import styles from '../../../styles/theme/index.module.scss'
 
 
-export const ThemeToggle = ({className}) => {
+export const ThemeToggle = () => {
 
   const {theme} = useAppSelector((state) => state.theme)
   const {toggleTheme} = useTheme()
@@ -24,7 +24,6 @@ export const ThemeToggle = ({className}) => {
   return (
     <div
       className={cn(
-        className,
         styles.theme,
         theme === 'light' ? styles.light : styles.dark)}
       onClick={handleChange}

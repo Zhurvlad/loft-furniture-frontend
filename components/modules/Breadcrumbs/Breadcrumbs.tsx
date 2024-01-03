@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Link from 'next/link';
 import {ParsedUrlQuery} from "querystring";
@@ -59,9 +60,11 @@ export const Breadcrumbs = ({getTextGenerator, getDefaultTextGenerator}
             </a>
           </Link>
         </li>
+
         {breadcrumbs.map((crumb, idx) => (
           <li className={`${styles.breadcrumbs__item} ${darkModeClass}`} key={idx}>
             {crumb.text
+              //@ts-ignore
               ? <Crumb {...crumb} key={idx} last={idx === breadcrumbs.length - 1}/>
               : ''
             }

@@ -73,6 +73,7 @@ export const HeaderTop:React.FC = () => {
 
         dispatch(citySlice.actions.setCity({
             city: data.features[0].properties.city,
+          //@ts-ignore
             street: data.features[0].properties.address_line1,
           })
         )

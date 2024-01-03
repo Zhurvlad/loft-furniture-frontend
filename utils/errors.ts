@@ -6,7 +6,6 @@ import {toast} from 'react-toastify';
 export const showAuthError = (error: unknown) => {
   const axiosError = error as AxiosError
 
-  console.log(axiosError)
   if(axiosError.response){
     if(axiosError.response.status === HTTPStatus.UNAUTHORIZED){
       toast.error('Неверное имя пользователя')

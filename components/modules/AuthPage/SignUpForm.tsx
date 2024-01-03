@@ -36,7 +36,7 @@ export const SignUpForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
       reset()
     } catch (err) {
       const maybeError = isErrorWithMessage(err)
-      console.log(maybeError, 4234)
+      console.log(maybeError)
       if (maybeError) {
         setError(err.data.message)
         showAuthError(maybeError)

@@ -50,7 +50,8 @@ export const authApi = api.injectEndpoints({
   })
 })
 
-
+//@ts-ignore
 export const {useLoginMutation, useLoginCheckQuery, useRegisterMutation, useLogoutQuery} = authApi
 
+//@ts-ignore
 export const {endpoints: {register, login, loginCheck, logout}} = authApi

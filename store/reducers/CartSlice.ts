@@ -51,6 +51,7 @@ export const cartSlice = createSlice({
   },
   extraReducers: builder => {
     builder
+      //@ts-ignore
       .addMatcher(shoppingCartApi.endpoints.getUserCart.matchFulfilled, (state: CartState, actions : PayloadAction<ICart[]>) => {
       state.item = actions.payload
     })

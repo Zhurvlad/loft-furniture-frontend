@@ -51,6 +51,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
     try {
       const data = await Api().payment.makePayment({
         amount: cartTotalPrice,
+        //@ts-ignore
         description: `Заказ №1 ${city.city.length ? `Город: ${city.city}, улица: ${city.street}` : ''}`
       })
 
@@ -66,6 +67,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
 
   const resetCart = async () => {
     sessionStorage.removeItem('paymentId')
+    //@ts-ignore
     await Api().cart.removeAllCartItem(+user?.user.userId)
     dispatch(cartSlice.actions.setCartItem([]))
   }
@@ -74,7 +76,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
 
     try {
       const data = await Api().payment.checkPayment(paymentId)
-
+      //@ts-ignore
       if (data.status === 'succeeded') {
         await resetCart()
       }

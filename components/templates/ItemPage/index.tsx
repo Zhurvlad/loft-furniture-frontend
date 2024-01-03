@@ -30,6 +30,7 @@ export const OneItemPage = ({darkModeClass}: { darkModeClass: string }) => {
   const dispatch = useDispatch()
 
   const isInCart = item?.some((cartItem) => cartItem.itemId === +sofa.id)
+  //@ts-ignore
   const toggleCart = () => toggleCartItem(user && user.user?.username, +sofa.id, isInCart && isInCart, setSpinner, dispatch)
   const addedToCart = isInCart && `${styles.added}`
 

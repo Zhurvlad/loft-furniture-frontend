@@ -25,16 +25,21 @@ export const userSlice = createSlice({
   },
   extraReducers: builder => {
     builder
+      //@ts-ignore
       .addMatcher(authApi.endpoints.login.matchFulfilled, (state:ResponseLoginUser, action) => {
+        //@ts-ignore
         state.user = action.payload
       })
+      //@ts-ignore
       .addMatcher(authApi.endpoints.register.matchFulfilled, (state:UserState, action) => {
+        //@ts-ignore
         state.user = action.payload
       })
      /* .addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
         state.user = []
       })*/
       .addMatcher(authApi.endpoints.loginCheck.matchFulfilled, (state:UserState, action) => {
+        //@ts-ignore
         state.user = action.payload
       })
 
