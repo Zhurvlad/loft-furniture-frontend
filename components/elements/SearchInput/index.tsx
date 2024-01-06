@@ -35,7 +35,7 @@ export const SearchInput = () => {
   const [options, setOptions] = React.useState<OptionProps>([])
   const [inputValue, setInputValue] = React.useState('')
 
-  console.log(options)
+
 
   const [spinner, setSpinner] = React.useState(false)
 

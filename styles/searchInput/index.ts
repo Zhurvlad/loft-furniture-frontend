@@ -10,7 +10,6 @@ export const controlStyles = (
   '&:hover': {borderColor: '#e6e6e6',},
   height: '40px',
   boxShadow: 'none',
-  width: '840px',
   cursor: 'text',
   '& .css-1dimb5e-singleValue': {color: theme === 'dark' ? '#f2f2f2' : '#313131'},
 

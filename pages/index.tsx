@@ -67,6 +67,7 @@ export default function Home() {
         getTextGenerator={getTextGenerator}
       />
       <MainPage/>
+      <div className={'overlay'}/>
       <Footer/>
     </>
 )

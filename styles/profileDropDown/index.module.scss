@@ -4,10 +4,31 @@
   margin: 0;
   padding: 0;
   border: none;
-  width: 20px;
+  width: 16px;
   height: 20px;
   background-color: transparent;
   z-index: 10;
+
+  @media (max-width: 768px) {
+    margin-left: 25px;
+  }
+
+  @media (max-width: 420px) {
+    margin-left: 20px;
+  }
+
+}
+
+.profile button span svg path{
+  @media (max-width: 768px) {
+    stroke: black;
+  }
+}
+
+.profile.dark_mode button span svg path{
+  @media (max-width: 768px) {
+    stroke: white;
+  }
 }
 
 .profile__dropdown.dark_mode{

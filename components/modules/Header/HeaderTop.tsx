@@ -1,20 +1,22 @@
 import React from 'react';
 import Link from 'next/link';
 
-import {citySlice} from '../../../store/reducers/CitySlice';
+import {useAppSelector} from '../../../hooks/redux';
 
-import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
-
-import {Api} from '../../../utils/api/index';
-
-import {LocationSvg} from '../../elements/LocationSvg/index';
 import {SignInForm} from '../AuthPage/SignInForm';
 import {SignUpForm} from '../AuthPage/SignUpForm';
 import ProfileDropDown from './ProfileDropDown';
 
 import styles from '../../../styles/header/index.module.scss'
-import spinnerStyles from '../../../styles/spinner/index.module.scss'
+import {CityButton} from '../../elements/CityButton/index';
+import {useMediaQuery} from '../../../hooks/useMediaQuery';
+import {UserProfile} from './UserProfile';
 
+const headerRef = [
+  {id: 1, name: 'Главная', ref: '/'},
+  {id: 2, name: 'О нас', ref: '/about'},
+  {id: 3, name: 'Контакты', ref: '/contacts'},
+]
 
 export interface GeolocationCoordinates {
   latitude: number;
@@ -36,108 +38,61 @@ export interface GeolocationPositionError {
   message: string;
 }
 
-export const HeaderTop:React.FC = () => {
+export const HeaderTop: React.FC = () => {
 
-  const {user} = useAppSelector(state => state.user)
-  const {city} = useAppSelector(state => state.city)
-  const [open, setOpen] = React.useState(false)
-  const [register, setRegister] = React.useState(false)
-  const [spinner, setSpinner] = React.useState(false)
-  const dispatch = useAppDispatch()
+  const isMedia768 = useMediaQuery(768)
 
+  const [openBurgerMenu, setOpenBurgerMenu] = React.useState(false)
 
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
-  const toggleRegister = () => {
-    setRegister(!register)
+  const toggleBurgerMenu = () => {
+    setOpenBurgerMenu(!openBurgerMenu)
+    window.scrollTo(0,0)
+    document.querySelector('.overlay')?.classList.toggle('open')
+    document.querySelector('.body')?.classList.toggle('overflow-hidden')
   }
 
-  const toggleOpen = () => {
-    setOpen(!open)
+  const closeBurgerMenu = () => {
+    setOpenBurgerMenu(false)
+    document.querySelector('.overlay')?.classList.remove('open')
+    document.querySelector('.body')?.classList.remove('overflow-hidden')
   }
 
-  const getCity = () => {
-    const options = {
-      enableHighAccuracy: true,
-      timeout: 2000,
-      maximumAge: 0
-    }
+  React.useEffect(() => {
+    const overlay = document.querySelector('.overlay')
 
-    const success = async (pos: GeolocationPosition) => {
-      try {
-        setSpinner(true)
-        const {longitude, latitude} = pos.coords
+    overlay?.addEventListener('click', closeBurgerMenu)
 
-        const data = await Api().location.getLocation({longitude, latitude})
 
-        dispatch(citySlice.actions.setCity({
-            city: data.features[0].properties.city,
-          //@ts-ignore
-            street: data.features[0].properties.address_line1,
-          })
-        )
-
-      } catch (e) {
-        console.log(e)
-      } finally {
-        setSpinner(false)
-      }
-    }
-
-    const error = (error: GeolocationPositionError) => console.log(error)
-    navigator.geolocation.getCurrentPosition(success, error, options)
-  }
-
+    return () => overlay?.removeEventListener('click', closeBurgerMenu)
+  }, [openBurgerMenu])
 
   return (
     <div className={styles.header__top}>
       <div className={'container'}>
         <div className={styles.header__top__inner}>
-          <button onClick={getCity} className={styles.city}>
-                <span>
-                      <LocationSvg/>
-                </span>
-            <span className={`${styles.city__text} ${darkModeClass}`}>
-        {spinner ? (
-          <span
-            className={spinnerStyles.spinner}
-            style={{top: '-2px', left: 10, width: 20, height: 20}}
-          />
-        ) : city.city?.length ? (
-          city.city
-        ) : (
-          'Город'
-        )}
-      </span>
-          </button>
-          <nav className={styles.menu}>
+          {!isMedia768 && <CityButton darkModeClass={darkModeClass}/>}
+          {isMedia768
+          &&
+          <button onClick={toggleBurgerMenu} className={`${styles.burger_menu} ${openBurgerMenu ? styles.open : ''} ${darkModeClass}`}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>}
+          <nav className={`${styles.menu} ${openBurgerMenu ? styles.open : ''}`}>
             <ul className={styles.menu__list}>
-              <li className={styles.menu__item}>
-                <Link href={'/'} legacyBehavior passHref>
-                  <a>Главная</a>
-                </Link>
-              </li>
-              <li className={styles.menu__item}>
-                <Link href={'/about'} legacyBehavior passHref>
-                  <a>О нас</a>
-                </Link>
-              </li>
-              <li className={styles.menu__item}>
-                <Link href={'/contacts'} legacyBehavior passHref>
-                  <a>Контакты</a>
-                </Link>
-              </li>
+              {headerRef.map((i) =>
+                <li key={i.id} className={styles.menu__item}>
+                  <Link href={i.ref} legacyBehavior passHref>
+                    <a>{i.name}</a>
+                  </Link>
+                </li>
+              )}
             </ul>
           </nav>
-          <div onClick={toggleOpen} className={styles.header__box}>
-            <ProfileDropDown/>
-          </div>
-          {!user && open
-            ? register
-              ? <SignUpForm setOpen={toggleOpen} toggleRegister={toggleRegister}/>
-              : <SignInForm setOpen={toggleOpen} toggleRegister={toggleRegister}/>
-            : ''}
+          <UserProfile/>
         </div>
       </div>
     </div>

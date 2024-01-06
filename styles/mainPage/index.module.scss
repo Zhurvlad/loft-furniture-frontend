@@ -7,6 +7,10 @@
 
 .categories {
   margin-bottom: 30px;
+
+  @media (max-width: 600px) {
+    margin-bottom: 15px;
+  }
 }
 
 .categories__inner {
@@ -14,28 +18,94 @@
   align-items: center;
   justify-content: space-around;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.07);
+
+  @media (max-width: 960px) {
+    box-shadow: none;
+  }
 }
 
 .categories__item {
-  padding: 25px 0;
+  margin: 25px 0;
+
+  @media (max-width: 968px) {
+    margin: 0;
+  }
+
+  @media (max-width: 600px) {
+    padding: 0;
+    width: 50px;
+    height: 95px;
+  }
 }
 
 .categories__item__link {
   position: relative;
   padding-left: 33px;
   font-size: 16px;
+  @media (max-width: 960px) {
+    text-align: center;
+    padding-left: 0;
+    font-size: 14px;
+  }
 
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
+
+  @media (max-width: 520px) {
+    font-size: 11px;
+  }
+
+  @media (max-width: 320px) {
+    font-size: 9px;
+  }
 }
+
+
+
+.categories__inner .categories__item:last-child .categories__item__link{
+  padding-left: 5px;
+  span{
+    display: none;
+
+    @media (max-width: 960px) {
+      display: inline-flex;
+
+      svg path{
+        fill: transparent;
+      }
+    }
+  }
+}
+
 
 .categories__item__link:hover span svg path, .categories__item__link:hover {
   fill: #888888;
   color: #888888;
+  stroke: transparent;
+}
+
+.categories__inner .categories__item:hover:last-child a span svg path, .categories__item__link:hover:last-child {
+  fill: #FFDBD7;
+  color: #b0b0b0;
+  stroke: #FD5E49;
 }
 
 .categories__item__link span {
   position: absolute;
   left: 0;
   top: -2px;
+
+  @media (max-width: 960px) {
+    position: static;
+    width: 50px;
+    height: 50px;
+    display: inline-flex;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.07);
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+  }
 }
 
 .categories__item__link span svg {
@@ -44,14 +114,35 @@
   fill: $black;
 }
 
+.categories__inner .categories__item:last-child a span svg {
+  width: 22px;
+  height: 22px;
+  fill: transparent;
+}
+
 .categories__item__link.dark_mode span svg path {
   fill: $white;
 }
+
+
 
 .categories__item__link.dark_mode:hover.dark_mode span svg path,
 .categories__item__link:hover.dark_mode {
   fill: #b0b0b0;
   color: #b0b0b0;
+  stroke: transparent;
+}
+
+/*.categories__inner .categories__item:last-child a.dark_mode:hover.dark_mode span svg path,
+.categories__inner .categories__item:last-child a.dark_mode {
+  fill: #FFDBD7;
+  color: $white;
+}*/
+
+.categories__inner .categories__item:hover:last-child a.dark_mode span svg path, .categories__item__link:hover:last-child {
+  fill: transparent;
+  color: #b0b0b0;
+  stroke: #FD5E49;
 }
 
 .categories__item__link.dark_mode {
@@ -289,5 +380,12 @@
 
   &.dark_mode{
     color: $white;
+  }
+}
+
+
+@media (max-width: 960px) {
+  .categories__inner{
+
   }
 }

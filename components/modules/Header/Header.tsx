@@ -8,11 +8,11 @@ import styles from '../../../styles/header/index.module.scss'
 
 export const Header:React.FC = () => {
 
-  const isMedia950 = useMediaQuery(768)
+  const isMedia768 = useMediaQuery(768)
 
     return (
         <header>
-          <HeaderTop/>
+          {!isMedia768 && <HeaderTop/>}
           <HeaderBottom/>
         </header>
     );
