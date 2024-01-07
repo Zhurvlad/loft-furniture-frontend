@@ -7,6 +7,7 @@ import {PhoneSvg} from '../../elements/PhoneSvg/index';
 import {MailSvg} from '../../elements/MailSvg/index';
 
 import styles from '../../../styles/footer/index.module.scss'
+import {useMediaQuery} from '../../../hooks/useMediaQuery';
 
 
 const AvailableCategories = [
@@ -20,11 +21,14 @@ const AvailableCategories = [
 ]
 
 export const Footer = () => {
+
+  const isMedia600 = useMediaQuery(600)
+
   return (
     <footer className={styles.footer}>
       <div className="container">
         <div className={styles.footer__inner}>
-          <div className={styles.footer__left}>
+          {!isMedia600 && <div className={styles.footer__left}>
             <h4 className={styles.footer__top__title}>Навигация</h4>
             <ul className={styles.footer__left__list}>
               {AvailableCategories.map(item => (
@@ -36,7 +40,7 @@ export const Footer = () => {
               ))}
 
             </ul>
-          </div>
+          </div>}
           <div className={styles.footer__right}>
             <LogoSmallSvg/>
             <div className={styles.footer__top__inner}>

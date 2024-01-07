@@ -33,8 +33,13 @@
 
   @media (max-width: 600px) {
     padding: 0;
-    width: 50px;
+    width: 50px !important;
     height: 95px;
+  }
+
+  @media (max-width: 460px) {
+    margin: 0 5px;
+    width: 50px !important;
   }
 }
 
@@ -61,8 +66,6 @@
   }
 }
 
-
-
 .categories__inner .categories__item:last-child .categories__item__link{
   padding-left: 5px;
   span{
@@ -83,12 +86,32 @@
   fill: #888888;
   color: #888888;
   stroke: transparent;
+
+  @media (max-width: 460px) {
+    fill: #000000;
+    color: #000000;
+  }
 }
+
+.red:hover svg path{
+  @media (max-width: 460px) {
+    stroke: #000000 !important;
+    fill: transparent !important;
+
+  }
+}
+
 
 .categories__inner .categories__item:hover:last-child a span svg path, .categories__item__link:hover:last-child {
   fill: #FFDBD7;
   color: #b0b0b0;
   stroke: #FD5E49;
+
+  @media (max-width: 460px) {
+    stroke: transparent;
+    fill: transparent;
+  }
+
 }
 
 .categories__item__link span {
@@ -111,7 +134,9 @@
 .categories__item__link span svg {
   width: 22px;
   height: 22px;
-  fill: $black;
+  fill: transparent;
+
+
 }
 
 .categories__inner .categories__item:last-child a span svg {
@@ -143,6 +168,12 @@
   fill: transparent;
   color: #b0b0b0;
   stroke: #FD5E49;
+
+  @media (max-width: 460px) {
+    fill: chocolate;
+    color: #000000;
+    stroke: chocolate;
+  }
 }
 
 .categories__item__link.dark_mode {
@@ -151,8 +182,6 @@
 
 .main__slider {
   position: relative;
-  margin-bottom: 30px;
-
   img {
     width: 100%;
   }
@@ -184,6 +213,7 @@
 
 .main__top_sales {
   margin-bottom: 10px;
+  margin-top: 30px;
 }
 
 .main__top_sales__inner {
@@ -191,6 +221,10 @@
   flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: 30px;
+
+  @media (max-width: 1140px) {
+    justify-content: space-around;
+  }
 }
 
 /*
@@ -212,9 +246,29 @@
   position: relative;
   padding: 74px 20px 20px 20px;
   text-align: center;
-  margin-bottom: 30px;
   border: 1px solid rgba(239, 239, 239, 1);
   border-radius: 10px;
+  margin: 0 5px 30px;
+
+  @media (max-width: 1140px) {
+    width: 290px;
+  }
+
+  @media (max-width: 960px) {
+    width: 230px;
+  }
+
+  @media (max-width: 768px) {
+    width: 263px;
+  }
+
+  @media (max-width: 600px) {
+    width: 230px;
+  }
+
+  @media (max-width: 540px) {
+    min-width: 263px;
+  }
 }
 
 .main__top_sales__card.dark_mode {

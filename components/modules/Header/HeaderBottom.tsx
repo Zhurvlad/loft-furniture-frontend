@@ -11,7 +11,6 @@ import {ThemeToggle} from '../../elements/ThemeToggler/index';
 import styles from '../../../styles/header/index.module.scss'
 import {useMediaQuery} from '../../../hooks/useMediaQuery';
 import {UserProfile} from './UserProfile';
-import {BurgerMenu} from '../../elements/BurgerMenu/index';
 import {MobileLogo} from '../../elements/MobileLogo/index';
 import {KitchenSvg} from '../../elements/KitchenSvg/index';
 import {CloseBurgerSvg} from '../../elements/CloseBurgerSvg/index';
