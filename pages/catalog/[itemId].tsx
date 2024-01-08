@@ -118,7 +118,6 @@ export default function ItemPage({query}: { query: IQueryParams }) {
          </main>
         </MainLayout>
       }
-      <Footer/>
     </>
   )
 }

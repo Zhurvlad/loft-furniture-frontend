@@ -46,8 +46,7 @@ export const Crumb = ({text: defaultText, textGenerator, href, last = false}: IC
       <a>
               <span
                 className={`${styles.breadcrumbs__item__icon} ${darkModeClass}`}
-                style={{marginRight: 13}}
-              >
+                style={{marginRight: 13}}>
               </span>
         <span className={styles.breadcrumbs__item__text}>{text}</span>
       </a>

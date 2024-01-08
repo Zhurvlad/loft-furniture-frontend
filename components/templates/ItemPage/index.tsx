@@ -66,10 +66,10 @@ export const OneItemPage = ({darkModeClass}: { darkModeClass: string }) => {
                 :
                 <p className={`${styles.item__empty} ${darkModeClass}`}>Нет на складе</p>
             }
-            <div className={`${styles.item__favorite} ${darkModeClass} ${styles.active}`}>
+            {/*<div className={`${styles.item__favorite} ${darkModeClass} ${styles.active}`}>
               <FavoriteSvg/>
               <span>Добавить в желаемое</span>
-            </div>
+            </div>*/}
           </div>
           <div className={`${styles.item__color} ${darkModeClass}`}>
             <p>Цвет:<span>{color.map(i => i.colorNameRu)}</span></p>

@@ -18,9 +18,9 @@ export const ItemCharacteristics:React.FC<ItemCharacteristicsProps> = ({ darkMod
           {SofaInfo.map((item) =>
             <div key={item.id}>
               <div className={`${styles.cart__details__count} ${darkModeClass}`}>
-                <p>{item.infoName}</p>
+                <p >{item.infoName}</p>
                 <div/>
-                <p>{item.value}</p>
+                <p className={styles.cart__details__info}>{item.value}</p>
               </div>
             </div>)}
         </div>

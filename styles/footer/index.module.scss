@@ -14,6 +14,8 @@
 
   @media (max-width: 480px) {
     flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding-top: 20px;
   }
 }
 
@@ -62,6 +64,9 @@
 
 .footer__top__contacts{
 
+  @media (max-width: 480px) {
+    font-size: 10px;
+  }
 }
 
 .footer__top__contacts__item{
@@ -117,6 +122,10 @@
   @media (max-width: 600px) {
     flex-wrap: wrap;
   }
+
+  @media (max-width: 480px) {
+    padding: 10px 0;
+  }
 }
 
 .footer__bottom__left {
@@ -142,6 +151,11 @@
 
   @media (max-width: 968px) {
     margin-bottom: 20px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px;
+    margin-bottom: 10px;
   }
 
 }
@@ -240,3 +254,10 @@
   flex-wrap: wrap;
   width: 250px;
 }*/
+
+
+.footer__bottom__block__copyright{
+  @media (max-width: 480px) {
+    font-size: 12px;
+  }
+}
