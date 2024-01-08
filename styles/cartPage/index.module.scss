@@ -15,6 +15,7 @@
   &.dark_mode{
     color: #F9F9F9;
   }
+
 }
 
 .cart__subtitle{
@@ -412,7 +413,7 @@
 .emptyCart__title{
   font-size: 23px;
   font-weight: 800;
-  width: 550px;
+  max-width: 550px;
   margin: 0 auto 15px;
   text-transform: uppercase;
   line-height: 36px;
@@ -420,15 +421,24 @@
   &.dark_mode{
     color: $white;
   }
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+    line-height: 24px;
+  }
 }
 
 .emptyCart__text{
   font-size: 16px;
-  width: 640px;
+  max-width: 640px;
   margin: 0 auto 20px;
   color: #7C8B9D;
   &.dark_mode{
     color: $white;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
   }
 }
 

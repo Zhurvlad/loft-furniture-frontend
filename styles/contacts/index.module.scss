@@ -15,6 +15,11 @@
   &.dark_mode {
     color: #f2f2f2;
   }
+
+  @media (max-width: 480px) {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
 }
 
 .contacts__inner {

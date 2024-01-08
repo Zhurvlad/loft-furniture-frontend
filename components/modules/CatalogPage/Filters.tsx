@@ -22,6 +22,9 @@ import {Accordion} from '../../elements/Accordion/index';
 
 import spinnerStyles from '../../../styles/spinner/index.module.scss';
 import styles from '../../../styles/catalogPage/index.module.scss';
+import {CloseBurgerSvg} from '../../elements/CloseBurgerSvg/index';
+import {useMediaQuery} from '../../../hooks/useMediaQuery';
+import {FilterSelect} from './FilterSelect';
 
 const sofaManufacturers = [
   'SCANDICA',
@@ -36,7 +39,7 @@ const sofaManufacturers = [
 
 export interface FiltersProps {
   handleActiveColor: (color: string) => void,
-  handleActiveManufacturer : (manufacturer: string) => void,
+  handleActiveManufacturer: (manufacturer: string) => void,
   activeColor: string[],
   activeManufacturer: string[],
   setActiveManufacturer: (manufacturer: string[]) => void,
@@ -49,11 +52,12 @@ export interface FiltersProps {
   query: IQueryParams
 }
 
-export const Filters:React.FC<FiltersProps> = ({handleActiveColor, handleActiveManufacturer,
-                                                 activeColor, query, activeManufacturer,
-                                                 setActiveManufacturer, setActiveColor, setPriceQuery, currentPage,
-                                                 isValidOffset, setCurrentPage, setLoading}) => {
-
+export const Filters: React.FC<FiltersProps> = ({
+                                                  handleActiveColor, handleActiveManufacturer,
+                                                  activeColor, query, activeManufacturer,
+                                                  setActiveManufacturer, setActiveColor, setPriceQuery, currentPage,
+                                                  isValidOffset, setCurrentPage, setLoading
+                                                }) => {
 
 
   const {theme} = useAppSelector((state) => state.theme)
@@ -66,7 +70,6 @@ export const Filters:React.FC<FiltersProps> = ({handleActiveColor, handleActiveM
   const [priceRange, setPriceRange] = React.useState([0, 200000])
 
   const [isPriceRangeChanged, setIsPriceRangeChanged] = React.useState(false)
-
 
 
   const [spinnerShow, setSpinnerShow] = React.useState(false)
@@ -193,7 +196,7 @@ export const Filters:React.FC<FiltersProps> = ({handleActiveColor, handleActiveM
 
   const loadSofas = async () => {
 
-  //@ts-ignore
+    //@ts-ignore
     const {data} = await Api().sofas.getSofas()
 
     if (!isValidOffset) {
@@ -229,6 +232,8 @@ export const Filters:React.FC<FiltersProps> = ({handleActiveColor, handleActiveM
     try {
       setSpinnerShow(true)
       setLoading(true)
+
+
 
       const priceFrom = priceRange[0]
       const priceTo = priceRange[1]
@@ -319,17 +324,31 @@ export const Filters:React.FC<FiltersProps> = ({handleActiveColor, handleActiveM
         setPriceQuery([priceFrom, priceTo])
         return
       }
+
+
+
       setTimeout(() => {
         setSpinnerShow(false)
         setLoading(false)
       }, 1000)
+
+
+
     } catch (e) {
       toast.error('Произошла неизвестная ошибка')
     } finally {
+
+
       setTimeout(() => {
         setSpinnerShow(false)
         setLoading(false)
       }, 1000)
+
+      if(isMedia768){
+        closeBurgerMenu()
+      }
+
+
     }
   }
 
@@ -361,8 +380,27 @@ export const Filters:React.FC<FiltersProps> = ({handleActiveColor, handleActiveM
     }
   }
 
-    return (
-      <div className={styles.filters}>
+  const [openBurgerMenu, setOpenBurgerMenu] = React.useState(false)
+
+  const isMedia768 = useMediaQuery(810)
+
+  const toggleBurgerMenu = () => {
+    setOpenBurgerMenu(!openBurgerMenu)
+    window.scrollTo(0, 0)
+    document.querySelector('.overlay')?.classList.toggle('open')
+    document.querySelector('.body')?.classList.toggle('overflow-hidden')
+  }
+
+  const closeBurgerMenu = () => {
+    setOpenBurgerMenu(false)
+    document.querySelector('.overlay')?.classList.remove('open')
+    document.querySelector('.body')?.classList.remove('overflow-hidden')
+  }
+
+  return (
+    <div className={styles.filters}>
+
+      {!isMedia768 && <div>
         <form>
           <ul className={styles.filters__list}>
             <div className={styles.filter__list__inner}>
@@ -426,7 +464,92 @@ export const Filters:React.FC<FiltersProps> = ({handleActiveColor, handleActiveM
             className={spinnerStyles.spinner}
           /> : 'Сбросить все фильтры'}
         </button>
-      </div>
-    );
+      </div>}
+      {isMedia768
+      &&
+      <div className={styles.filters__mob}>
+        <button onClick={toggleBurgerMenu}
+                className={`${styles.filters__mobile__btn} ${openBurgerMenu ? styles.open : ''}`}>
+          Фильтры
+        </button>
+        <div className={styles.items__sort}>
+          <FilterSelect/>
+        </div>
+        <div className={`${styles.filters__mobile} ${openBurgerMenu ? styles.filters__mobile__active : ''}`}>
+          <div className={styles.filters__mobile__header}>
+            <h3 className={styles.filters__mobile__title}>Фильтры</h3>
+            <span onClick={closeBurgerMenu}><CloseBurgerSvg/></span>
+          </div>
+
+          <div className={styles.filters}>
+            <form>
+              <ul className={styles.filters__list}>
+                <div className={styles.filter__list__inner}>
+                  <Accordion arrowClass={styles.open} title={'Цена'}>
+                    <li className={styles.filters__list__item}>
+                      <PriceRange
+                        priceRange={priceRange}
+                        setPriceRange={setPriceRange}
+                        setIsPriceChanged={setIsPriceRangeChanged}
+                        //@ts-ignore
+                        allowOverlap={true}
+                      />
+
+                    </li>
+                  </Accordion>
+                </div>
+                <div style={{height: 20}}/>
+                <div className={styles.filter__list__inner}>
+                  <Accordion arrowClass={styles.open} title={'Цвет'}>
+                    <li className={styles.filters__list__item}>
+                      {sofaColor.map(item => (
+                        <ColorEl key={item.id} activeColor={activeColor} item={item}
+                                 toggleActiveColor={handleActiveColor}/>
+                      ))}
+                    </li>
+                  </Accordion>
+                </div>
+                <div style={{height: 20}}/>
+                <div className={styles.filter__list__inner}>
+                  <Accordion arrowClass={styles.open} title={'Бренд'}>
+                    <li className={styles.filters__list__item}>
+                      {sofaManufacturers.map(item => (
+                        <BrandInput
+                          key={item}
+                          activeManufacturer={activeManufacturer}
+                          handleActiveManufacturer={handleActiveManufacturer}
+                          manufacturer={item}/>
+                      ))}
+                    </li>
+                  </Accordion>
+                </div>
+              </ul>
+            </form>
+            <button
+              className={`${styles.filter__clear} ${darkModeClass} ${loadingItem}`}
+              disabled={resetFiltersBtnDisabled}
+              onClick={applyFilter}
+            >
+              {spinnerShow ? <span
+                style={{top: '9px', left: '45%'}}
+                className={spinnerStyles.spinner}
+              /> : 'Показать'}
+
+            </button>
+            <button
+              onClick={resetFilters}
+              className={`${styles.filter__clear} ${darkModeClass} ${loadingClear}`}
+              disabled={resetFiltersBtnDisabled}>
+              {spinnerClear ? <span
+                style={{top: '9px', left: '45%'}}
+                className={spinnerStyles.spinner}
+              /> : 'Сбросить все фильтры'}
+            </button>
+          </div>
+        </div>
+      </div>}
+    </div>
+  )
+    ;
 };
 

@@ -17,11 +17,16 @@ import {NextArrow} from '../../elements/NextArrow/index';
 
 import skeletonStyles from '../../../styles/skeletonStyles/index.module.scss';
 import styles from '../../../styles/catalogPage/index.module.scss'
+import {FiltersMobile} from '../../modules/CatalogPage/FiltersMobile';
+import {useMediaQuery} from '../../../hooks/useMediaQuery';
 
 export const CatalogPage = ({query}: { query: IQueryParams }) => {
 
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
+
+  const isMedia768 = useMediaQuery(810)
+  const isMedia480 = useMediaQuery(480)
 
   const router = useRouter()
 
@@ -106,10 +111,12 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
             setCurrentPage={setCurrentPage}
             setLoading={setLoading}
           />
+
           <div className={styles.items}>
-            <div className={styles.items__sort}>
+            {/*<FiltersMobile/>*/}
+            {!isMedia768 && <div className={styles.items__sort}>
               <FilterSelect/>
-            </div>
+            </div>}
             <div>
               {isLoading || loading
                 ? (
@@ -146,8 +153,8 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                 containerClassName={styles.pagination__list}
                 pageLinkClassName={`${styles.pagination__list__item} ${darkModeClass}`}
                 previousClassName={currentPage !== 0 ? `${styles.pagination__prev}` : `${styles.arrow__disable}`}
-                nextLabel={<NextArrow/>}
-                previousLabel={<PrevArrow/>}
+                nextLabel={!isMedia480 && <NextArrow/>}
+                previousLabel={!isMedia480 && <PrevArrow/>}
                 nextClassName={pagesCount !== currentPage + 1 ? `${styles.pagination__next}` : `${styles.arrow__disable}`}
                 breakLinkClassName={`${styles.pagination__break__link} ${darkModeClass}`}
                 breakLabel={'...'}

@@ -31,6 +31,9 @@ export const controlStyles = (
   '@media (max-width: 560px)': {
     width: '177px',
   },
+  '@media (max-width: 480px)': {
+    width: '160px',
+  },
 })
 
 export const menuStyles = (
