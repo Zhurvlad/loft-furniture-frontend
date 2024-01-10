@@ -9,9 +9,12 @@ import {AccordionArrow} from '../AccordionArrow/index';
 import {ArrowBack} from '../ArrowBack/index';
 
 import styles from '../../../styles/catalogPage/index.module.scss';
+import {useMediaQuery} from '../../../hooks/useMediaQuery';
 
 
 export const Accordion: React.FC<IAccordion> = ({children, title, arrowClass, toggleCartContinue, cartTotalCount, inCart, cartContinue}) => {
+
+  const isMedia960 = useMediaQuery(960)
 
   const [expanded, setExpanded] = React.useState(false)
 
@@ -39,7 +42,7 @@ export const Accordion: React.FC<IAccordion> = ({children, title, arrowClass, to
           {!inCart ? <span
             className={`${styles.filter__title__arrow} ${arrowRotate} ${darkModeClass}`}><AccordionArrow/></span> : !cartContinue ?
             <span onClick={inCart ? toggleOpenAccordion : undefined}
-                  className={`${styles.filter__title__arrow}`}><ArrowBack/> Редактировать</span> : ''}
+                  className={`${styles.filter__title__arrow}`}>{!isMedia960 && <ArrowBack/>} Редактировать</span> : ''}
         </p>
 
       </motion.div>

@@ -18,7 +18,8 @@ export type OrderDetailsProps = {
   cartTotalCount: number,
   sales: number,
   spinner: boolean,
-  cartContinue: boolean
+  cartContinue: boolean,
+  totalPrice: number
 
 }
 
@@ -28,7 +29,8 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
                                                             cartTotalCount,
                                                             sales,
                                                             spinner,
-                                                            cartContinue
+                                                            cartContinue,
+                                                            totalPrice
                                                           }) => {
 
   const {user} = useAppSelector(state => state.user)
@@ -89,13 +91,13 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
 
 
   return (
-    <div className={styles.v}>
-      <div className={`${styles.cart__details} ${darkModeClass}`}>
+    <div className={styles.cart__details}>
+      <div className={`${styles.cart__details__inner} ${darkModeClass}`}>
         <h5 className={styles.cart__details__title}>Детали заказа</h5>
         <div className={styles.cart__details__count}>
           <p> {cartTotalCount} товара </p>
           <div/>
-          <p>{formatPrice(cartTotalPrice)} ₽</p>
+          <p>{formatPrice(totalPrice)} ₽</p>
         </div>
         {sales ? <div className={styles.cart__details__count}>
           <p> Скидка </p>
@@ -105,7 +107,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({
         <div className={styles.cart__details__count}>
           <p> Итого </p>
           <div/>
-          <p>{formatPrice(cartTotalPrice - sales)} ₽</p>
+          <p>{formatPrice(cartTotalPrice)} ₽</p>
         </div>
         <button onClick={makePay} disabled={cartContinue || spinner} className={styles.cart__details__order}>Оформить
           заказ

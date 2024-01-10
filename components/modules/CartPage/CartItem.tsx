@@ -18,6 +18,7 @@ import {CartCount} from '../../elements/CartCount/index';
 
 import spinnerStyles from '../../../styles/spinner/index.module.scss';
 import styles from '../../../styles/cartPage/index.module.scss';
+import {useMediaQuery} from '../../../hooks/useMediaQuery';
 
 
 export interface CartItemProps {
@@ -27,6 +28,9 @@ export interface CartItemProps {
 }
 
 export const CartItem: FC<CartItemProps> = ({item, removeCartItem, setSpinner}) => {
+
+
+  const isMedia768 = useMediaQuery(768)
 
   const dispatch = useDispatch()
 
@@ -85,27 +89,33 @@ export const CartItem: FC<CartItemProps> = ({item, removeCartItem, setSpinner}) 
           :
           ''
       }
-      <div className={styles.cart__item__inner}>
-        <img src={item.image} alt={item.name}/>
-        <div className={styles.cart__item__info}>
-          <h4 className={`${styles.cart__item__name} ${darkModeClass}`}>{item.name}</h4>
-          <ul className={`${styles.cart__item__text} ${darkModeClass}`}>
-            <li className={`${styles.cart__item__color} ${darkModeClass}`}>Цвет: <span>{colorName?.colorNameRu}</span>
-              <span className={styles.span__color} style={{backgroundColor: `${colorName?.hex}`}}/></li>
-            <li className={styles.cart__item__size}>Размер(Ш×Д×В): <span>{sofaSize} СМ</span></li>
-          </ul>
+
+        <div className={styles.cart__item__inner}>
+          <img src={item.image} alt={item.name}/>
+          <div className={styles.cart__item__info}>
+            {!isMedia768 && <h4 className={`${styles.cart__item__name} ${darkModeClass}`}>{item.name}</h4>}
+            <ul className={`${styles.cart__item__text} ${darkModeClass}`}>
+              <li className={`${styles.cart__item__color} ${darkModeClass}`}>Цвет: <span>{colorName?.colorNameRu}</span>
+                <span className={styles.span__color} style={{backgroundColor: `${colorName?.hex}`}}/></li>
+              <li className={styles.cart__item__size}>Размер(Ш×Д×В): <span>{sofaSize} СМ</span></li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div className={`${styles.cart__item__price__inner} ${darkModeClass}`}>
-        <p className={`${styles.cart__item__price} ${darkModeClass}`}>{formatPrice(item.price)} ₽
-          {sales && <span>{formatPrice(item.oldPrice)} ₽</span>}
-        </p>
-        <CartCount item={item} darkModeClass={darkModeClass} onPlusItem={onPlusItem} onMinusItem={onMinusItem}/>
-        <p className={`${styles.cart__item__totalPrice} ${darkModeClass}`}>{formatPrice(item.total_price)} ₽ </p>
-        <button onClick={() => removeCartItem(item.itemId)} className={`${styles.btn__delete} ${darkModeClass}`}>
-          <DeleteSvg/>
-        </button>
-      </div>
+
+        <div className={`${styles.cart__item__price__inner} ${darkModeClass}`}>
+          {isMedia768 && <h4 className={`${styles.cart__item__name} ${darkModeClass}`}>{item.name}</h4>}
+         <div className={styles.cart__item__price__inner__mob}>
+           <CartCount item={item} darkModeClass={darkModeClass} onPlusItem={onPlusItem} onMinusItem={onMinusItem}/>
+          {/* <p className={`${styles.cart__item__totalPrice} ${darkModeClass}`}>{formatPrice(item.total_price)} ₽ </p>*/}
+           <p className={`${styles.cart__item__price} ${darkModeClass}`}>{formatPrice(item.total_price)} ₽
+             {sales && <span>{formatPrice(item.oldPrice)} ₽</span>}
+           </p>
+           <button onClick={() => removeCartItem(item.itemId)} className={`${styles.btn__delete} ${darkModeClass}`}>
+             <DeleteSvg/>
+           </button>
+         </div>
+        </div>
+
     </div>
   );
 };

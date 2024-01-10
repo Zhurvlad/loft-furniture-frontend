@@ -25,7 +25,7 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
-  const isMedia768 = useMediaQuery(810)
+  const isMedia810 = useMediaQuery(810)
   const isMedia480 = useMediaQuery(480)
 
   const router = useRouter()
@@ -114,7 +114,7 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
 
           <div className={styles.items}>
             {/*<FiltersMobile/>*/}
-            {!isMedia768 && <div className={styles.items__sort}>
+            {!isMedia810 && <div className={styles.items__sort}>
               <FilterSelect/>
             </div>}
             <div>

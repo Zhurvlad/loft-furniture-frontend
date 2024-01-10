@@ -56,6 +56,10 @@
   &.dark_mode{
     color: $white;
   }
+
+  @media (max-width: 480px) {
+    padding: 15px;
+  }
 }
 
 .filter__title__arrow{
@@ -84,12 +88,16 @@
 
 .in_cart{
   cursor: default;
-  margin: 0 20px;
   border: 1px solid #EFEFEF;
   border-radius: 16px;
 
   span{
     right: 20px;
+
+    @media (max-width: 480px) {
+      right: 0;
+
+    }
   }
 
   p span:hover:nth-child(2){
@@ -102,6 +110,10 @@
     svg{
       left: -20px;
     }
+
+    @media (max-width: 960px) {
+      color: #000000;
+    }
   }
 
   svg{
@@ -113,8 +125,9 @@
       cursor: pointer;
     }
 
-
   }
+
+
 }
 
 .arrow__expanded{
@@ -442,8 +455,16 @@
 .cart{
   font-size: 24px;
 
+  @media (max-width: 480px) {
+    font-size: 18px;
+  }
+
   span{
    font-size: 18px;
+
+    @media (max-width: 480px) {
+      font-size: 14px;
+    }
   }
 }
 

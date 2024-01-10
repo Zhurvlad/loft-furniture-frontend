@@ -53,6 +53,8 @@ export const CartPage = () => {
   const cartTotalCount = cart?.reduce((sum, obj) => obj.count + sum , 0)
   const cartTotalPrice = cart?.reduce((sum, obj) => obj.total_price + sum , 0)
   const totalSales = cart?.map((i) => i.oldPrice > i.price ? (i.oldPrice * i.count) - i.price : 0).reduce((sum , obj) =>  obj + sum, 0)
+  const totalPrice = cart?.map((i) => i.oldPrice > i.price ? i.oldPrice * i.count : 0).reduce((sum , obj) =>  obj + sum, 0) + cart?.map((i) => i.oldPrice < i.price ? i.total_price : 0).reduce((sum , obj) =>  obj + sum, 0)
+
 
 /*  React.useEffect(() => {
     setFirstRender(true)
@@ -116,7 +118,7 @@ export const CartPage = () => {
               </Accordion>
             </div>
             {/*//@ts-ignore*/}
-            <OrderDetails cartContinue={cartContinue} spinner={spinner} sales={totalSales} cartTotalCount={cartTotalCount} cartTotalPrice={cartTotalPrice} totalCount={cartItem?.length} darkModeClass={darkModeClass}/>
+            <OrderDetails totalPrice={totalPrice} cartContinue={cartContinue} spinner={spinner} sales={totalSales} cartTotalCount={cartTotalCount} cartTotalPrice={cartTotalPrice} totalCount={cartItem?.length} darkModeClass={darkModeClass}/>
           </div>
           :
           <EmptyCart darkModeClass={darkModeClass}/>
