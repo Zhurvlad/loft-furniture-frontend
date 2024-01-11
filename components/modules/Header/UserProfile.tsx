@@ -1,9 +1,12 @@
 import React from 'react';
-import styles from '../../../styles/header/index.module.scss';
-import ProfileDropDown from './ProfileDropDown';
+
+import {useAppSelector} from '../../../hooks/redux';
+
 import {SignUpForm} from '../AuthPage/SignUpForm';
 import {SignInForm} from '../AuthPage/SignInForm';
-import {useAppSelector} from '../../../hooks/redux';
+import ProfileDropDown from './ProfileDropDown';
+
+import styles from '../../../styles/header/index.module.scss';
 
 export const UserProfile = () => {
 

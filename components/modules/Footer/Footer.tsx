@@ -1,13 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
 
+import {useMediaQuery} from '../../../hooks/useMediaQuery';
+
 import {LogoSmallSvg} from '../../elements/LogoSmall/index';
 import {MarkerSvg} from '../../elements/MarkerSvg/index';
 import {PhoneSvg} from '../../elements/PhoneSvg/index';
 import {MailSvg} from '../../elements/MailSvg/index';
 
 import styles from '../../../styles/footer/index.module.scss'
-import {useMediaQuery} from '../../../hooks/useMediaQuery';
 
 
 const AvailableCategories = [

@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import React from 'react';
 
-import {CartPage} from '../../components/templates/CartPage/index';
 import {MainLayout} from '../../components/layout/MainLayout';
 import {Breadcrumbs} from '../../components/modules/Breadcrumbs/Breadcrumbs';
 import {AboutPage} from '../../components/templates/About/index';

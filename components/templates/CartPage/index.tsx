@@ -123,25 +123,6 @@ export const CartPage = () => {
           :
           <EmptyCart darkModeClass={darkModeClass}/>
       }
-      {/* <div className={styles.cart__details}>
-        <h5 className={styles.cart__details__title}>Детали заказа</h5>
-        <div className={styles.cart__details__count}>
-          <p> 2 товара </p>
-          <div></div>
-          <p>{formatPrice(15000)} ₽</p>
-        </div>
-        <div className={styles.cart__details__count}>
-          <p> Скидка </p>
-          <div></div>
-          <p>{formatPrice(15000)} ₽</p>
-        </div>
-        <div className={styles.cart__details__count}>
-          <p> Итого </p>
-          <div></div>
-          <p>{formatPrice(15000)} ₽</p>
-        </div>
-        <button className={styles.cart__details__order}>Оформить заказ</button>
-      </div>*/}
     </div>
   );
 };

@@ -19,14 +19,11 @@ import styles from '../../../styles/authPage/index.module.scss'
 
 export const SignInForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
 
-
   const [loginUser] = useLoginMutation()
   const {register, formState: {errors}, handleSubmit, reset} = useForm<IInputs>()
   const [error, setError] = React.useState('')
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
-
-  /* console.log(loginUserResult, 9898989)*/
 
   const onSubmit = async (dto: CreateUserDto) => {
     try {

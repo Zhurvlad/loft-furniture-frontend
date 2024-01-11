@@ -5,15 +5,17 @@ import {userSlice} from '../store/reducers/UserSlice';
 import {shoppingCartApi} from '../store/shoppingCart/shoppingCart.api';
 
 import {useAppDispatch, useAppSelector} from '../hooks/redux';
+import {useMediaQuery} from '../hooks/useMediaQuery';
 
 import {Api} from '../utils/api/index';
 
 import {Breadcrumbs} from '../components/modules/Breadcrumbs/Breadcrumbs';
-import {Footer} from '../components/modules/Footer/Footer';
 import {MainPage} from '../components/templates/MainPage/index';
-import {Header} from '../components/modules/Header/Header';
+import {MainLayout} from '../components/layout/MainLayout';
 
 export default function Home() {
+
+  const isMedia768 = useMediaQuery(768)
 
   const dispatch = useAppDispatch()
 
@@ -21,23 +23,23 @@ export default function Home() {
   //@ts-ignore
   const {data: cartItem} = shoppingCartApi.useGetUserCartQuery({userId: user?.user.userId})
 
- /* const shouldCheckAuth = useRef(true)*/
+  /* const shouldCheckAuth = useRef(true)*/
 
   //TODO Подумать как переделать
   const checkUser = async () => {
     //@ts-ignore
-    if(!user?.user){
+    if (!user?.user) {
       const data = await Api().user.checkUser()
       dispatch(userSlice.actions.checkUser(data))
     }
   }
 
   React.useEffect(() => {
-      checkUser()
+    checkUser()
   }, [])
 
 
-/*  const {data, error, isLoading} = useGetSofasQuery()*/
+  /*  const {data, error, isLoading} = useGetSofasQuery()*/
 
   /*const getDefaultTextGenerator = React.useCallback(() => '', [])
   const getTextGenerator = React.useCallback((param: string) => ({}[param]), []);*/
@@ -46,9 +48,9 @@ export default function Home() {
 
   const getTextGenerator = () => ''
 
- /* React.useEffect(() => {
-    fetchSofas(dispatch)
-  }, [])*/
+  /* React.useEffect(() => {
+     fetchSofas(dispatch)
+   }, [])*/
 
   return (
     <>
@@ -61,14 +63,14 @@ export default function Home() {
         <link rel={'icon'} type={'image/svg'} sizes={'32x32'} href={'/img/LogoSmall.svg'}/>
 
       </Head>
-      <Header/>
-      <Breadcrumbs
-        getDefaultTextGenerator={getDefaultTextGenerator}
-        getTextGenerator={getTextGenerator}
-      />
-      <MainPage/>
-      <div className={'overlay'}/>
-      <Footer/>
+
+      <MainLayout>
+        <Breadcrumbs
+          getDefaultTextGenerator={getDefaultTextGenerator}
+          getTextGenerator={getTextGenerator}/>
+        <MainPage/>
+        {isMedia768 && <div className={'overlay'}/>}
+      </MainLayout>
     </>
-)
+  )
 }

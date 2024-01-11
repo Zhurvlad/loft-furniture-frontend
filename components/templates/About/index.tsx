@@ -1,7 +1,9 @@
 import React from 'react';
-import styles from '../../../styles/about/index.module.scss'
+
 import {useAppSelector} from '../../../hooks/redux';
 import {useMediaQuery} from '../../../hooks/useMediaQuery';
+
+import styles from '../../../styles/about/index.module.scss'
 
 export const AboutPage = () => {
 

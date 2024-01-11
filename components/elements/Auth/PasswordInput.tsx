@@ -10,10 +10,11 @@ export const PasswordInput: FC<IAuthInput> = ({errors, register}) => {
   const {theme} = useAppSelector((state) => state.theme)
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
+
   return (
     <label className={styles.signUp__inner}>
       <p className={`${styles.signUp__input__title} ${darkModeClass}`}>Пароль</p>
-      <input className={`${styles.signUp__input} ${darkModeClass}`}
+      <input className={`${styles.signUp__input} ${styles.signUp__input__password} ${darkModeClass}`}
              type="text" name={'Password'}
              placeholder={'Введите свой пароль'}
              {...register("password", {
@@ -22,7 +23,7 @@ export const PasswordInput: FC<IAuthInput> = ({errors, register}) => {
                maxLength: 20,
                pattern: {
                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                 message: 'Пароль должен содержать хотя бы одну латинскую букву или цифру'
+                 message: 'Пароль должен содержать хотя бы одну латинскую букву или цифру!'
                }
              })}
       />

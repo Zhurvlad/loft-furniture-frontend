@@ -361,6 +361,10 @@
 
   &:hover{
     background-color: #2BB159;
+
+    @media (max-width: 768px) {
+      background-color: #359740;
+    }
   }
 
   &.dark_mode svg{
@@ -397,6 +401,14 @@
   &.dark_mode svg{
     path {
       stroke: #ffffff;
+    }
+  }
+
+  &:hover{
+    background-color: #2BB159;
+
+    @media (max-width: 768px) {
+      background-color: #359740;
     }
   }
 
@@ -516,6 +528,12 @@
 
   &:hover {
     background-color: $btn-hover;
+
+    @media (max-width: 768px) {
+      background-color: #359740;
+    }
+
+
   }
 
 
@@ -666,5 +684,10 @@ justify-content: center;*/
 
   &:hover {
     background-color: $btn-hover;
+
+
+    @media (max-width: 768px) {
+      background-color: #359740;
+    }
   }
 }

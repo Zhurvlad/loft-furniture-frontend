@@ -6,6 +6,7 @@ import {toast} from 'react-toastify';
 import {cartSlice} from '../../../store/reducers/CartSlice';
 
 import {useAppSelector} from '../../../hooks/redux';
+import {useMediaQuery} from '../../../hooks/useMediaQuery';
 
 import {formatPrice} from '../../../utils/common';
 import {Api} from '../../../utils/api/index';
@@ -18,7 +19,6 @@ import {CartCount} from '../../elements/CartCount/index';
 
 import spinnerStyles from '../../../styles/spinner/index.module.scss';
 import styles from '../../../styles/cartPage/index.module.scss';
-import {useMediaQuery} from '../../../hooks/useMediaQuery';
 
 
 export interface CartItemProps {

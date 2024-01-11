@@ -4,8 +4,6 @@ import {sofaApi} from '../../../store/sofa/sofa.api';
 
 import {useAppSelector} from '../../../hooks/redux';
 
-import {sofaColor} from '../../../utils/color';
-
 import {ISofas} from '../../../models/ISofas';
 
 import {CatalogItem} from './CatalogItem';

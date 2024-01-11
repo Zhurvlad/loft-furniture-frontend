@@ -8,6 +8,7 @@ import {shoppingCartApi} from '../../../store/shoppingCart/shoppingCart.api';
 import {userSlice} from '../../../store/reducers/UserSlice';
 
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
+import {useMediaQuery} from '../../../hooks/useMediaQuery';
 
 import {sofaColor} from '../../../utils/color';
 import {Api} from '../../../utils/api/index';
@@ -19,12 +20,11 @@ import {PriceRange} from './PriceRange';
 import {ColorEl} from '../../elements/ColorEl/index';
 import {BrandInput} from '../../elements/BrendInput/index';
 import {Accordion} from '../../elements/Accordion/index';
+import {CloseBurgerSvg} from '../../elements/CloseBurgerSvg/index';
+import {FilterSelect} from './FilterSelect';
 
 import spinnerStyles from '../../../styles/spinner/index.module.scss';
 import styles from '../../../styles/catalogPage/index.module.scss';
-import {CloseBurgerSvg} from '../../elements/CloseBurgerSvg/index';
-import {useMediaQuery} from '../../../hooks/useMediaQuery';
-import {FilterSelect} from './FilterSelect';
 
 const sofaManufacturers = [
   'SCANDICA',
@@ -234,7 +234,6 @@ export const Filters: React.FC<FiltersProps> = ({
       setLoading(true)
 
 
-
       const priceFrom = priceRange[0]
       const priceTo = priceRange[1]
       const encodedSofasBrandQuery = encodeURIComponent(JSON.stringify(activeManufacturer))
@@ -326,12 +325,10 @@ export const Filters: React.FC<FiltersProps> = ({
       }
 
 
-
       setTimeout(() => {
         setSpinnerShow(false)
         setLoading(false)
       }, 1000)
-
 
 
     } catch (e) {
@@ -344,7 +341,7 @@ export const Filters: React.FC<FiltersProps> = ({
         setLoading(false)
       }, 1000)
 
-      if(isMedia768){
+      if (isMedia768) {
         closeBurgerMenu()
       }
 
@@ -382,7 +379,7 @@ export const Filters: React.FC<FiltersProps> = ({
 
   const [openBurgerMenu, setOpenBurgerMenu] = React.useState(false)
 
-  const isMedia768 = useMediaQuery(810)
+  const isMedia810 = useMediaQuery(810)
 
   const toggleBurgerMenu = () => {
     setOpenBurgerMenu(!openBurgerMenu)
@@ -397,10 +394,14 @@ export const Filters: React.FC<FiltersProps> = ({
     document.querySelector('.body')?.classList.remove('overflow-hidden')
   }
 
+  React.useEffect(() => {
+    closeBurgerMenu()
+  }, [isMedia810])
+
   return (
     <div className={styles.filters}>
 
-      {!isMedia768 && <div>
+      {!isMedia810 && <div>
         <form>
           <ul className={styles.filters__list}>
             <div className={styles.filter__list__inner}>
@@ -465,7 +466,7 @@ export const Filters: React.FC<FiltersProps> = ({
           /> : 'Сбросить все фильтры'}
         </button>
       </div>}
-      {isMedia768
+      {isMedia810
       &&
       <div className={styles.filters__mob}>
         <button onClick={toggleBurgerMenu}
@@ -475,9 +476,10 @@ export const Filters: React.FC<FiltersProps> = ({
         <div className={styles.items__sort}>
           <FilterSelect/>
         </div>
-        <div className={`${styles.filters__mobile} ${openBurgerMenu ? styles.filters__mobile__active : ''}`}>
+        <div
+          className={`${styles.filters__mobile} ${openBurgerMenu ? styles.filters__mobile__active : ''} ${darkModeClass}`}>
           <div className={styles.filters__mobile__header}>
-            <h3 className={styles.filters__mobile__title}>Фильтры</h3>
+            <h3 className={`${styles.filters__mobile__title} ${darkModeClass}`}>Фильтры</h3>
             <span onClick={closeBurgerMenu}><CloseBurgerSvg/></span>
           </div>
 

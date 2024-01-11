@@ -19,7 +19,6 @@ const mainSlider = [
 
 export const MainSlider = () => {
 
-  const isMedia1140 = useMediaQuery(1140)
   const isMedia960 = useMediaQuery(960)
   const isMedia768 = useMediaQuery(768)
   const isMedia320 = useMediaQuery(320)

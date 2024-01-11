@@ -2,20 +2,18 @@ import React from 'react';
 import Link from 'next/link';
 
 import {useAppSelector} from '../../../hooks/redux';
+import {useMediaQuery} from '../../../hooks/useMediaQuery';
 
-import {SignInForm} from '../AuthPage/SignInForm';
-import {SignUpForm} from '../AuthPage/SignUpForm';
-import ProfileDropDown from './ProfileDropDown';
+import {CityButton} from '../../elements/CityButton/index';
+import {UserProfile} from './UserProfile';
 
 import styles from '../../../styles/header/index.module.scss'
-import {CityButton} from '../../elements/CityButton/index';
-import {useMediaQuery} from '../../../hooks/useMediaQuery';
-import {UserProfile} from './UserProfile';
 
 const headerRef = [
   {id: 1, name: 'Главная', ref: '/'},
   {id: 2, name: 'О нас', ref: '/about'},
-  {id: 3, name: 'Контакты', ref: '/contacts'},
+  {id: 3, name: 'Каталог', ref: '/catalog'},
+  {id: 4, name: 'Контакты', ref: '/contacts'},
 ]
 
 export interface GeolocationCoordinates {

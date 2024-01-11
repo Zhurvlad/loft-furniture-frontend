@@ -52,6 +52,10 @@
 
 .footer__left__item a:hover{
   color: #ffffff;
+
+  @media (max-width: 960px) {
+    color: #b5b5b9;;
+  }
 }
 
 .footer__left__item + .footer__left__item{
@@ -84,6 +88,10 @@
 
 .footer__top__contacts__item:hover{
   color: #ffffff;
+
+  @media (max-width: 960px) {
+    color: #b5b5b9;;
+  }
 }
 
 .footer__top__contacts__link span:nth-child(3){
@@ -100,6 +108,11 @@
 .footer__top__contacts__item:hover span svg{
   stroke: #ffffff;
   color: #ffffff;
+
+  @media (max-width: 960px) {
+    color: #b5b5b9;
+    stroke: #b5b5b9;
+  }
 }
 
 

@@ -281,6 +281,12 @@
   transform: scale(1.03);
   transition: transform .2s ease-in-out, box-shadow .2s ease-in-out;
   box-shadow: -1px 4px 30px rgba(0, 0, 0, 0.16);
+
+  @media (max-width: 7200px) {
+    transform: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+  }
 }
 
 /*:hover {
@@ -307,11 +313,20 @@
 
 .main__card__favorite:hover path {
   stroke: #359740;
+
+  @media (max-width: 720px) {
+    stroke: #000000;
+  }
 }
 
 .main__card__favorite:hover.dark_mode path {
   stroke: #359740;
   fill: #359740;
+
+  @media (max-width: 720px) {
+    stroke: #f2f2f2;
+    fill: transparent;
+  }
 }
 
 .main__card__sales {
@@ -420,13 +435,25 @@
       background-color: $white;
       color: #27682C;
       border: 1px solid #27682C;
+
+      @media (max-width: 720px) {
+        background-color: $white;
+        color: $btn;
+        border: 1px solid $btn;
+      }
     }
   }
 
 
   &:hover {
     background-color: $btn-hover;
+
+    @media (max-width: 720px) {
+      background-color: $btn;
+    }
   }
+
+
 }
 
 

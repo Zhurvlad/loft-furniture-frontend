@@ -114,12 +114,22 @@
       background-color: $white;
       color: #27682C;
       border: 1px solid #27682C;
+
+      @media (max-width: 720px) {
+        background-color: $white;
+        color: $btn;
+        border: 1px solid $btn;
+      }
     }
   }
 
 
   &:hover {
     background-color: $btn-hover;
+
+    @media (max-width: 720px) {
+      background-color: $btn;
+    }
   }
 }
 

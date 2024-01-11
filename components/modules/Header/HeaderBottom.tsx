@@ -2,14 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 
 import {useAppSelector} from '../../../hooks/redux';
+import {useMediaQuery} from '../../../hooks/useMediaQuery';
 
 import {LogoSvg} from '../../elements/LogoSvg/index';
 import {CartSvg} from '../../elements/CartSvg/index';
 import {SearchInput} from '../../elements/SearchInput/index';
 import {ThemeToggle} from '../../elements/ThemeToggler/index';
-
-import styles from '../../../styles/header/index.module.scss'
-import {useMediaQuery} from '../../../hooks/useMediaQuery';
 import {UserProfile} from './UserProfile';
 import {MobileLogo} from '../../elements/MobileLogo/index';
 import {KitchenSvg} from '../../elements/KitchenSvg/index';
@@ -23,6 +21,9 @@ import {WardrobeSvg} from '../../elements/WardobeSvg/index';
 import {OfficeFurnitureSvg} from '../../elements/OfficeFurnitureSvg/index';
 import {ChildrenRoomSvg} from '../../elements/ChildrenRoomSvg/index';
 import {SalesSvg} from '../../elements/SalesSvg/index';
+
+
+import styles from '../../../styles/header/index.module.scss'
 
 
 const categoryItem = [
@@ -50,7 +51,7 @@ export const HeaderBottom: React.FC = () => {
 
   const toggleBurgerMenu = () => {
     setOpenBurgerMenu(!openBurgerMenu)
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
     document.querySelector('.overlay')?.classList.toggle('open')
     document.querySelector('.body')?.classList.toggle('overflow-hidden')
   }
@@ -60,6 +61,10 @@ export const HeaderBottom: React.FC = () => {
     document.querySelector('.overlay')?.classList.remove('open')
     document.querySelector('.body')?.classList.remove('overflow-hidden')
   }
+
+  React.useEffect(() => {
+    closeBurgerMenu()
+  }, [isMedia768])
 
   React.useEffect(() => {
     const overlay = document.querySelector('.overlay')
@@ -75,7 +80,8 @@ export const HeaderBottom: React.FC = () => {
       <div className="container">
 
         <div className={styles.header__bottom__inner}>
-          {isMedia768 && <button onClick={toggleBurgerMenu} className={`${styles.burger_menu} ${openBurgerMenu ? styles.open : ''} ${darkModeClass}`}>
+          {isMedia768 && <button onClick={toggleBurgerMenu}
+                                 className={`${styles.burger_menu} ${openBurgerMenu ? styles.open : ''} ${darkModeClass}`}>
             <span></span>
             <span></span>
             <span></span>
@@ -121,45 +127,54 @@ export const HeaderBottom: React.FC = () => {
             </ul>
           </div>
         </div>
-        <div className={`${styles.menu__mobile} ${openBurgerMenu ? styles.menu__mobile__active : ''}`}>
+        {isMedia768 && <div
+          className={`${styles.menu__mobile} ${openBurgerMenu ? styles.menu__mobile__active : ''} ${darkModeClass}`}>
           <div className={styles.menu__mobile__header}>
-            <h3 className={styles.menu__mobile__title}>Меню</h3>
-            <span onClick={closeBurgerMenu}><CloseBurgerSvg /></span>
+            <h3 className={`${styles.menu__mobile__title} ${darkModeClass}`}>Меню</h3>
+            <span onClick={closeBurgerMenu}><CloseBurgerSvg/></span>
           </div>
           <ul className={styles.menu__mobile__list}>
             <li className={styles.menu__mobile__item}>
-              <a className={styles.menu__mobile__link}>
-                <MainPageSvg/>
-                <p>Главная</p>
-              </a>
+              <Link href={'/'} passHref legacyBehavior>
+                <a className={`${styles.menu__mobile__link} ${darkModeClass}`}>
+                  <MainPageSvg/>
+                  <p>Главная</p>
+                </a>
+              </Link>
             </li>
             <li className={styles.menu__mobile__item}>
-              <a className={styles.menu__mobile__link}>
-                <AboutUsSvg/>
-                <p>О нас</p>
-              </a>
+              <Link href={'/about'} passHref legacyBehavior>
+                <a className={`${styles.menu__mobile__link} ${darkModeClass}`}>
+                  <AboutUsSvg/>
+                  <p>О нас</p>
+                </a>
+              </Link>
             </li>
             <li className={styles.menu__mobile__item}>
-              <a className={styles.menu__mobile__link}>
-                <ContactsSvg/>
-                <p>Контакты</p>
-              </a>
+              <Link href={'/contacts'} passHref legacyBehavior>
+                <a className={`${styles.menu__mobile__link} ${darkModeClass}`}>
+                  <ContactsSvg/>
+                  <p>Контакты</p>
+                </a>
+              </Link>
             </li>
           </ul>
           <div className={styles.menu__mobile__header}>
-            <h3 className={styles.menu__mobile__title}>Меню</h3>
+            <h3 className={`${styles.menu__mobile__title} ${darkModeClass}`}>Каталог</h3>
           </div>
-          <ul className={styles.menu__mobile__list}>
+          <ul className={`${styles.menu__mobile__list} ${darkModeClass}`}>
             {categoryItem.map((item) => (
               <li key={item.id} className={styles.menu__mobile__item}>
-                <a className={styles.menu__mobile__link}>
-                  {item.svg}
-                  <p>{item.name}</p>
-                </a>
+                <Link href={'/catalog'} passHref legacyBehavior>
+                  <a className={`${styles.menu__mobile__catalog__link} ${darkModeClass}`}>
+                    {item.svg}
+                    <p>{item.name}</p>
+                  </a>
+                </Link>
               </li>
             ))}
           </ul>
-        </div>
+        </div>}
 
         {isMedia600
           ?

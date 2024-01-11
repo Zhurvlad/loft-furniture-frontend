@@ -5,6 +5,7 @@ import {toast} from 'react-toastify';
 
 import {sofaApi} from '../../../store/sofa/sofa.api';
 import {useAppSelector} from '../../../hooks/redux';
+import {useMediaQuery} from '../../../hooks/useMediaQuery';
 import {sofaColor} from '../../../utils/color';
 import {IQueryParams} from '../../../types/catalog';
 
@@ -17,8 +18,6 @@ import {NextArrow} from '../../elements/NextArrow/index';
 
 import skeletonStyles from '../../../styles/skeletonStyles/index.module.scss';
 import styles from '../../../styles/catalogPage/index.module.scss'
-import {FiltersMobile} from '../../modules/CatalogPage/FiltersMobile';
-import {useMediaQuery} from '../../../hooks/useMediaQuery';
 
 export const CatalogPage = ({query}: { query: IQueryParams }) => {
 
@@ -75,6 +74,8 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
       setActiveManufacturer((prev) => prev.filter((_, i) => i !== index))
     }
   }
+
+
 
   const handleChangePage = async ({selected}: { selected: number }) => {
 
