@@ -134,10 +134,10 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                   <div className={styles.items__inner}>
                     {sofas.rows?.length
                       ? <div className={styles.items__inner}>
-                        {sofas && sofas.rows?.map(i => (
+                        {sofas ? sofas.rows?.map(i => (
                           //@ts-ignore
                           <CatalogItem sofa={i} sofaColor={sofaColor} key={i.id}/>
-                        ))}
+                        )) : 'Произошла ошибка при загрузке'}
                       </div>
                       : <div className={`${styles.not__found} ${darkModeClass}`}>
                         <img className={styles.not__found__img} src="/img/notFound1.jpg" alt=""/>
@@ -149,7 +149,7 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                 )}
 
             </div>
-            {sofas.rows?.length && pagesCount !== 1
+            {sofas ? sofas.rows?.length && pagesCount !== 1
               ? <ReactPaginate
                 containerClassName={styles.pagination__list}
                 pageLinkClassName={`${styles.pagination__list__item} ${darkModeClass}`}
@@ -162,7 +162,7 @@ export const CatalogPage = ({query}: { query: IQueryParams }) => {
                 pageCount={pagesCount}
                 forcePage={currentPage}
                 onPageChange={handleChangePage}/>
-              : ''}
+              : '' : ''}
           </div>
         </div>
       </div>

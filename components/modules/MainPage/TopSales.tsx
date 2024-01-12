@@ -17,6 +17,7 @@ export const TopSales = () => {
   const {theme} = useAppSelector((state) => state.theme)
 
 
+
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
   const sofaItem = sofas as ISofas
@@ -39,9 +40,9 @@ export const TopSales = () => {
           </ul>
         ) : (
           <div className={styles.main__top_sales__inner}>
-            {sofas && sofaItem.rows.map(i => (
+            {sofas ? sofaItem.rows.map(i => (
               <CatalogItem  sofa={i} key={i.id}/>
-            ))}
+            )) : 'Произошла ошибка при загрузке'}
           </div>
         )}
     </div>

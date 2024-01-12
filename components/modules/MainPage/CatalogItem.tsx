@@ -55,7 +55,7 @@ export const CatalogItem: React.FC<TopSalesItemProps> = ({sofa}) => {
       }
       <Link href={`/catalog/${sofa.id}`}>
         <img className={styles.main__card__img} src={JSON.parse(sofa.images)[0]} alt="content-img-1"/>
-        <div>
+        <div className={styles.main__card__color__inner}>
           <p className={`${styles.main__card__color__name} ${darkModeClass}`}>Цвет :</p>
           <p className={styles.main__card__color} style={{backgroundColor: `${colorHex}`}}/>
         </div>

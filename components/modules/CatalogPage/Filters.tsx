@@ -380,6 +380,8 @@ export const Filters: React.FC<FiltersProps> = ({
   const [openBurgerMenu, setOpenBurgerMenu] = React.useState(false)
 
   const isMedia810 = useMediaQuery(810)
+  const isMedia768 = useMediaQuery(768)
+
 
   const toggleBurgerMenu = () => {
     setOpenBurgerMenu(!openBurgerMenu)
