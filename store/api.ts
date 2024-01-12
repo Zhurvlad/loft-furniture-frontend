@@ -2,7 +2,9 @@ import {createApi, fetchBaseQuery, retry} from '@reduxjs/toolkit/dist/query/reac
 
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: `${process.env.NEXT_PUBLIC_SERVER_URL}`
+  withCredentials: true,
+  baseUrl: `${process.env.NEXT_PUBLIC_SERVER_URL}`,
+  credentials: 'include',
 })
 
 const baseQueryWithRetry = retry(baseQuery, {maxRetries: 3})

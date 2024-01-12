@@ -18,9 +18,9 @@ export type ApiReturnType = {
 export const Api = (): ApiReturnType => {
 
   const instance = axios.create({
+    string: undefined,
     withCredentials: true,
     baseURL: `${process.env.NEXT_PUBLIC_SERVER_URL}`
-
   })
 
   return {
