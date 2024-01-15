@@ -56,7 +56,9 @@ const ProfileDropDown = forwardRef<HTMLDivElement, IWrappedComponentProps>(({ope
             style={{transformOrigin: 'right top'}}
           >
             <li className={styles.profile__dropdown__user}>
+              {/*//@ts-ignore*/}
               <span className={`${styles.profile__dropdown__username} ${darkModeClass}`}>{userData.user?.username || userData?.username}</span>
+              {/*//@ts-ignore*/}
               <span className={`${styles.profile__dropdown__email} ${darkModeClass}`}>{userData.user?.email || userData?.email}</span>
             </li>
             <li className={styles.profile__dropdown__item}>

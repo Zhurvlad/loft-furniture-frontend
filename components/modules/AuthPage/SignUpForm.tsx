@@ -8,7 +8,7 @@ import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 import {isErrorWithMessage} from '../../../utils/is-error-with-message';
 import {showAuthError} from '../../../utils/errors';
 
-import {CreateUserDto, IAuthFrom, IInputs} from '../../../types/auth';
+import {CreateUserDto, IAuthFrom, IInputs, ResponseRegisterData} from '../../../types/auth';
 
 import {EmailInput} from '../../elements/Auth/EmailInput';
 import {NameInput} from '../../elements/Auth/NameInput';
@@ -36,6 +36,7 @@ export const SignUpForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
     try {
       /*await registerUser(dto).unwrap()*/
       const data = await Api().user.register(dto)
+      //@ts-ignore
       dispatch(userSlice.actions.register(data))
 
       setOpen()
