@@ -6,7 +6,7 @@ import {useDispatch} from 'react-redux';
 import {userSlice} from '../../../store/reducers/UserSlice'
 import {useAppSelector} from '../../../hooks/redux';
 import {IWrappedComponentProps, withClickOutside} from '../../../utils/withClickOutside';
-import {ResponseLoginUser} from '../../../types/auth';
+import {ResponseLoginUser, ResponseRegisterData} from '../../../types/auth';
 
 import {LogoutSvg} from '../../elements/LogoutSvg/index';
 import {UserSvg} from '../../elements/UserSvg/index';
@@ -21,7 +21,9 @@ const ProfileDropDown = forwardRef<HTMLDivElement, IWrappedComponentProps>(({ope
   const {theme} = useAppSelector((state) => state.theme)
   const {user} = useAppSelector(state => state.user)
 
-  const userData = user as ResponseLoginUser
+  console.log(user)
+
+  const userData = user as ResponseLoginUser | ResponseRegisterData
 
   const darkModeClass = theme === 'dark' ? `${styles.dark_mode}` : ''
 
@@ -54,8 +56,8 @@ const ProfileDropDown = forwardRef<HTMLDivElement, IWrappedComponentProps>(({ope
             style={{transformOrigin: 'right top'}}
           >
             <li className={styles.profile__dropdown__user}>
-              <span className={`${styles.profile__dropdown__username} ${darkModeClass}`}>{userData.user.username}</span>
-              <span className={`${styles.profile__dropdown__email} ${darkModeClass}`}>{userData.user.email}</span>
+              <span className={`${styles.profile__dropdown__username} ${darkModeClass}`}>{userData.user?.username || userData?.username}</span>
+              <span className={`${styles.profile__dropdown__email} ${darkModeClass}`}>{userData.user?.email || userData?.email}</span>
             </li>
             <li className={styles.profile__dropdown__item}>
               <button onClick={handleLogout} className={styles.profile__dropdown__item__btn}>

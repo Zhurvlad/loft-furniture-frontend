@@ -21,7 +21,7 @@ export default function Home() {
 
   const {user} = useAppSelector(state => state.user)
   //@ts-ignore
-  const {data: cartItem} = shoppingCartApi.useGetUserCartQuery({userId: user?.user.userId})
+  const {data: cartItem} = shoppingCartApi.useGetUserCartQuery({userId: user?.user?.userId || user?.user?.id})
 
   /* const shouldCheckAuth = useRef(true)*/
 

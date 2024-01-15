@@ -29,7 +29,7 @@ export const CartPage = () => {
   const {item: cart} = useAppSelector(state => state.cart)
 
   //@ts-ignore
-  const {data: cartItem} = shoppingCartApi.useGetUserCartQuery({userId: user?.user.userId})
+  const {data: cartItem} = shoppingCartApi.useGetUserCartQuery({userId: user?.user?.userId || user?.user?.id})
 
   const [spinner, setSpinner] = React.useState(false)
   /*const [firstRender, setFirstRender] = React.useState(false)*/

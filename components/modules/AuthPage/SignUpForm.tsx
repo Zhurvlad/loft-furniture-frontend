@@ -3,7 +3,7 @@ import {useForm} from 'react-hook-form';
 
 import {useRegisterMutation} from '../../../store/user/user.api';
 
-import {useAppSelector} from '../../../hooks/redux';
+import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
 
 import {isErrorWithMessage} from '../../../utils/is-error-with-message';
 import {showAuthError} from '../../../utils/errors';
@@ -16,13 +16,16 @@ import {PasswordInput} from '../../elements/Auth/PasswordInput';
 import {CloseSvg} from '../../elements/CloseSvg/index';
 
 import styles from '../../../styles/authPage/index.module.scss'
+import {Api} from '../../../utils/api/index';
+import {userSlice} from '../../../store/reducers/UserSlice';
 
 
 export const SignUpForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
 
   //TODO: Баг при регистрации когда нажамаешь на иконку юзера
 
-  const [registerUser] = useRegisterMutation()
+  /*const [registerUser] = useRegisterMutation()*/
+  const dispatch = useAppDispatch()
   const {register, formState: {errors}, handleSubmit, reset} = useForm<IInputs>()
   const [error, setError] = React.useState('')
 
@@ -31,7 +34,10 @@ export const SignUpForm: React.FC<IAuthFrom> = ({setOpen, toggleRegister}) => {
 
   const onSubmit = async (dto: CreateUserDto) => {
     try {
-      await registerUser(dto).unwrap()
+      /*await registerUser(dto).unwrap()*/
+      const data = await Api().user.register(dto)
+      dispatch(userSlice.actions.register(data))
+
       setOpen()
       reset()
     } catch (err) {
