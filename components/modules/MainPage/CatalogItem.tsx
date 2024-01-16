@@ -42,9 +42,9 @@ export const CatalogItem: React.FC<TopSalesItemProps> = ({sofa}) => {
 
   return (
     <div key={sofa.id} className={`${styles.main__top_sales__card} ${darkModeClass}`}>
-      <button className={`${styles.main__card__favorite} ${darkModeClass}`}>
+     {/* <button className={`${styles.main__card__favorite} ${darkModeClass}`}>
         <FavoriteSvg/>
-      </button>
+      </button>*/}
       {itemDiscount &&
       <div>
         <span className={`${styles.main__card__sales} ${darkModeClass}`}>
