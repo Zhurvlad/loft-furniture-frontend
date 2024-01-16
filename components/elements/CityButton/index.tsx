@@ -1,11 +1,16 @@
 import React from 'react';
-import styles from '../../../styles/header/index.module.scss';
-import {LocationSvg} from '../LocationSvg/index';
-import spinnerStyles from '../../../styles/spinner/index.module.scss';
-import {Api} from '../../../utils/api/index';
+
 import {citySlice} from '../../../store/reducers/CitySlice';
-import {GeolocationPosition, GeolocationPositionError} from '../../modules/Header/HeaderTop';
+
 import {useAppDispatch, useAppSelector} from '../../../hooks/redux';
+
+import {Api} from '../../../utils/api/index';
+
+import {GeolocationPosition, GeolocationPositionError} from '../../modules/Header/HeaderTop';
+import {LocationSvg} from '../LocationSvg/index';
+
+import spinnerStyles from '../../../styles/spinner/index.module.scss';
+import styles from '../../../styles/header/index.module.scss';
 
 export interface CityButtonProps {
   darkModeClass: string
@@ -52,7 +57,7 @@ export const CityButton:React.FC<CityButtonProps> = ({darkModeClass} ) => {
   }
 
     return (
-      <button onClick={getCity} className={styles.city}>
+      <button onClick={getCity} className={`${styles.city} ${darkModeClass}`}>
                 <span>
                       <LocationSvg/>
                 </span>

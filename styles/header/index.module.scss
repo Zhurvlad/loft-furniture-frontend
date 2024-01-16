@@ -17,11 +17,13 @@
   height: 17px;
   color: $white;
 
+
   svg{
     height: 12px;
     width: 12px;
     margin-right: 8px;
     margin-top: 2px;
+
   }
 
   &:hover &__text {
@@ -35,6 +37,41 @@
     transition: fill .2s ease-in-out;
   }
 
+
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+
+   svg path {
+      fill: #000000;
+    }
+
+    &:hover &__text {
+      color: $text-color;
+    }
+
+    &:hover &__span > svg {
+      fill: $white;
+    }
+
+    &.dark_mode{
+      svg path {
+        fill: $white;
+      }
+
+      &:hover &__span > svg {
+        fill: $white;
+      }
+
+      &:hover &__text {
+        color: $white;
+      }
+    }
+
+  }
+
+
+
 }
 
 .city__span {
@@ -46,8 +83,6 @@
     width: 11px;
     height: 11px;
     transition: fill .2s ease-in-out;
-
-
   }
 
   &.dark_mode svg {
@@ -64,6 +99,21 @@
   text-decoration-line: underline;
   color: #FAFBFC;
   transition: color .2s ease-in-out;
+
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    color: $text-color;
+
+    &.dark_mode{
+      color: $white !important;
+
+
+      &:hover {
+        color: $white;
+      }
+    }
+  }
 }
 
 .logo{
@@ -345,13 +395,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 
   svg{
     cursor: pointer;
   }
 }
 
+.menu__mobile__list{
+  margin-top: 30px;
+}
 
 .menu__mobile__list .menu__mobile__item:last-child {
   margin-bottom: 20px;

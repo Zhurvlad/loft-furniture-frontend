@@ -24,6 +24,7 @@ import {SalesSvg} from '../../elements/SalesSvg/index';
 
 
 import styles from '../../../styles/header/index.module.scss'
+import {CityButton} from '../../elements/CityButton/index';
 
 
 const categoryItem = [
@@ -133,6 +134,7 @@ export const HeaderBottom: React.FC = () => {
             <h3 className={`${styles.menu__mobile__title} ${darkModeClass}`}>Меню</h3>
             <span onClick={closeBurgerMenu}><CloseBurgerSvg/></span>
           </div>
+          <CityButton darkModeClass={darkModeClass}/>
           <ul className={styles.menu__mobile__list}>
             <li className={styles.menu__mobile__item}>
               <Link href={'/'} passHref legacyBehavior>
