@@ -33,7 +33,7 @@
 
 #### Backend:
 
-- NextJs
+- NestJs
 - Sequelize
 - Swagger
 - Faker
