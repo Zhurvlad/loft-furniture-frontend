@@ -47,7 +47,11 @@
 ## Развертывание проекта
 
 `npm i` - установка зависмостей; <br/>
-`npm run start` - запуск фронтенда;
+`npm run start` - запуск фронтенда; <br/>
+Создать .env и установить зависимость для: <br/>
+NEXT_PUBLIC_SERVER_URL= "Ваш локальный сервер" <br/>
+Перейти на сайт [https://apidocs.geoapify.com/#docs](https://apidocs.geoapify.com/#docs) зарегестрироваться и создать API key. <br/>
+NEXT_PUBLIC_GEOAPI_KEY="Ваш API key"
 
 
 
