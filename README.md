@@ -1,40 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Магазин мебели Loft Furniture
 
-First, run the development server:
+##О проекте
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+В проекте реализована регистрация, логин, логаут. При логине в cookies сохраняется ссесия пользователя которая позволяет 
+при перезегрузке оставаться залогиненным на сайте. 
+Есть поиск товаров по названию с переходом на страницу товара.
+Реализовано добавление, удаление товара, а так же увеличение и уменьшение колличества товаров в корзине. 
+Удаление всех товаров с корзины. Поиск таваров по фильтрам: цена, цвет, бренд. 
+Сортировка товаров по "Сначала дешевые", "Сначала дорогие" и "По популярности".
+Определение геолокации пользователя. Фейковая оплата с помощью ЮKassa.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Что использовано
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+#### Frontend:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- ReactJs + хуки
+- TypeScript
+- NextJs
+- Redux Toolkit
+- React Hook Form 
+- Framer-motion
+- Css-Modules/Scss
+- Next progressbar
+- React paginate 
+- React select
+- React slick
+- React range
+- React toastify
+- Slick carousel 
+- Axios
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+#### Backend:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- NextJs
+- Sequelize
+- Swagger
+- Faker
+- bcrypt
+- Express-session
+- Passport
+- Passport local
+- MySql
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Развертывание проекта
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`npm i` - установка зависмостей; <br/>
+`npm run start` - запуск фронтенда;
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Ссылка на Frontend: [https://loft-furniture-frontend.onrender.com](https://loft-furniture-frontend.onrender.com)<br/>
+Ссылка на репозиторий с Backend: [https://github.com/Zhurvlad/loft-furniture-backend](https://github.com/Zhurvlad/loft-furniture-backend) <br/>
+Ссылка на Api documentation: [https://loft-furniture-server.onrender.com/swagger](https://loft-furniture-server.onrender.com/swagger)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
